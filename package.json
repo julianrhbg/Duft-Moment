@@ -14,7 +14,8 @@
     "check": "node scripts/check.mjs",
     "test:browser": "node scripts/browser.mjs",
     "setup": "node scripts/setup.mjs",
-    "test:info": "node scripts/info-browser.mjs"
+    "test:info": "node scripts/info-browser.mjs",
+    "build:info-stills": "node scripts/info-stills.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

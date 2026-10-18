@@ -13,9 +13,9 @@ const errors=[],requests=[];let count=0;
 const context=await browser.newContext({viewport:{width:1280,height:850},colorScheme:'light',reducedMotion:'no-preference',locale:'de-DE',timezoneId:'Europe/Berlin'});
 await context.addInitScript(()=>{
  Object.defineProperty(navigator,'hardwareConcurrency',{value:8,configurable:true});Object.defineProperty(navigator,'deviceMemory',{value:8,configurable:true});
- window.__gpu={buffers:0,deletedBuffers:0,programs:0,deletedPrograms:0,shaders:0,deletedShaders:0,draws:0};
+ window.__gpu={buffers:0,deletedBuffers:0,programs:0,deletedPrograms:0,shaders:0,deletedShaders:0,textures:0,deletedTextures:0,draws:0};
  const proto=WebGLRenderingContext.prototype;
- for(const [name,counter]of Object.entries({createBuffer:'buffers',deleteBuffer:'deletedBuffers',createProgram:'programs',deleteProgram:'deletedPrograms',createShader:'shaders',deleteShader:'deletedShaders',drawArrays:'draws'})){
+ for(const [name,counter]of Object.entries({createBuffer:'buffers',deleteBuffer:'deletedBuffers',createProgram:'programs',deleteProgram:'deletedPrograms',createShader:'shaders',deleteShader:'deletedShaders',createTexture:'textures',deleteTexture:'deletedTextures',drawArrays:'draws'})){
   const original=proto[name];proto[name]=function(...args){window.__gpu[counter]++;return original.apply(this,args);};
  }
 });
@@ -34,20 +34,20 @@ try{
  await check('Normaler Start: kein Footer-Link, Info ≥44 px, kein Demo-Code oder WebGL geladen',async()=>{
   await page.goto(base);await initial();assert.equal(await page.locator('footer,#sources-link').count(),0);
   const box=await page.getByRole('button',{name:'Info',exact:true}).boundingBox();assert(box.width>=44&&box.height>=44);
-  assert(!requests.some(url=>/info-(demo|room)\.(mjs|css)/.test(url)));assert.equal((await page.evaluate(()=>window.__gpu)).buffers,0);
+  assert(!requests.some(url=>/info-(demo|room)\.(mjs|css)/.test(url)));assert.equal((await page.evaluate(()=>window.__gpu)).buffers,0);assert(!requests.some(url=>url.includes('info-still-')));
   await assertColors();await page.screenshot({path:'test-results/schema-light-desktop.png'});
  });
  await check('Echte 3D-Demo wird erst bei Info geladen; Quellen sind vor jedem Scrollen erreichbar',async()=>{
   await page.getByRole('button',{name:/^Lernen & Arbeiten/}).click();await page.getByRole('button',{name:/^Warm & holzig/}).click();
   await page.getByRole('heading',{name:'Wie intensiv?',exact:true}).waitFor();await open();
   await page.waitForFunction(()=>document.querySelector('.demo-stage')?.dataset.renderer==='webgl');await frames();
-  assert(requests.some(url=>url.endsWith('/info-room.mjs')));assert.equal(await page.locator('.info-experience').evaluate(e=>e.scrollTop),0);
+  assert(requests.some(url=>url.endsWith('/info-room.mjs')));assert(!requests.some(url=>url.includes('info-still-')),'3D lädt keine Fallbackbilder');assert.equal(await page.locator('.info-experience').evaluate(e=>e.scrollTop),0);
   assert(await page.getByRole('button',{name:'Anwendung & Quellen',exact:true}).isVisible());
   await page.getByRole('button',{name:'Anwendung & Quellen',exact:true}).click();await page.getByRole('dialog',{name:'Anwendung & Quellen'}).waitFor();
   assert.equal(await page.locator('#info-dialog a.source').count(),5);await page.getByRole('button',{name:'Schließen',exact:true}).click();
   assert(await page.locator('.info-experience').evaluate(e=>e.open));await page.screenshot({path:'test-results/info-light-start.png'});
  });
- await check('Scrollen führt von gestapelten Flächen zum Raum; Canvas-Bilder ändern sich, Eingabe bleibt nativ',async()=>{
+ await check('Native Scrollposition öffnet Glasbänder und verbindet sie reversibel zu einer Komposition',async()=>{
   const first=await page.locator('.demo-stage canvas').screenshot();
   await page.mouse.move(700,450);await page.mouse.wheel(0,450);await frames();
   assert((await page.locator('.info-experience').evaluate(e=>e.scrollTop))>300);
@@ -55,6 +55,10 @@ try{
   await scroll(1);const last=await page.locator('.demo-stage canvas').screenshot();
   assert.notEqual(createHash('sha256').update(first).digest('hex'),createHash('sha256').update(last).digest('hex'));
   assert.equal(await page.locator('.demo-label').innerText(),'Eine Mischung');await page.screenshot({path:'test-results/info-light-room.png'});
+  await scroll(0);const reversed=await page.locator('.demo-stage canvas').screenshot();
+  assert.equal(createHash('sha256').update(first).digest('hex'),createHash('sha256').update(reversed).digest('hex'),'Scrollgeometrie ist unmittelbar reversibel');
+  assert.equal(await page.locator('.demo-label').innerText(),'Drei Noten.');
+  assert.equal(await page.locator('.demo-stage canvas').evaluate(c=>c.getContext('webgl').getError()),0,'Kein WebGL-Fehler');await scroll(1);
  });
  await check('Live-Systemwechsel gestaltet Hauptansicht und offene 3D-Materialien dunkel, ohne Motive zu tauschen',async()=>{
   const src=await page.locator('main .lens-surface img').getAttribute('src');await page.emulateMedia({colorScheme:'dark'});await frames();
@@ -77,15 +81,15 @@ try{
   assert.equal(await page.locator('main').innerHTML(),before);assert.equal(requests.filter(u=>u.includes('/api/config')).length,apiCount);
   assert(await page.getByText('Verhältnis, keine Tropfenangabe.',{exact:true}).isVisible());await page.screenshot({path:'test-results/ergebnis-dark-desktop.png'});
  });
- await check('Reduzierte Bewegung zur Laufzeit gibt alle GPU-Ressourcen frei und zeigt einen statischen Raum',async()=>{
+ await check('Reduzierte Bewegung zur Laufzeit gibt alle GPU-Ressourcen frei und zeigt die statische Glasstudie',async()=>{
   await open();await page.waitForFunction(()=>document.querySelector('.demo-stage')?.dataset.renderer==='webgl');
   await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>document.querySelector('.info-experience')?.dataset.reduced==='true');await frames();
   assert.equal(await page.locator('.info-experience canvas').count(),0);assert.equal(await page.locator('.demo-label').innerText(),'Eine Mischung');
   await page.screenshot({path:'test-results/info-dark-reduced.png'});await close();await page.emulateMedia({reducedMotion:'no-preference'});
  });
- await check('Wiederholtes Öffnen/Schließen löscht Buffer, Shader und Programme; keine geschlossene Renderarbeit',async()=>{
+ await check('Wiederholtes Öffnen/Schließen löscht Buffer, Shader, Texturen und Programme; keine geschlossene Renderarbeit',async()=>{
   for(let i=0;i<3;i++){await open();await page.waitForFunction(()=>document.querySelector('.demo-stage')?.dataset.renderer==='webgl');await frames();await close();}
-  const gpu=await page.evaluate(()=>window.__gpu);assert.equal(gpu.buffers,gpu.deletedBuffers);assert.equal(gpu.programs,gpu.deletedPrograms);assert.equal(gpu.shaders,gpu.deletedShaders);
+  const gpu=await page.evaluate(()=>window.__gpu);assert.equal(gpu.buffers,gpu.deletedBuffers);assert.equal(gpu.programs,gpu.deletedPrograms);assert.equal(gpu.shaders,gpu.deletedShaders);assert.equal(gpu.textures,gpu.deletedTextures);
   assert.equal(await page.locator('.info-experience, .info-experience canvas').count(),0);
   await frames();assert.equal((await page.evaluate(()=>window.__gpu)).draws,gpu.draws);
  });
@@ -95,14 +99,14 @@ try{
   await noOverflow();assert(await page.getByRole('button',{name:'Info schließen',exact:true}).isVisible());assert(await page.getByRole('button',{name:'Anwendung & Quellen',exact:true}).isVisible());
   await page.screenshot({path:'test-results/info-dark-mobile.png'});await close();await page.emulateMedia({colorScheme:'light'});await assertColors();await page.screenshot({path:'test-results/start-light-mobile.png'});
  });
- await check('Ohne WebGL bleibt ein hochwertiger statischer Raum; keine leere lange Scrollstrecke',async()=>{
+ await check('Ohne WebGL bleibt die statische Glasstudie; keine leere lange Scrollstrecke',async()=>{
   const fallback=await browser.newPage({viewport:{width:320,height:568},colorScheme:'dark'});
   fallback.on('pageerror',e=>errors.push(e.message));await fallback.addInitScript(()=>{const original=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...args){return String(type).includes('webgl')?null:original.call(this,type,...args);};});
   await fallback.goto(base);await initial(fallback);await open(fallback);await fallback.waitForFunction(()=>document.querySelector('.info-experience')?.dataset.fallback==='true');await frames(fallback);
   assert.equal(await fallback.locator('.info-experience canvas').count(),0);assert(await fallback.locator('.room-model').isVisible());
   assert(await fallback.locator('.info-experience').evaluate(e=>e.scrollHeight-e.clientHeight<60));await fallback.screenshot({path:'test-results/info-no-webgl-320.png'});await close(fallback);await fallback.close();
  });
- await check('Verlorener Grafikkontext wechselt zuverlässig zur statischen Raumansicht',async()=>{
+ await check('Verlorener Grafikkontext wechselt zuverlässig zur statischen Glasstudie',async()=>{
   await open();await page.waitForFunction(()=>document.querySelector('.demo-stage')?.dataset.renderer==='webgl');
   await page.locator('.demo-stage canvas').evaluate(c=>c.getContext('webgl').getExtension('WEBGL_lose_context').loseContext());
   await page.waitForFunction(()=>document.querySelector('.info-experience')?.dataset.fallback==='true');
@@ -111,12 +115,17 @@ try{
  await check('Schwaches Geräteprofil verwendet die statische Demo ohne 3D-Modul',async()=>{
   const low=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'no-preference'});const urls=[];low.on('request',r=>urls.push(r.url()));
   await low.addInitScript(()=>{Object.defineProperty(navigator,'deviceMemory',{value:1,configurable:true});});
-  await low.goto(base);await initial(low);await open(low);await frames(low);assert(!urls.some(u=>u.includes('info-room.mjs')));assert.equal(await low.locator('.info-experience canvas').count(),0);await close(low);await low.close();
+  await low.goto(base);await initial(low);await open(low);await frames(low);assert(!urls.some(u=>u.includes('info-room.mjs')));assert.equal(await low.locator('.info-experience canvas').count(),0);assert(await low.locator('.info-experience').evaluate(e=>e.scrollHeight-e.clientHeight<60),'Schwache Geräte bekommen keine leere Scrollstrecke');await close(low);await low.close();
  });
  await check('Datensparen/reduzierte Bewegung laden kein 3D-Modul; Quellen bleiben direkt erreichbar',async()=>{
   const quiet=await browser.newPage({viewport:{width:390,height:844},colorScheme:'light',reducedMotion:'reduce'});const urls=[];quiet.on('request',r=>urls.push(r.url()));
   await quiet.addInitScript(()=>Object.defineProperty(navigator,'connection',{value:{saveData:true},configurable:true}));await quiet.goto(base);await initial(quiet);await open(quiet);await frames(quiet);
-  assert(!urls.some(u=>u.includes('info-room.mjs')));assert.equal(await quiet.locator('.info-experience canvas').count(),0);
+  assert(!urls.some(u=>u.includes('info-room.mjs')));assert.equal(await quiet.locator('.info-experience canvas').count(),0);assert.equal(await quiet.locator('.demo-progress').isVisible(),false);
+  await quiet.waitForFunction(()=>document.querySelector('.room-model img')?.naturalWidth===620);
+  assert((await quiet.locator('.room-model img').evaluate(e=>e.currentSrc)).endsWith('info-still-light.webp'));
+  await quiet.emulateMedia({colorScheme:'dark'});await quiet.waitForFunction(()=>document.querySelector('.room-model img')?.currentSrc.endsWith('info-still-dark.webp')&&document.querySelector('.room-model img').complete);
+  await quiet.screenshot({path:'test-results/info-static-dark.png'});await quiet.emulateMedia({colorScheme:'light'});
+  await quiet.waitForFunction(()=>document.querySelector('.room-model img')?.currentSrc.endsWith('info-still-light.webp')&&document.querySelector('.room-model img').complete);
   await quiet.getByRole('button',{name:'Anwendung & Quellen',exact:true}).click();assert.equal(await quiet.locator('#info-dialog a.source').count(),5);
   await quiet.getByRole('button',{name:'Schließen',exact:true}).click();await quiet.screenshot({path:'test-results/info-light-reduced.png'});await close(quiet);await quiet.close();
  });

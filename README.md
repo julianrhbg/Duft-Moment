@@ -20,7 +20,7 @@ Das vollständige Projekt lässt sich auf GitHub über **Code → Download ZIP**
 
 ## Info und automatisches Farbschema
 
-Die kleine Info-Schaltfläche im Kopfbereich öffnet eine freiwillige, scrollbare räumliche Demo. Drei eigene 3D-Flächen entfalten sich zu einem Raum. Anwendung und Quellen sind dort sofort erreichbar; der frühere Footer-Link entfällt. Schließen erhält den laufenden Quiz- oder Ergebnisstand.
+Die kleine Info-Schaltfläche im Kopfbereich öffnet eine freiwillige, scrollbare räumliche Demo. Drei eigene geschwungene Glasbänder öffnen sich und verbinden sich zu einer gemeinsamen Form. Anwendung und Quellen sind dort sofort erreichbar; der frühere Footer-Link entfällt. Schließen erhält den laufenden Quiz- oder Ergebnisstand.
 
 Die gesamte Oberfläche folgt automatisch dem hellen bzw. dunklen Systemfarbschema, unabhängig von Tageszeit und saisonalen Motiven. Demo-Code wird erst bei Bedarf geladen; reduzierte Bewegung, Datensparen und fehlendes WebGL erhalten eine hochwertige statische Alternative. Keine neuen Laufzeitabhängigkeiten.
 
@@ -81,6 +81,8 @@ npm run check
 npm test
 npm run test:browser
 npm run test:info
+# Nur nach Änderungen an der 3D-Szene: kompakte ruhige Ansichten regenerieren
+npm run build:info-stills
 ```
 
 `check` prüft die JavaScript-Syntax, das vollständige Ausgangsschema und alle 24 lokalen Motive. Der Browserlauf nutzt echtes Chromium über Playwright. Auf anderen Rechnern einen bereits installierten kompatiblen Chromium-Browser über `CHROMIUM_PATH` angeben; die optionalen Browserprüfungen setzen diesen voraus. Screenshots entstehen in `test-results/` (Git-ignoriert). Die ausgewählten Ansichten unter `docs/preview/` sind auf GitHub direkt zugänglich.

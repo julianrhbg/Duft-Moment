@@ -18,8 +18,9 @@ Es wurden keine vorhandenen Hostingdateien entfernt oder überschrieben und kein
 - `public/app.mjs`: Info-Integration, flüchtige History/Fokus-Rückkehr.
 - `public/style.css`: ruhigeres Layout, Farbschemata und Safe Areas.
 - `public/meta.mjs`: öffentliche Ausgangsquellen als Ausfallsicherung, falls die gemeinsame Konfiguration nicht erreichbar ist.
-- Neu: `public/info-demo.mjs`, `public/info-demo.css`, `public/info-room.mjs`.
+- Info-Demo: `public/info-demo.mjs`, `public/info-demo.css`, `public/info-room.mjs`.
+- Ruhige Alternative: `public/assets/info-still-light.webp` und `public/assets/info-still-dark.webp` (zusammen ca. 29 KB).
 
-Die drei neuen Dateien müssen im bestehenden statischen Auslieferungsschritt ebenfalls unter der Webwurzel erreichbar sein. Es sind keine neuen API-Endpunkte, Secrets, Backendpakete, Datenmigrationen oder Datenbankbindungen nötig.
+Die drei Demo-Dateien und beide WebP-Ansichten müssen im bestehenden statischen Auslieferungsschritt ebenfalls unter der Webwurzel erreichbar sein. Es sind keine neuen API-Endpunkte, Secrets, Backendpakete, Datenmigrationen oder Datenbankbindungen nötig.
 
 Beim Einspielen in ein separat angepasstes Sites-Projekt dessen tatsächlichen Adapter, Authentifizierung, Storage-Bindings und Konfigurationsformat erhalten. Die vollständige GitHub-ZIP ist ein Quellcodepaket; ihr Node-Server ist kein Ersatz für einen unbekannten bereits verwendeten Hostingadapter. Eine Veröffentlichung kann erst über den Zugriff auf dieses bestehende Projekt und dessen autorisierten Veröffentlichungsweg erfolgen. Die bestehende Adresse und damit der QR-Code sind erst nach erfolgreicher Aktualisierung dort als erhalten bestätigt.

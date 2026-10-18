@@ -11,8 +11,10 @@
     "files": [
       "info-room.mjs",
       "info-demo.mjs",
-      "info-demo.css"
+      "info-demo.css",
+      "assets/info-still-light.webp",
+      "assets/info-still-dark.webp"
     ],
-    "note": "Keine fremden Modelle, Texturen oder Medien. Scrollgesteuerte Entfaltung von drei Flächen zu einem Raum."
+    "note": "Eigene prozedurale Glasbänder und Studio-Beleuchtung. Die ruhigen WebP-Ansichten werden mit scripts/info-stills.mjs aus derselben Szene erzeugt. Keine fremden Modelle, Texturen oder Medien."
   }
 }

@@ -12,5 +12,6 @@ validateConfig(defaults);
 assert.deepEqual(sourceFallback,sources);
 for(const season of ['spring','summer','autumn','winter'])for(const phase of ['morning','day','evening'])for(const variant of [0,1]){const file=path.join(root,'public/assets',`${season}-${phase}-${variant}.svg`);assert(existsSync(file));assert(readFileSync(file,'utf8').includes('<svg'));}
 assert(existsSync(path.join(root,'public/assets/credits.json')));
+for(const mode of ['light','dark'])assert(existsSync(path.join(root,`public/assets/info-still-${mode}.webp`)));
 assert.equal(defaults.oils.length,23);
 console.log(`${count} JavaScript-Dateien syntaktisch gültig; Datenmodell und 24 lokale Landschaftsmotive geprüft. Kein separater Bundle-Build erforderlich.`);
