@@ -16,7 +16,7 @@ Die Darstellung besteht aus CSS und den vorhandenen SVGs. Ohne Bild bleibt eine 
 
 Mischungsname, Ölbezeichnungen und Zahlen bilden die stärkste Hierarchie. Ganze verifizierte Tropfen bzw. ausdrücklich gekennzeichnete Verhältnisse bleiben fachlich unverändert. Eine ungeprüfte Dosierung wird weiterhin direkt erklärt und nicht in ein Menü verschoben. Ersatzempfehlungen und fehlende Alternativen werden ebenfalls unmittelbar gekennzeichnet.
 
-„Andere Mischung“ und „Auswahl ändern“ bleiben die beiden Ergebnisaktionen. Die bisher ständig sichtbaren Antwort-Chips entfallen. Ein gezielter Änderungsdialog erlaubt weiterhin den direkten Sprung zu jeder einzelnen Antwort. Anwendungshinweise und Quellen sind über den kleinen globalen Zugang und gegebenenfalls die Dosierungseinschränkung erreichbar.
+„Andere Mischung“ und „Auswahl ändern“ bleiben die beiden Ergebnisaktionen. Die bisher ständig sichtbaren Antwort-Chips entfallen. Ein gezielter Änderungsdialog erlaubt weiterhin den direkten Sprung zu jeder einzelnen Antwort. Anwendungshinweise und Quellen sind über „Info“, das Menü und gegebenenfalls die Dosierungseinschränkung erreichbar. Der dauerhaft sichtbare Footer-Link ist in der aktuellen Überarbeitung entfernt.
 
 ## Entfernte sichtbare Inhalte
 
@@ -36,3 +36,7 @@ Die Auswahlregel, Rezepte, Produkte, Dosierungsbedingungen, Server und serversei
 24 bestehende automatisierte Tests prüfen Auswahl, Rotation, Dosierung und Serverfunktionen. Der überarbeitete Chromium-Lauf prüft mobile Touch-Bedienung bei 320 × 568, 360 × 640 und 390 × 844, Desktop bei 1440 × 950 und Tablet bei 768 × 1024. Reale Ansichten von Fragen, Verhältnis-Ergebnis, Änderungsdialog, Menü, Quellen, Einrichtung, Verwaltung und leerem Bestand wurden aufgerufen. Zusätzlich: Enter-Auswahl, sichtbarer Tastaturfokus, Escape und Fokusrückgabe, aktuelle Bestandsänderungen, Netzwerkfehler, verspätete Antworten, Medienausfall und Datensparmodus. BFCache wird über das zugehörige `pageshow`-Ereignis geprüft, nicht als Garantie jedes browserspezifischen Cachepfads.
 
 Screenshots unter `docs/preview/` zeigen den tatsächlich ausgeführten Browserstand. Es wurde keine neue Website-Veröffentlichung behauptet. Die bisherige öffentliche Adresse kann aus dieser Umgebung weiterhin nicht aktualisiert werden; Quellcode und Vorschauen werden über das vorhandene GitHub-Repository bereitgestellt.
+
+## Ergänzung: Info und Systemfarbschema
+
+Die Hauptansicht wurde weiter beruhigt und vollständig für helle und dunkle Systemfarben gestaltet. Die räumliche Inszenierung ist jetzt eine freiwillige, erst beim Öffnen geladene Erfahrung hinter „Info“. Details, Fallbacks und aktueller Prüfstand: [Info und Farbschema](info.md).

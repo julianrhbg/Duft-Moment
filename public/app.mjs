@@ -1,5 +1,5 @@
 import {choose,isMorning,availableGroups,sceneFor} from './engine.mjs';
-import {groups,activities,intensities} from './meta.mjs';
+import {groups,activities,intensities,sourceFallback} from './meta.mjs';
 import {el,btn,icon,toast,api} from './ui.mjs';
 import {openAdmin} from './admin.mjs';
 
@@ -7,12 +7,40 @@ const main=document.querySelector('#main');
 const menu=document.querySelector('#menu');
 const menuButton=document.querySelector('#menu-button');
 const dialog=document.querySelector('#info-dialog');
-let config,sources=[],version=0,answers={},step=0,run=0,turn=0,busy=false,controller;
+let config,sources=sourceFallback,version=0,answers={},step=0,run=0,turn=0,busy=false,controller;
 let manualTime='',lastScene='',motionPaused=false,view='quiz';
 const seen=new Map();
+const infoButton=document.querySelector('#info-button');
+let experience=null,infoModule=null,infoOpening=false,infoSerial=0,infoLoadId=0,infoClosing=false;
+function motionReduced(){return motionPaused||config?.settings.motion===false||matchMedia('(prefers-reduced-motion: reduce)').matches||navigator.connection?.saveData===true;}
+async function openExperience(push=true){
+ if(experience?.isOpen||infoOpening)return;infoOpening=true;infoClosing=false;const loadId=++infoLoadId;
+ const active=document.activeElement;
+ infoButton.setAttribute('aria-busy','true');
+ try{
+  infoModule??=import('./info-demo.mjs');const {createExperience}=await infoModule;
+  if(!infoOpening||loadId!==infoLoadId)return;
+  experience=createExperience({onClose:requestCloseExperience,onSources:showSources,reduced:motionReduced()});
+  experience.returnFocus=active?.isConnected?active:infoButton;
+  const current=experience;await current.open();if(!current.isOpen||loadId!==infoLoadId)return;
+  if(push)history.pushState({...history.state,overlay:'info',infoSerial:++infoSerial},'','#info');
+ }catch{experience?.dispose();experience=null;toast('Info konnte nicht geladen werden. Anwendungshinweise sind weiterhin im Menü erreichbar.');}
+ finally{infoOpening=false;infoButton.removeAttribute('aria-busy');}
+}
+function hideExperience(){
+ infoOpening=false;infoClosing=false;infoLoadId++;if(!experience)return;
+ const target=experience.returnFocus;experience.dispose();experience=null;
+ if(target?.isConnected)target.focus({preventScroll:true});else infoButton.focus({preventScroll:true});
+ if(answers.activity==='wake'&&!isMorning(now()))clockChanged();
+}
+function requestCloseExperience(){
+ if(infoClosing)return;infoClosing=true;
+ if(history.state?.overlay==='info')history.back();else hideExperience();
+}
+infoButton.addEventListener('click',()=>openExperience());
 
 function now(){const d=new Date();if(manualTime){const[h,m]=manualTime.split(':').map(Number);d.setHours(h,m,0,0);}return d;}
-function updateMotion(){document.body.classList.toggle('motion-off',motionPaused||config?.settings.motion===false||matchMedia('(prefers-reduced-motion: reduce)').matches||navigator.connection?.saveData===true);}
+function updateMotion(){const reduced=motionReduced();document.body.classList.toggle('motion-off',reduced);experience?.setReduced(reduced);}
 function closeMenu(){if(menu.open)menu.close();menuButton.setAttribute('aria-expanded','false');}
 menu.addEventListener('close',()=>menuButton.setAttribute('aria-expanded','false'));
 function showMenu(){
@@ -20,7 +48,7 @@ function showMenu(){
  menu.replaceChildren(
   el('div',{class:'menu-top'},el('span',{},'Menü'),btn('×',closeMenu,'icon-button',{'aria-label':'Menü schließen'})),
   btn('Neu beginnen',()=>home(),'menu-item'),
-  btn('Anwendung & Quellen',()=>{closeMenu();showInfo();},'menu-item'),
+  btn('Anwendung & Quellen',()=>{closeMenu();showSources();},'menu-item'),
   btn(motionPaused?'Bewegung erlauben':'Bewegung pausieren',()=>{motionPaused=!motionPaused;updateMotion();closeMenu();},'menu-item'),
   el('details',{class:'clock-settings'},el('summary',{},'Uhrzeit anpassen'),
    el('label',{},'Uhrzeit für diesen Besuch',el('input',{type:'time',value:manualTime||now().toTimeString().slice(0,5),'aria-label':'Manuelle Uhrzeit',onchange:e=>{manualTime=e.target.value;clockChanged();}})),
@@ -31,7 +59,6 @@ function showMenu(){
 menuButton.addEventListener('click',showMenu);
 menu.addEventListener('click',e=>{if(e.target===menu){const r=menu.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeMenu();}});
 document.querySelector('#home').addEventListener('click',()=>home());
-document.querySelector('#sources-link').addEventListener('click',()=>showInfo());
 document.querySelector('#close-dialog').addEventListener('click',()=>dialog.close());
 dialog.addEventListener('click',e=>{if(e.target!==dialog)return;const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();});
 
@@ -52,7 +79,7 @@ function atmosphere(){
 function layout(copy,cls){return el('div',{class:`composition ${cls} enter`},copy,atmosphere());}
 function questionTitle(){return config.settings.tagline==='Was braucht dein Dazwischen?'?'Was hast du vor?':config.settings.tagline;}
 function home(push=true){
- run++;controller?.abort();busy=false;step=0;answers={};view='quiz';closeMenu();if(dialog.open)dialog.close();
+ hideExperience();infoOpening=false;run++;controller?.abort();busy=false;step=0;answers={};view='quiz';closeMenu();if(dialog.open)dialog.close();
  main.removeAttribute('aria-busy');if(push)history.replaceState({run,step:0},'','/');if(config)renderQuiz();
 }
 function forward(){step++;history.pushState({run,step},'','/');renderQuiz();}
@@ -126,8 +153,8 @@ function renderResult(selected){
  const parts=el('dl',{class:'recipe-parts','aria-label':dosed?'Geprüfte Tropfenmengen':'Mischungsverhältnis, keine Dosierung'});
  for(const p of selected.parts||r.parts){const oil=config.oils.find(o=>o.id===p.oil);parts.append(el('div',{class:'part'},el('dt',{class:'part-name'},oil.name),el('dd',{class:'part-amount'},dosed?p.drops:p.ratio,el('span',{},dosed?'Tropfen':p.ratio===1?'Teil':'Teile'))));}
  copy.append(parts,el('p',{class:'scent-description'},r.description));
- if(!dosed)copy.append(el('div',{class:'recipe-note'},el('strong',{},'Verhältnis, keine Tropfenangabe.'),el('span',{},'Produkt- oder Geräteprüfung steht aus. Die Intensität ist noch undosiert.'),btn('Details',()=>showInfo(),'inline-link',{'aria-label':'Hinweise zur ungeprüften Dosierung'})));
- else copy.append(el('p',{class:'recipe-note'},'Interne Rezeptregel. Wasser nur bis MAX.',btn('Anwendung',()=>showInfo(),'inline-link')));
+ if(!dosed)copy.append(el('div',{class:'recipe-note'},el('strong',{},'Verhältnis, keine Tropfenangabe.'),el('span',{},'Produkt- oder Geräteprüfung steht aus. Die Intensität ist noch undosiert.'),btn('Details',()=>showSources(),'inline-link',{'aria-label':'Hinweise zur ungeprüften Dosierung'})));
+ else copy.append(el('p',{class:'recipe-note'},'Interne Rezeptregel. Wasser nur bis MAX.',btn('Anwendung',()=>showSources(),'inline-link')));
  if(selected.fallback)copy.append(el('p',{class:'notice fallback'},'Alternative: Die Duftrichtung passt, die Tätigkeit ist diesem Rezept nicht ausdrücklich zugeordnet.'));
  const again=btn('Andere Mischung',()=>result(),'primary');
  if(!selected.alternatives){again.disabled=true;again.dataset.only='true';again.title='Keine weitere passende Zusammensetzung verfügbar.';}
@@ -135,7 +162,7 @@ function renderResult(selected){
  if(!selected.alternatives)copy.append(el('p',{class:'availability-note'},'Aktuell die einzige passende Zusammensetzung.'));
  copy.append(el('div',{class:'flow-error',role:'alert'}));mount(layout(copy,'result'));
 }
-function showInfo(){
+function showSources(){
  const box=document.querySelector('#dialog-content');box.replaceChildren(
   el('h2',{id:'dialog-title'},'Anwendung & Quellen'),
   el('p',{},'Eigene redaktionelle Duftideen. Keine belegte Wirkung auf Schlaf, Konzentration oder Gesundheit.'),
@@ -146,7 +173,7 @@ function showInfo(){
    el('p',{},'Beachte die Anleitung deines Geräts und das Etikett der konkreten Ölflasche. Nicht einnehmen und nicht als Hautanleitung verwenden. Bei empfindlichen Personen, Kindern, Schwangerschaft oder Tieren im Raum vorher fachlichen Rat einholen; bei Beschwerden die Anwendung beenden. Duft ersetzt kein Lüften.')),
   el('h3',{},'Ausgangsquellen · noch nicht geprüft'));
  for(const s of sources)box.append(el('a',{class:'source',href:s.url,target:'_blank',rel:'noopener noreferrer'},s.title,el('small',{},s.kind)));
- const reviewed=[...config.oils.filter(o=>o.review==='verified').map(o=>({name:o.name,url:o.source,date:o.reviewedAt})),...(config.device.review==='verified'?[{name:config.device.name,url:config.device.source,date:config.device.reviewedAt}]:[])];
+ const reviewed=[...(config?.oils??[]).filter(o=>o.review==='verified').map(o=>({name:o.name,url:o.source,date:o.reviewedAt})),...(config?.device?.review==='verified'?[{name:config.device.name,url:config.device.source,date:config.device.reviewedAt}]:[])];
  if(reviewed.length){box.append(el('h3',{},'Dokumentierte Prüfungen'));for(const p of reviewed)box.append(el('a',{class:'source',href:p.url,target:'_blank',rel:'noopener noreferrer'},p.name,el('small',{},`Prüfdatum laut Verwaltung: ${p.date}`)));}
  box.append(el('details',{class:'info-detail'},el('summary',{},'Projekt & Darstellung'),el('p',{},'Keine offizielle Partnerschaft oder Freigabe durch doTERRA oder Stadler Form. Die saisonalen Landschaften sind eigene Illustrationen, keine Wetterdaten. Keine externen Medienanfragen und keine Standortabfrage. Quizantworten werden nicht dauerhaft gespeichert.')));
  if(!dialog.open)dialog.showModal();
@@ -157,14 +184,14 @@ async function admin(){
  await openAdmin(main,{onHome:home,isActive:()=>view==='admin'&&run===adminRun,onSaved:async()=>{version=0;await refresh();}});
 }
 function clockChanged(){
- if(!config)return;
+ if(!config||experience?.isOpen)return;
  if(answers.activity==='wake'&&!isMorning(now())){controller?.abort();run++;busy=false;main.removeAttribute('aria-busy');answers={};step=0;history.replaceState({run,step},'','/');renderQuiz();toast('Es ist nicht mehr Morgen. Bitte wähle deine Tätigkeit neu.');}
  else if(view==='quiz')renderQuiz();else if(view==='result'){const scene=main.querySelector('.atmosphere');if(scene)scene.replaceWith(atmosphere());}
 }
-window.addEventListener('popstate',e=>{closeMenu();controller?.abort();busy=false;main.removeAttribute('aria-busy');if(dialog.open)dialog.close();if(location.hash==='#verwaltung')return admin();if(e.state?.run===run&&Number.isInteger(e.state.step)&&e.state.step>=0&&e.state.step<=2&&(e.state.step===0||answers.activity)){step=e.state.step;renderQuiz();}else home(false);});
-window.addEventListener('pageshow',e=>{if(e.persisted)home();});
+window.addEventListener('popstate',e=>{if(infoOpening&&!experience?.isOpen)hideExperience();if(experience?.isOpen){if(dialog.open)dialog.close();hideExperience();return;}if(e.state?.overlay==='info'){openExperience(false);return;}closeMenu();controller?.abort();busy=false;main.removeAttribute('aria-busy');if(dialog.open)dialog.close();if(location.hash==='#verwaltung')return admin();if(e.state?.run===run&&Number.isInteger(e.state.step)&&e.state.step>=0&&e.state.step<=2&&(e.state.step===0||answers.activity)){step=e.state.step;renderQuiz();}else home(false);});
+window.addEventListener('pageshow',e=>{if(e.persisted){hideExperience();home();}});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)clockChanged();});
 matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',updateMotion);
 setInterval(()=>{if(!config)return;if(answers.activity==='wake'&&!isMorning(now()))clockChanged();else if(view!=='admin'&&sceneFor(config,now()).id!==lastScene)clockChanged();},30000);
-try{await refresh();if(location.hash==='#verwaltung')await admin();else home(true);}
+try{const startOnInfo=location.hash==='#info';await refresh();if(location.hash==='#verwaltung')await admin();else{home(true);if(startOnInfo)openExperience();}}
 catch{mount(el('section',{class:'login'},el('h1',{},'Bestand nicht erreichbar.'),el('p',{class:'error-box'},'Bitte versuche es erneut. Ohne aktuellen Bestand geben wir keine Empfehlung aus.'),btn('Erneut versuchen',()=>location.reload(),'primary')));}

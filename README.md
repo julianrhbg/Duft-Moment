@@ -18,6 +18,14 @@ Die Designüberarbeitung entfernt die vorgeschaltete Einstiegsseite, Mottos, Bil
 
 Das vollständige Projekt lässt sich auf GitHub über **Code → Download ZIP** herunterladen. Der Quellcode enthält keine Datenbank, Passwörter, Sitzungen oder Einrichtungsschlüssel. Ein GitHub-Download ist noch keine öffentlich laufende Website.
 
+## Info und automatisches Farbschema
+
+Die kleine Info-Schaltfläche im Kopfbereich öffnet eine freiwillige, scrollbare räumliche Demo. Drei eigene 3D-Flächen entfalten sich zu einem Raum. Anwendung und Quellen sind dort sofort erreichbar; der frühere Footer-Link entfällt. Schließen erhält den laufenden Quiz- oder Ergebnisstand.
+
+Die gesamte Oberfläche folgt automatisch dem hellen bzw. dunklen Systemfarbschema, unabhängig von Tageszeit und saisonalen Motiven. Demo-Code wird erst bei Bedarf geladen; reduzierte Bewegung, Datensparen und fehlendes WebGL erhalten eine hochwertige statische Alternative. Keine neuen Laufzeitabhängigkeiten.
+
+[Konzept und geprüfte Grenzen](docs/info.md) · [Übernahme in das vorhandene Hosting](docs/hosting-handoff.md)
+
 ## Start
 
 Voraussetzung: **Node.js 24 LTS** (hier geprüft mit 24.19.0), npm. Keine Laufzeitpakete und kein Bundle-Build. Die einzige Entwicklungsabhängigkeit ist Playwright für reale Browserprüfungen.
@@ -72,6 +80,7 @@ Quizantworten bleiben im Arbeitsspeicher. Kein Local Storage, keine Besuchercook
 npm run check
 npm test
 npm run test:browser
+npm run test:info
 ```
 
 `check` prüft die JavaScript-Syntax, das vollständige Ausgangsschema und alle 24 lokalen Motive. Der Browserlauf nutzt echtes Chromium über Playwright. Auf anderen Rechnern einen bereits installierten kompatiblen Chromium-Browser über `CHROMIUM_PATH` angeben; die optionalen Browserprüfungen setzen diesen voraus. Screenshots entstehen in `test-results/` (Git-ignoriert). Die ausgewählten Ansichten unter `docs/preview/` sind auf GitHub direkt zugänglich.
@@ -97,6 +106,8 @@ Die frühere Installation und ihre Daten sind nicht erreichbar; es wurde kein Ex
 - `src/server.mjs`: HTTP, SQLite, Authentifizierung, Versionsschutz und Auslieferung.
 - `test/`: automatisierte Auswahl- und Serverprüfungen.
 - `scripts/browser.mjs`: echte Chromium-Klickabläufe.
+- `scripts/info-browser.mjs`: zusätzliche echte Prüfungen für Info, WebGL, Farbschemata und Ressourcenfreigabe.
+- `public/info-demo.mjs`, `public/info-room.mjs`, `public/info-demo.css`: bei Bedarf geladene Info-Erfahrung.
 - `research/notes.md`: Quellenstatus, Dosierungsgrenzen und fehlende Migration.
 - `public/assets/credits.json`: Mediennachweise; kein fremdes Video, keine Fremdschrift.
 

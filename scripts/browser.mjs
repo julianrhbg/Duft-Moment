@@ -105,11 +105,11 @@ try{
   await begin();await page.evaluate(()=>window.dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})));await firstQuestion();
  });
  await check('Anwendung und alle Quellen sind erreichbar; reduzierte Bewegung bleibt statisch',async()=>{
-  await page.locator('#sources-link').click();await page.getByRole('dialog',{name:'Anwendung & Quellen'}).waitFor();
+  await page.getByRole('button',{name:'Info',exact:true}).click();await page.locator('.info-experience[open]').waitFor();await page.getByRole('button',{name:'Anwendung & Quellen',exact:true}).click();await page.getByRole('dialog',{name:'Anwendung & Quellen'}).waitFor();
   assert.equal(await page.locator('#info-dialog a.source').count(),5);
   await page.getByText('Prüfstand & Dosierung',{exact:true}).click();
   await page.getByText('Ein Teil bedeutet nicht ein Tropfen.',{exact:false}).waitFor();
-  await page.getByRole('button',{name:'Schließen',exact:true}).click();
+  await page.getByRole('button',{name:'Schließen',exact:true}).click();await page.getByRole('button',{name:'Info schließen',exact:true}).click();await page.locator('.info-experience').waitFor({state:'detached'});
   assert(await page.locator('body').evaluate(e=>e.classList.contains('motion-off')));
  });
  await check('Tastatur: Auswahl per Enter, sichtbarer Fokus, Menü-Escape mit Fokusrückgabe',async()=>{

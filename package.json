@@ -13,7 +13,8 @@
     "test": "node --test test/*.test.mjs",
     "check": "node scripts/check.mjs",
     "test:browser": "node scripts/browser.mjs",
-    "setup": "node scripts/setup.mjs"
+    "setup": "node scripts/setup.mjs",
+    "test:info": "node scripts/info-browser.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

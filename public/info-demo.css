@@ -1,0 +1,56 @@
+/* Erst beim Öffnen geladen. Ein zusammenhängender Scrollraum, keine Scrollsteuerung. */
+dialog.info-experience {
+  position: fixed; inset: 0; margin: 0; width: 100%; max-width: none;
+  height: 100%; max-height: none; padding: 0; border: 0; border-radius: 0;
+  background: var(--paper); color: var(--ink); box-shadow: none;
+  overflow: auto; overscroll-behavior: contain; scroll-behavior: auto;
+  --info-bar: calc(78px + env(safe-area-inset-top, 0px));
+  --panel-back: #c2b7a2; --panel-side: #85937d; --panel-floor: #bb9474;
+}
+.info-experience::backdrop { background: var(--paper); backdrop-filter: none; }
+.info-topbar { position: sticky; top: 0; height: var(--info-bar); z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: env(safe-area-inset-top, 0px) max(6%, env(safe-area-inset-right, 0px)) 0 max(6%, env(safe-area-inset-left, 0px)); background: var(--paper); }
+.info-topbar h1 { font-size: 14px; font-weight: 400; letter-spacing: 0; margin: 0; line-height: 1; }
+.info-top-actions { display: flex; align-items: center; gap: 25px; }
+.info-top-actions .source-shortcut { min-height: 44px; padding: 12px 0; font-size: 12px; color: var(--muted); }
+.info-top-actions .source-shortcut:hover { color: var(--ink); }
+.demo-track { position: relative; height: 290svh; }
+.demo-stage { position: sticky; top: var(--info-bar); height: calc(100svh - var(--info-bar)); min-height: 340px; overflow: hidden; isolation: isolate; }
+.demo-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.demo-label { position: absolute; bottom: max(45px, env(safe-area-inset-bottom, 0px)); left: 8%; font-size: clamp(20px, 2.2vw, 30px); letter-spacing: -.035em; font-weight: 400; pointer-events: none; }
+.demo-description { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.demo-stage[data-renderer='webgl'] .quiet-room { display: none; }
+.info-experience[data-fallback='true'] .demo-track,
+.info-experience[data-reduced='true'] .demo-track { height: calc(100svh - var(--info-bar)); min-height: 440px; }
+.info-experience[data-fallback='true'] .demo-stage,
+.info-experience[data-reduced='true'] .demo-stage { position: relative; top: 0; }
+.quiet-room { position: absolute; inset: 0; display: grid; place-items: center; perspective: 950px; }
+.room-model { position: relative; width: 240px; height: 240px; transform-style: preserve-3d; transform: translateY(-12px) rotateX(-24deg) rotateY(34deg); }
+.room-plane { position: absolute; width: 240px; height: 240px; border-radius: 9px; backface-visibility: visible; border: 1px solid #ffffff40; box-shadow: inset 0 0 35px #39372713; }
+.room-plane.back { background: linear-gradient(130deg, #e0d8c7, var(--panel-back)); transform: translateZ(-120px); }
+.room-plane.side { background: linear-gradient(130deg, #aebba4, var(--panel-side)); transform: translateX(-120px) rotateY(90deg); }
+.room-plane.floor { background: radial-gradient(ellipse at 48% 50%, #d8b899, var(--panel-floor)); transform: translateY(120px) rotateX(90deg); }
+.quiet-room::after { content: ''; position: absolute; width: 280px; height: 40px; border-radius: 50%; bottom: 24%; left: calc(50% - 100px); transform: skewX(-35deg); background: #4c463d20; filter: blur(18px); z-index: -1; }
+@media (max-width: 720px) {
+  dialog.info-experience { --info-bar: calc(70px + env(safe-area-inset-top, 0px)); }
+  .info-topbar { padding-inline: max(6%, env(safe-area-inset-left, 0px)); gap: 10px; }
+  .info-top-actions { gap: 16px; }
+  .info-top-actions .source-shortcut { font-size: 11px; }
+  .demo-label { bottom: max(36px, env(safe-area-inset-bottom, 0px)); left: 7%; font-size: 23px; }
+  .room-model { width: 175px; height: 175px; }
+  .room-plane { width: 175px; height: 175px; }
+  .room-plane.back { transform: translateZ(-87.5px); }
+  .room-plane.side { transform: translateX(-87.5px) rotateY(90deg); }
+  .room-plane.floor { transform: translateY(87.5px) rotateX(90deg); }
+}
+@media (prefers-color-scheme: dark) {
+  dialog.info-experience { --panel-back: #56594c; --panel-side: #3c5140; --panel-floor: #725c48; }
+  .room-plane { border-color: #c4cbb31c; box-shadow: inset 0 0 35px #0002; }
+  .room-plane.back { background: linear-gradient(130deg, #72735e, var(--panel-back)); }
+  .room-plane.side { background: linear-gradient(130deg, #566a51, var(--panel-side)); }
+  .room-plane.floor { background: radial-gradient(ellipse at 48% 50%, #8f7357, var(--panel-floor)); }
+  .quiet-room::after { background: #0007; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .info-experience .demo-track { height: calc(100svh - var(--info-bar)); min-height: 440px; }
+  .info-experience .demo-stage { position: relative; top: 0; }
+}

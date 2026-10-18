@@ -5,5 +5,14 @@
     "license": "Projektbestand; keine fremden Bildrechte",
     "note": "Atmosphärische Illustrationen, keine Wetterdaten und keine Herstelleraufnahmen. Kein Video im Projekt."
   },
-  "typefaces": "Systemschriften: Georgia und Helvetica/Arial; keine externen Fontanfragen."
+  "typefaces": "Systemschriften: Georgia und Helvetica/Arial; keine externen Fontanfragen.",
+  "info_demo": {
+    "creator": "Für DAZWISCHEN eigens erstellte prozedurale Geometrie und CSS-Darstellung",
+    "files": [
+      "info-room.mjs",
+      "info-demo.mjs",
+      "info-demo.css"
+    ],
+    "note": "Keine fremden Modelle, Texturen oder Medien. Scrollgesteuerte Entfaltung von drei Flächen zu einem Raum."
+  }
 }
