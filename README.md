@@ -1,6 +1,6 @@
 # DAZWISCHEN
 
-**Zwischen gerade noch. Und gleich wieder.**
+Drei Fragen führen direkt zu einer Duftidee. Der Einstieg beginnt sofort mit der Tätigkeitsauswahl.
 
 Eine deutschsprachige Duftauswahl für den kleinen Raum zwischen Tätigkeiten. Drei Fragen führen zu genau einer redaktionell ausgewählten Duftidee aus dem verfügbaren Bestand. Eigene lokale Landschaftsillustrationen wechseln mit Tageszeit, Jahreszeit und Datum. Keine Besucheraccounts, keine laufende KI, keine Tracker und keine externen Medienabrufe.
 
@@ -12,7 +12,9 @@ Die folgenden Bilder zeigen den implementierten und im Browser geprüften Stand:
 
 ![Startseite auf dem Desktop](docs/preview/start-desktop.png)
 
-[Mobile Startseite](docs/preview/start-mobile.png) · [Mobile Ergebnisansicht](docs/preview/ergebnis-mobile.png)
+[Mobile Startseite](docs/preview/start-mobile.png) · [Duftrichtung](docs/preview/duftrichtung-mobile.png) · [Intensität](docs/preview/intensitaet-mobile.png) · [Ergebnis](docs/preview/ergebnis-mobile.png)
+
+Die Designüberarbeitung entfernt die vorgeschaltete Einstiegsseite, Mottos, Bildbeschriftungen, dekorative Zahlen und die Antwort-Chips im Ergebnis. Ein statischer Lichtkörper trägt die saisonalen Motive. Antworten werden gezielt über „Auswahl ändern“ bearbeitet. Details: [Gestaltungsentscheidungen und Prüfstand](docs/design.md).
 
 Das vollständige Projekt lässt sich auf GitHub über **Code → Download ZIP** herunterladen. Der Quellcode enthält keine Datenbank, Passwörter, Sitzungen oder Einrichtungsschlüssel. Ein GitHub-Download ist noch keine öffentlich laufende Website.
 
@@ -60,7 +62,7 @@ Die Ausgangsquellen und alte Referenz waren wegen einer Netzwerkproxysperre nich
 
 Der Datenpfad ist: verfügbare und nicht ausgeschlossene Ölvariante → vorhandenes redaktionelles Rezept → Tätigkeit und Duftrichtung → Dosierbarkeit bei dokumentierter Prüfung → schwache Tageszeit-/Prioritätsgewichtung → Rotation innerhalb ähnlich passender Rezepte. Dosierbarkeit ist eine harte Bedingung, kein Bonus. Gleiche Ölzusammenstellungen werden dedupliziert. „Andere Mischung“ wiederholt bei passenden Alternativen nicht sofort dieselbe Zusammensetzung. Fehlt eine exakte Passung, wird nur eine vorhandene Alternative gleicher Duftrichtung mit sichtbarem Hinweis angeboten. Sonst entsteht ein ehrlicher leerer Zustand.
 
-Serenity ist ausschließlich dem Ausklang zugeordnet, nicht Lernen. Bergamot Mint ist kein Alias für Peppermint. Aufwachen erscheint nur von 06:00 bis vor 11:00 Uhr der Besucherzeit bzw. bewusst manuell eingestellter Uhrzeit. Die manuelle Zeit gilt nur für den Besuch. Hausstandard ist lediglich eine sichtbare Empfehlung, keine versteckte Vorauswahl.
+Serenity ist ausschließlich dem Ausklang zugeordnet, nicht Lernen. Bergamot Mint ist kein Alias für Peppermint. Aufwachen erscheint nur von 06:00 bis vor 11:00 Uhr der Besucherzeit bzw. bewusst manuell eingestellter Uhrzeit. Die manuelle Zeit gilt nur für den Besuch. Hausstandard ist lediglich eine sichtbare Empfehlung, keine versteckte Vorauswahl. Die Tätigkeitsfrage ist die Startseite; vor dem Anzeigen der Duftrichtungen und jeder neuen Empfehlung wird der aktuelle Bestand geprüft. Der bisherige Einstiegstext bleibt gespeichert und in der Verwaltung erreichbar, wird im direkten Einstieg jedoch nicht angezeigt.
 
 Quizantworten bleiben im Arbeitsspeicher. Kein Local Storage, keine Besuchercookies, kein Wiederherstellen alter Antworten. Home, erneutes Öffnen und BFCache-Wiederherstellung beginnen frisch. Die flüchtige Rotationshistorie enthält nur Rezeptzusammensetzungen und wird beim Schließen des Tabs verworfen.
 
@@ -72,7 +74,7 @@ npm test
 npm run test:browser
 ```
 
-`check` prüft die JavaScript-Syntax, das vollständige Ausgangsschema und alle 24 lokalen Motive. Der Browserlauf nutzt echtes Chromium über Playwright. Auf anderen Rechnern einen bereits installierten kompatiblen Chromium-Browser über `CHROMIUM_PATH` angeben; die optionalen Browserprüfungen setzen diesen voraus. Screenshots entstehen in `test-results/` (Git-ignoriert).
+`check` prüft die JavaScript-Syntax, das vollständige Ausgangsschema und alle 24 lokalen Motive. Der Browserlauf nutzt echtes Chromium über Playwright. Auf anderen Rechnern einen bereits installierten kompatiblen Chromium-Browser über `CHROMIUM_PATH` angeben; die optionalen Browserprüfungen setzen diesen voraus. Screenshots entstehen in `test-results/` (Git-ignoriert). Die ausgewählten Ansichten unter `docs/preview/` sind auf GitHub direkt zugänglich.
 
 Tests verwenden eigene temporäre Datenordner, verändern niemals die eigentliche Installation und geben keine echten Einrichtungsschlüssel aus. Geprüft sind Auswahl/Rotation, Dosierungsbedingungen, lokale Zeitgrenzen, Produktstatus, Schema, Authentifizierung, Origin-Schutz, Anmeldesperre, Sitzungsablauf, Konflikte, Neustartpersistenz und Byte-Ranges. Browserprüfungen decken Besucherablauf, mobile Ansichten, Alternative, Home, Netzwerkrennen, manuelle Uhrzeit, Verwaltungsabläufe und aktuelle Bestandsänderungen ab. BFCache wird über sein tatsächliches `pageshow`-Ereignis mit `persisted` geprüft; das ist keine Garantie für jeden browserabhängigen Cachepfad.
 

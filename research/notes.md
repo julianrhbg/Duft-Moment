@@ -48,4 +48,4 @@ Tropfen werden erst berechnet, wenn das Gerät und **alle** beteiligten Produkte
 
 ## Name und Gestaltung
 
-Der aktuelle Auftrag verlangt ausdrücklich einen neuen, durchdachten Namen und hat Vorrang vor der alten Namensvorgabe. **DAZWISCHEN** bezeichnet den kleinen Übergang zwischen Tätigkeiten. Ein offenes Fenster ist das Grundmotiv, kein Feed. Creme, Waldgrün und Bernstein, Serifentypografie und wenige Entscheidungen tragen die Idee. Keine Marken- oder Domainverfügbarkeitsprüfung behauptet.
+Der aktuelle Auftrag verlangt ausdrücklich einen neuen, durchdachten Namen und hat Vorrang vor der alten Namensvorgabe. **DAZWISCHEN** bezeichnet den kleinen Übergang zwischen Tätigkeiten. Die ursprüngliche Fenstergestaltung wurde anschließend durch einen ruhigen Lichtkörper und einen unmittelbaren Einstieg in die Tätigkeitsfrage ersetzt. Saisonale lokale Motive, neutrale Materialtöne und eine klare serifenlose Hierarchie tragen die reduzierte Oberfläche. Siehe `docs/design.md`. Keine Marken- oder Domainverfügbarkeitsprüfung behauptet.
