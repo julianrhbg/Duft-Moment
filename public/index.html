@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f2efe7">
+<meta name="description" content="Ein Raum. Ein Moment. Dein Duft. Finde eine bewusst ausgewählte Duftidee für das, was du gerade brauchst.">
+<title>DAZWISCHEN — Raum für deinen Moment</title>
+<link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="module" src="/app.mjs"></script>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt</a>
+<header class="header">
+<button class="wordmark" id="home" aria-label="DAZWISCHEN · Zur Startseite"><span class="brand-mark" aria-hidden="true">d<span>·</span></span><span id="brand">DAZWISCHEN</span></button>
+<div class="header-right"><span class="header-note">EIN KLEINER RAUM FÜR DICH</span><button class="icon-button" id="menu-button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="menu"><span class="menu-lines" aria-hidden="true"></span></button></div>
+</header>
+<div id="menu" class="menu" hidden></div>
+<main id="main" tabindex="-1"><div class="loading"><span class="loading-dot"></span>Ein kleiner Moment …</div></main>
+<footer class="footer"><span>WENIGER AUSSEN. MEHR HIER.</span><button id="sources-link">Quellen & Anwendung</button><span class="footer-sign">Mit Bedacht ausgewählt.</span></footer>
+<dialog id="info-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><span class="eyebrow">GUT ZU WISSEN</span><button class="icon-button" id="close-dialog" aria-label="Schließen">×</button></div><div id="dialog-content"></div></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

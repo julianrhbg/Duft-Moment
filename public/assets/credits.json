@@ -1,0 +1,9 @@
+{
+  "landscapes": {
+    "creator": "Für DAZWISCHEN eigens erstellte Vektorillustrationen",
+    "files": "*-morning-*.svg, *-day-*.svg, *-evening-*.svg",
+    "license": "Projektbestand; keine fremden Bildrechte",
+    "note": "Atmosphärische Illustrationen, keine Wetterdaten und keine Herstelleraufnahmen. Kein Video im Projekt."
+  },
+  "typefaces": "Systemschriften: Georgia und Helvetica/Arial; keine externen Fontanfragen."
+}

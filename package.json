@@ -1,0 +1,21 @@
+{
+  "name": "dazwischen",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Ein kleiner Raum für deinen Duftmoment.",
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "dev": "node --watch src/server.mjs",
+    "test": "node --test test/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "test:browser": "node scripts/browser.mjs",
+    "setup": "node scripts/setup.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
