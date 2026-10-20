@@ -1,0 +1,1768 @@
+{
+  "schema": 1,
+  "oils": [
+    {
+      "id": "bergamot-mint",
+      "name": "Bergamot Mint",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Fein minzig, zitrisch, blumig; mittlere Intensität",
+      "composition": "Mentha citrata",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten.",
+      "source": "https://media.doterra.com/eu/de/pips/bergamot-mint-oil.pdf",
+      "diffuserSource": "https://media.doterra.com/au-otg/en/pips/convention-kit.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 4,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "bergamot",
+      "name": "Bergamot",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Fein zitrisch, leicht blumig; mittlere Intensität",
+      "composition": "Citrus bergamia",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten.",
+      "source": "https://media.doterra.com/eu/de/pips/bergamot-oil.pdf",
+      "diffuserSource": "https://media.doterra.com/us/en/pips/bergamot-oil.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 4,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "lemon",
+      "name": "Lemon",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Klar zitrisch; mittlere Intensität",
+      "composition": "Citrus limon",
+      "application": "EU-PIP: Lebensmittelaroma; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten.",
+      "source": "https://media.doterra.com/eu/de/pips/lemon-oil.pdf",
+      "diffuserSource": "https://media.doterra.com/us/en/pips/lemon-oil.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 4,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "lime",
+      "name": "Lime",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Spritzig zitrisch; mittlere Intensität",
+      "composition": "Citrus aurantifolia",
+      "application": "EU-PIP: Lebensmittelaroma; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten.",
+      "source": "https://media.doterra.com/eu/de/pips/lime-oil.pdf",
+      "diffuserSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 4,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "lemongrass",
+      "name": "Lemongrass",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Zitrisch, grasig; intensiv",
+      "composition": "Cymbopogon flexuosus",
+      "application": "EU-PIP: Lebensmittelaroma; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten. Dominantes Öl: in dieser Webseite höchstens ein Tropfen pro Füllung; bei Reizung ausschalten und lüften.",
+      "source": "https://media.doterra.com/eu/de/pips/lemongrass-oil.pdf",
+      "diffuserSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 1,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "citronella",
+      "name": "Citronella",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Zitrisch, grasig; intensiv",
+      "composition": "Cymbopogon winterianus",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten. Dominantes Öl: in dieser Webseite höchstens ein Tropfen pro Füllung; bei Reizung ausschalten und lüften.",
+      "source": "https://media.doterra.com/eu/de/pips/citronella-oil.pdf",
+      "diffuserSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 1,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "oregano",
+      "name": "Oregano",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Krautig, scharf; sehr intensiv",
+      "composition": "Origanum vulgare",
+      "application": "EU-PIP: Lebensmittelaroma; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten. Dominantes Öl: in dieser Webseite höchstens ein Tropfen pro Füllung; bei Reizung ausschalten und lüften. Hersteller nennt 1–2 Tropfen; unabhängige ANSES-Hinweise raten bei stark phenolreichen Produkten zur Zurückhaltung. Nicht als Standardempfehlung.",
+      "source": "https://media.doterra.com/eu/de/pips/oregano-oil.pdf",
+      "diffuserSource": "https://media.doterra.com/il-otg/en/pips/oregano-oil.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 1,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "wild-orange",
+      "name": "Wild Orange",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Süß, fruchtig, zitrisch; mittlere Intensität",
+      "composition": "Citrus sinensis",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP. Zusätzlich aktuelle EU-Shopseite: ausdrücklich Diffuserkombination beziehungsweise Diffusermischungen.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten.",
+      "source": "https://media.doterra.com/eu/de/pips/wild-orange-oil.pdf",
+      "diffuserSource": "https://shop.doterra.com/DE/de_DE/shop/petal-diffuser-v2-with-wild-orange-lavender/",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 4,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "lavender",
+      "name": "Lavender",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Blumig, krautig; mittlere Intensität",
+      "composition": "Lavandula angustifolia",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP. Zusätzlich aktuelle EU-Shopseite: ausdrücklich Diffuserkombination beziehungsweise Diffusermischungen.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten.",
+      "source": "https://media.doterra.com/eu/de/pips/lavender-oil.pdf",
+      "diffuserSource": "https://shop.doterra.com/DE/de_DE/shop/petal-diffuser-v2-with-wild-orange-lavender/",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 4,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "serenity",
+      "name": "Serenity",
+      "variant": "oil",
+      "blend": true,
+      "profile": "Blumig, warm, weich holzig; mittlere bis deutliche Intensität",
+      "composition": "Lavendel, Zeder, Koriandersamen, Ylang-Ylang, Majoran, Römische Kamille, Vetiver, Sandelholz, Tonkabohnenextrakt, Vanilleextrakt. Aktuelle EU-PIP nennt Santalum album; ältere Beschreibungen können abweichen.",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP. Zusätzlich aktuelle EU-Shopseite: ausdrücklich Diffuserkombination beziehungsweise Diffusermischungen.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten.",
+      "source": "https://media.doterra.com/eu/de/pips/doterra-serenity-oil.pdf",
+      "diffuserSource": "https://shop.doterra.com/de/de_de/shop/lumo-diffuser-with-serenity/",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 4,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "peppermint",
+      "name": "Peppermint",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Kühl minzig; sehr intensiv",
+      "composition": "Mentha piperita",
+      "application": "EU-PIP: Lebensmittelaroma; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten. Dominantes Öl: in dieser Webseite höchstens ein Tropfen pro Füllung; bei Reizung ausschalten und lüften.",
+      "source": "https://media.doterra.com/eu/de/pips/peppermint-oil.pdf",
+      "diffuserSource": "https://media.doterra.com/us/en/pips/peppermint-oil.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 1,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "air",
+      "name": "Air",
+      "variant": "oil",
+      "blend": true,
+      "profile": "Kühl minzig, eukalyptisch; intensiv",
+      "composition": "Lorbeerblatt, Eucalyptus globulus, Pfefferminze, Teebaum, Zitrone, Kardamom, Kampferbaumblatt, Ravensara aromatica.",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten. Dominantes Öl: in dieser Webseite höchstens ein Tropfen pro Füllung; bei Reizung ausschalten und lüften.",
+      "source": "https://media.doterra.com/eu/de/pips/doterra-air-oil.pdf",
+      "diffuserSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 1,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "adaptiv",
+      "name": "Adaptiv",
+      "variant": "oil",
+      "blend": true,
+      "profile": "Zitrisch, blumig, sanft minzig; mittlere Intensität",
+      "composition": "Wildorange, Lavendel, Copaiba, Grüne Minze, Magnolie, Rosmarin, Neroli, Amberbaum.",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten.",
+      "source": "https://media.doterra.com/eu/de/pips/doterra-adaptiv-oil.pdf",
+      "diffuserSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 4,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "zengest",
+      "name": "ZenGest",
+      "variant": "oil",
+      "blend": true,
+      "profile": "Krautig, würzig, minzig; intensiv",
+      "composition": "Pfefferminze, Koriandersamen, Ingwer, Kümmel, Kardamom, Fenchel, Anis.",
+      "application": "EU-PIP: Lebensmittelaroma; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten. Dominantes Öl: in dieser Webseite höchstens ein Tropfen pro Füllung; bei Reizung ausschalten und lüften.",
+      "source": "https://media.doterra.com/eu/de/pips/zengest-oil.pdf",
+      "diffuserSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 1,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "metapwr",
+      "name": "MetaPWR",
+      "variant": "oil",
+      "blend": true,
+      "profile": "Zitrisch, minzig, würzig; intensiv",
+      "composition": "Grapefruit, Zitrone, Ingwer, Pfefferminze, Zimtrinde.",
+      "application": "EU-PIP: Lebensmittelaroma; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten. Dominantes Öl: in dieser Webseite höchstens ein Tropfen pro Füllung; bei Reizung ausschalten und lüften.",
+      "source": "https://media.doterra.com/eu/de/pips/metapwr-oil.pdf",
+      "diffuserSource": "https://media.doterra.com/us/en/pips/metapwr-oil.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 1,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "tulsi",
+      "name": "Tulsi (Holy Basil)",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Warm, würzig, krautig; mittlere bis deutliche Intensität",
+      "composition": "Ocimum sanctum",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten. Dominantes Öl: in dieser Webseite höchstens ein Tropfen pro Füllung; bei Reizung ausschalten und lüften.",
+      "source": "https://media.doterra.com/eu/de/pips/tulsi-oil.pdf",
+      "diffuserSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 1,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "grapefruit",
+      "name": "Grapefruit",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Herb zitrisch; mittlere Intensität",
+      "composition": "Citrus paradisi",
+      "application": "EU-PIP: Lebensmittelaroma; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten.",
+      "source": "https://media.doterra.com/eu/de/pips/grapefruit-oil.pdf",
+      "diffuserSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 4,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "frankincense",
+      "name": "Frankincense (Weihrauch)",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Harzig, holzig, würzig; mittlere Intensität",
+      "composition": "Boswellia carterii/frereana/sacra/papyrifera",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten.",
+      "source": "https://media.doterra.com/eu/de/pips/frankincense-oil.pdf",
+      "diffuserSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 4,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "lemon-eucalyptus",
+      "name": "Lemon Eucalyptus",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Zitrisch, eukalyptisch; intensiv",
+      "composition": "Eucalyptus citriodora",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten. Dominantes Öl: in dieser Webseite höchstens ein Tropfen pro Füllung; bei Reizung ausschalten und lüften.",
+      "source": "https://media.doterra.com/eu/de/pips/lemon-eucalyptus-oil.pdf",
+      "diffuserSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 1,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "citrus-bliss",
+      "name": "Citrus Bliss",
+      "variant": "oil",
+      "blend": true,
+      "profile": "Zitrisch, süß, weich; mittlere Intensität",
+      "composition": "Wildorange, Zitrone, Grapefruit, Bergamotte, Mandarinenöl, Limette, Litsea, Tonkabohnenextrakt, Vanilleextrakt. Die PIP beschreibt rote/grüne Mandarine, die Zutatenliste Citrus nobilis: Etikett für die konkrete Charge beachten.",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP. Zusätzlich aktuelle EU-Shopseite: ausdrücklich Diffuserkombination beziehungsweise Diffusermischungen.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten.",
+      "source": "https://media.doterra.com/eu/de/pips/citrus-bliss-oil.pdf",
+      "diffuserSource": "https://shop.doterra.com/DE/en_DE/shop/laluz-diffuser-with-citrus-bliss/",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 4,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "balance",
+      "name": "Balance",
+      "variant": "oil",
+      "blend": true,
+      "profile": "Holzig, erdig; mittlere Intensität",
+      "composition": "Fraktioniertes Kokosöl, Schwarzfichte, Ho-Holz, Weihrauch, Blauer Rainfarn, Blaue Kamille, Osmanthusextrakt. Enthält Trägeröl; nicht mit Balance Touch verwechseln.",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten. Enthält fraktioniertes Kokosöl; der Hersteller beschreibt Diffusion für die Flaschenmischung, nicht für Touch-Roller. Rückstände regelmäßig entfernen.",
+      "source": "https://media.doterra.com/eu/de/pips/doterra-balance-oil.pdf",
+      "diffuserSource": "https://www.doterra.com/CA/en/p/balance-oil",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 4,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "copaiba",
+      "name": "Copaiba",
+      "variant": "oil",
+      "blend": false,
+      "profile": "Weich holzig, würzig; eher zurückhaltend",
+      "composition": "Copaifera coriacea/langsdorffii/officinalis/reticulata",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP. Zusätzlich aktuelle EU-Shopseite: ausdrücklich Diffuserkombination beziehungsweise Diffusermischungen.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten.",
+      "source": "https://media.doterra.com/eu/de/pips/copaiba-oil.pdf",
+      "diffuserSource": "https://shop.doterra.com/de/de_de/shop/copaiba-oil/?API=1&NoFooter=1&NoHeader=1&NoMeta=1",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 4,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    },
+    {
+      "id": "abode",
+      "name": "Abode",
+      "variant": "oil",
+      "blend": true,
+      "profile": "Zitrisch, krautig, würzig; intensiv",
+      "composition": "Limette, Litsea, Cassia, Lemon Eucalyptus, Teebaum, Arborvitae, Kochii-Eukalyptus, Korianderblatt/-stiel, Lavandin, Zitronenmyrte.",
+      "application": "EU-PIP: äußerliche Anwendung; keine konkrete Diffuseranwendung in dieser PIP.",
+      "notes": "Nur das angegebene Ölfläschchen, kein Touch-Roller oder anderes Produkt. Etikett und Geräteanleitung beachten. Dominantes Öl: in dieser Webseite höchstens ein Tropfen pro Füllung; bei Reizung ausschalten und lüften.",
+      "source": "https://media.doterra.com/eu/de/pips/doterra-abode-oil.pdf",
+      "diffuserSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "available": true,
+      "excluded": false,
+      "approved": true,
+      "doseVerified": true,
+      "doseSource": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+      "maxDrops": 1,
+      "approvalBasis": "Vom Nutzer für die Duftauswahl aktiviert; kein individuelles Sicherheitszertifikat.",
+      "doseBasis": "Eigener zurückhaltender Rezeptwert, keine publizierte Herstellerhöchstmenge für dieses Einzelöl."
+    }
+  ],
+  "recipes": [
+    {
+      "id": "orange-lavender",
+      "name": "Heller Moment",
+      "parts": [
+        {
+          "oil": "wild-orange",
+          "ratio": 2
+        },
+        {
+          "oil": "lavender",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "work",
+        "living",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "citrus",
+        "floral"
+      ],
+      "description": "Süße Orange mit einem leichten Lavendelton – eine helle Duftatmosphäre für den Tag.",
+      "reason": "Orange führt; wenig Lavendel rundet den fruchtigen Duft ab. Eigene sensorische Zusammenstellung, kein Konzentrationsnachweis.",
+      "priority": 20,
+      "times": [
+        "morning",
+        "day"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "lavender-orange",
+      "name": "Sanfter Abend",
+      "parts": [
+        {
+          "oil": "lavender",
+          "ratio": 2
+        },
+        {
+          "oil": "wild-orange",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "relax",
+        "sleep",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "floral",
+        "citrus"
+      ],
+      "description": "Blumiger Lavendel mit sanfter Orange, passend zum ruhigen Ausklang des Tages.",
+      "reason": "Lavendel führt; Orange mildert die krautige Note. Duftassoziation, keine Schlafgarantie.",
+      "priority": 22,
+      "times": [
+        "evening",
+        "night"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "orange-copaiba",
+      "name": "Warmes Licht",
+      "parts": [
+        {
+          "oil": "wild-orange",
+          "ratio": 2
+        },
+        {
+          "oil": "copaiba",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "relax",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "citrus",
+        "wood"
+      ],
+      "description": "Fruchtige Orange und weiches Holz für eine warme, wohnliche Atmosphäre.",
+      "reason": "Zitrus als Kopfnotencharakter, Copaiba als weicher holziger Hintergrund. Sensorische Rezeptidee.",
+      "priority": 22,
+      "times": [
+        "day",
+        "evening"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "lavender-copaiba",
+      "name": "Leise Hölzer",
+      "parts": [
+        {
+          "oil": "lavender",
+          "ratio": 2
+        },
+        {
+          "oil": "copaiba",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "relax",
+        "sleep",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "floral",
+        "wood"
+      ],
+      "description": "Krautiger Lavendel und weiches Holz für einen stillen Abend.",
+      "reason": "Zwei Einzelöle; zurückhaltende holzige Ergänzung. Keine Aussage über die Schlafqualität.",
+      "priority": 19,
+      "times": [
+        "evening",
+        "night"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "serenity",
+      "name": "Abendruhe",
+      "parts": [
+        {
+          "oil": "serenity",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "relax",
+        "sleep",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "floral",
+        "wood"
+      ],
+      "description": "Eine fertige Mischung mit blumigen, warmen und holzigen Duftnoten.",
+      "reason": "Fertig abgestimmte Mischung allein verwenden; keine zusätzlichen Mischprodukte.",
+      "priority": 25,
+      "times": [
+        "evening",
+        "night"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "citrus-bliss",
+      "name": "Zitrusgarten",
+      "parts": [
+        {
+          "oil": "citrus-bliss",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "wake",
+        "work",
+        "living",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "citrus"
+      ],
+      "description": "Ein runder Zitrusduft mit einer weichen, süßen Note.",
+      "reason": "Fertige Zitrusmischung allein; keine Überladung.",
+      "priority": 23,
+      "times": [
+        "morning",
+        "day"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "lavender",
+      "name": "Lavendel pur",
+      "parts": [
+        {
+          "oil": "lavender",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "relax",
+        "sleep",
+        "living",
+        "unsure",
+        "fresh"
+      ],
+      "families": [
+        "floral"
+      ],
+      "description": "Ein klarer, blumig-krautiger Lavendelduft für eine ruhige Atmosphäre.",
+      "reason": "Ein Einzelöl ist hier ausreichend.",
+      "priority": 14,
+      "times": [
+        "evening",
+        "night"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "orange",
+      "name": "Orange pur",
+      "parts": [
+        {
+          "oil": "wild-orange",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "wake",
+        "work",
+        "living",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "citrus"
+      ],
+      "description": "Süßer, fruchtiger Orangenduft für einen hellen Raumeindruck.",
+      "reason": "Einfache Alternative ohne zusätzliche Öle.",
+      "priority": 12,
+      "times": [
+        "morning",
+        "day"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "copaiba",
+      "name": "Weiches Holz",
+      "parts": [
+        {
+          "oil": "copaiba",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "relax",
+        "sleep",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "wood"
+      ],
+      "description": "Ein zurückhaltender, holzig-würziger Duft für eine warme Atmosphäre.",
+      "reason": "Eigene Duftzuordnung; Intensität kann trotz höherer Stärke sanfter als bei Zitrus wirken.",
+      "priority": 11,
+      "times": [
+        "morning",
+        "day",
+        "evening",
+        "night"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "citrus-mint",
+      "name": "Zitrusfrische",
+      "parts": [
+        {
+          "oil": "lemon",
+          "ratio": 2
+        },
+        {
+          "oil": "bergamot-mint",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "wake",
+        "work",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "citrus",
+        "mint"
+      ],
+      "description": "Klare Zitrone, weich abgerundet mit Bergamot Mint.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 28,
+      "times": [
+        "morning",
+        "day"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "bergamot-lavender",
+      "name": "Sanfte Bergamotte",
+      "parts": [
+        {
+          "oil": "bergamot",
+          "ratio": 2
+        },
+        {
+          "oil": "lavender",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "work",
+        "relax",
+        "sleep",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "citrus",
+        "floral"
+      ],
+      "description": "Feine Bergamotte mit einem blumigen Lavendelton.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 20,
+      "times": [
+        "day",
+        "evening",
+        "night"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "grapefruit-lime",
+      "name": "Fruchtiger Morgen",
+      "parts": [
+        {
+          "oil": "grapefruit",
+          "ratio": 2
+        },
+        {
+          "oil": "lime",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "wake",
+        "work",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "citrus"
+      ],
+      "description": "Herbe Grapefruit und spritzige Limette.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 24,
+      "times": [
+        "morning",
+        "day"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "orange-peppermint",
+      "name": "Kühle Orange",
+      "parts": [
+        {
+          "oil": "wild-orange",
+          "ratio": 2
+        },
+        {
+          "oil": "peppermint",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "wake",
+        "work",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "citrus",
+        "mint"
+      ],
+      "description": "Süße Orange mit einer kleinen, kühlen Minznote.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 23,
+      "times": [
+        "morning",
+        "day"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "lemon-lemongrass",
+      "name": "Grüner Zitrus",
+      "parts": [
+        {
+          "oil": "lemon",
+          "ratio": 2
+        },
+        {
+          "oil": "lemongrass",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "work",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "citrus",
+        "mint"
+      ],
+      "description": "Helle Zitrone mit einer grasig-frischen Note.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 14,
+      "times": [
+        "morning",
+        "day"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "frankincense-copaiba",
+      "name": "Harz & Holz",
+      "parts": [
+        {
+          "oil": "frankincense",
+          "ratio": 1
+        },
+        {
+          "oil": "copaiba",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "work",
+        "relax",
+        "sleep",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "wood"
+      ],
+      "description": "Warmer Weihrauch und weiches Copaiba-Holz.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 22,
+      "times": [
+        "day",
+        "evening",
+        "night"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "tulsi-orange",
+      "name": "Warme Kräuter",
+      "parts": [
+        {
+          "oil": "wild-orange",
+          "ratio": 2
+        },
+        {
+          "oil": "tulsi",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "relax",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "citrus",
+        "wood"
+      ],
+      "description": "Fruchtige Orange mit einer warmen Kräuternote.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 18,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "lemon-eucalyptus-lemon",
+      "name": "Frischgrün",
+      "parts": [
+        {
+          "oil": "lemon",
+          "ratio": 2
+        },
+        {
+          "oil": "lemon-eucalyptus",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "work",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "mint",
+        "citrus"
+      ],
+      "description": "Zitrone mit einem markanten frischen Akzent.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 20,
+      "times": [
+        "morning",
+        "day"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "citronella-lime",
+      "name": "Grüne Limette",
+      "parts": [
+        {
+          "oil": "lime",
+          "ratio": 2
+        },
+        {
+          "oil": "citronella",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "mint",
+        "citrus"
+      ],
+      "description": "Spritzige Limette mit einer grasigen Zitrusnote.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 8,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "oregano-bergamot",
+      "name": "Herbe Kräuter",
+      "parts": [
+        {
+          "oil": "bergamot",
+          "ratio": 2
+        },
+        {
+          "oil": "oregano",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "wood"
+      ],
+      "description": "Feine Bergamotte mit einem herben Kräuterakzent.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": -30,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-bergamot-mint",
+      "name": "Bergamot Mint pur",
+      "parts": [
+        {
+          "oil": "bergamot-mint",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "work",
+        "relax",
+        "sleep",
+        "living",
+        "unsure",
+        "wake"
+      ],
+      "families": [
+        "mint",
+        "floral"
+      ],
+      "description": "Fein minzig, zitrisch, blumig.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-bergamot",
+      "name": "Bergamot pur",
+      "parts": [
+        {
+          "oil": "bergamot",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "work",
+        "relax",
+        "sleep",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "citrus",
+        "floral"
+      ],
+      "description": "Fein zitrisch, leicht blumig.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-lemon",
+      "name": "Lemon pur",
+      "parts": [
+        {
+          "oil": "lemon",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "wake",
+        "work",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "citrus"
+      ],
+      "description": "Klar zitrisch.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-lime",
+      "name": "Lime pur",
+      "parts": [
+        {
+          "oil": "lime",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "wake",
+        "work",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "citrus"
+      ],
+      "description": "Spritzig zitrisch.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-lemongrass",
+      "name": "Lemongrass pur",
+      "parts": [
+        {
+          "oil": "lemongrass",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "mint",
+        "citrus"
+      ],
+      "description": "Zitrisch, grasig.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-citronella",
+      "name": "Citronella pur",
+      "parts": [
+        {
+          "oil": "citronella",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "mint",
+        "citrus"
+      ],
+      "description": "Zitrisch, grasig.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-oregano",
+      "name": "Oregano pur",
+      "parts": [
+        {
+          "oil": "oregano",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "wood"
+      ],
+      "description": "Krautig, scharf.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": -40,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-peppermint",
+      "name": "Peppermint pur",
+      "parts": [
+        {
+          "oil": "peppermint",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "wake",
+        "work",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "mint"
+      ],
+      "description": "Kühl minzig.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-air",
+      "name": "Klare Luft",
+      "parts": [
+        {
+          "oil": "air",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "work",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "mint"
+      ],
+      "description": "Kühl minzig, eukalyptisch.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-adaptiv",
+      "name": "Sanfter Moment",
+      "parts": [
+        {
+          "oil": "adaptiv",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "relax",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "citrus",
+        "floral",
+        "mint"
+      ],
+      "description": "Zitrisch, blumig, sanft minzig.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-zengest",
+      "name": "Würzige Frische",
+      "parts": [
+        {
+          "oil": "zengest",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "fresh",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "mint",
+        "wood"
+      ],
+      "description": "Krautig, würzig, minzig.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-metapwr",
+      "name": "Zitrus & Gewürz",
+      "parts": [
+        {
+          "oil": "metapwr",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "work",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "citrus",
+        "mint",
+        "wood"
+      ],
+      "description": "Zitrisch, minzig, würzig.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-tulsi",
+      "name": "Tulsi pur",
+      "parts": [
+        {
+          "oil": "tulsi",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "relax",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "wood"
+      ],
+      "description": "Warm, würzig, krautig.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-grapefruit",
+      "name": "Grapefruit pur",
+      "parts": [
+        {
+          "oil": "grapefruit",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "wake",
+        "work",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "citrus"
+      ],
+      "description": "Herb zitrisch.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-frankincense",
+      "name": "Frankincense pur",
+      "parts": [
+        {
+          "oil": "frankincense",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "work",
+        "relax",
+        "sleep",
+        "living",
+        "unsure",
+        "wake"
+      ],
+      "families": [
+        "wood"
+      ],
+      "description": "Harzig, holzig, würzig.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-lemon-eucalyptus",
+      "name": "Lemon Eucalyptus pur",
+      "parts": [
+        {
+          "oil": "lemon-eucalyptus",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "work",
+        "fresh",
+        "unsure"
+      ],
+      "families": [
+        "citrus",
+        "mint"
+      ],
+      "description": "Zitrisch, eukalyptisch.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-balance",
+      "name": "Waldruhe",
+      "parts": [
+        {
+          "oil": "balance",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "work",
+        "relax",
+        "sleep",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "wood"
+      ],
+      "description": "Holzig, erdig.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "solo-abode",
+      "name": "Frischer Raum",
+      "parts": [
+        {
+          "oil": "abode",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "fresh",
+        "living",
+        "unsure"
+      ],
+      "families": [
+        "citrus",
+        "mint",
+        "wood"
+      ],
+      "description": "Zitrisch, krautig, würzig.",
+      "reason": "Sensorische Zusammenstellung nach Duftprofil; keine Wirkungsgarantie. Dominante Anteile bleiben begrenzt.",
+      "priority": 3,
+      "times": [],
+      "enabled": true
+    },
+    {
+      "id": "wake-orange-mint",
+      "name": "Guten Morgen",
+      "description": "Spritzige Orange mit einer kühlen Minznote für einen frischen Start in den Tag.",
+      "reason": "Eigene Duftkombination: süße Zitrusnoten, wenig dominante Pfefferminze. Nur in der Morgen-Auswahl; keine Aussage über Wachheit oder einen Kaffeeersatz.",
+      "parts": [
+        {
+          "oil": "wild-orange",
+          "ratio": 2
+        },
+        {
+          "oil": "peppermint",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "wake"
+      ],
+      "families": [
+        "citrus",
+        "mint"
+      ],
+      "times": [
+        "morning"
+      ],
+      "priority": 35,
+      "enabled": true
+    },
+    {
+      "id": "wake-grapefruit-lime",
+      "name": "Morgenlicht",
+      "description": "Grapefruit und Limette: hell, fruchtig und leicht herb für deine Morgenroutine.",
+      "reason": "Eigene Duftkombination zweier sich ergänzender Zitrusprofile. Nur für die Morgen-Auswahl; keine stimulierende Wirkung vorausgesetzt.",
+      "parts": [
+        {
+          "oil": "grapefruit",
+          "ratio": 2
+        },
+        {
+          "oil": "lime",
+          "ratio": 1
+        }
+      ],
+      "activities": [
+        "wake"
+      ],
+      "families": [
+        "citrus"
+      ],
+      "times": [
+        "morning"
+      ],
+      "priority": 33,
+      "enabled": true
+    }
+  ],
+  "defaultStrength": "medium",
+  "device": {
+    "model": "Stadler Form Lucy",
+    "system": "water",
+    "verified": true,
+    "source": "https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf",
+    "note": "Wasser bis MAX (50 ml). Öle direkt ins Wasser geben. Zum Duftwechsel entleeren und reinigen.",
+    "maxTotal": 4,
+    "totals": {
+      "soft": 2,
+      "medium": 3,
+      "strong": 4
+    },
+    "limitBasis": "Eigene zurückhaltende Grenze. Lucy-Anleitung: mit 2–3 Tropfen beginnen; eine Erhöhung ist erlaubt, eine numerische Hersteller-Höchstzahl wird nicht genannt."
+  },
+  "visual": {
+    "season": "auto",
+    "daily": true,
+    "starts": {
+      "winter": 101,
+      "spring": 301,
+      "summer": 601,
+      "autumn": 901
+    },
+    "images": [
+      {
+        "src": "/assets/spring-0.webp",
+        "season": "spring",
+        "enabled": true,
+        "alt": "Frühlingsblüten",
+        "credit": "Unsplash",
+        "license": "https://unsplash.com/license"
+      },
+      {
+        "src": "/assets/spring-1.webp",
+        "season": "spring",
+        "enabled": true,
+        "alt": "Frühlingsblüten",
+        "credit": "Unsplash",
+        "license": "https://unsplash.com/license"
+      },
+      {
+        "src": "/assets/summer-0.webp",
+        "season": "summer",
+        "enabled": true,
+        "alt": "Sonnenlicht im grünen Wald",
+        "credit": "Unsplash",
+        "license": "https://unsplash.com/license"
+      },
+      {
+        "src": "/assets/summer-1.webp",
+        "season": "summer",
+        "enabled": true,
+        "alt": "Sonnenlicht im grünen Wald",
+        "credit": "Unsplash",
+        "license": "https://unsplash.com/license"
+      },
+      {
+        "src": "/assets/autumn-0.webp",
+        "season": "autumn",
+        "enabled": true,
+        "alt": "Natur im Herbst",
+        "credit": "Unsplash",
+        "license": "https://unsplash.com/license"
+      },
+      {
+        "src": "/assets/autumn-1.webp",
+        "season": "autumn",
+        "enabled": true,
+        "alt": "Natur im Herbst",
+        "credit": "Unsplash",
+        "license": "https://unsplash.com/license"
+      },
+      {
+        "src": "/assets/winter-0.webp",
+        "season": "winter",
+        "enabled": true,
+        "alt": "Verschneite Winterlandschaft",
+        "credit": "Unsplash",
+        "license": "https://unsplash.com/license"
+      },
+      {
+        "src": "/assets/winter-1.webp",
+        "season": "winter",
+        "enabled": true,
+        "alt": "Verschneite Winterlandschaft",
+        "credit": "Unsplash",
+        "license": "https://unsplash.com/license"
+      },
+      {
+        "src": "/assets/morning-0.webp",
+        "season": "all",
+        "times": [
+          "morning"
+        ],
+        "enabled": true,
+        "alt": "Morgenlicht fällt durch einen nebligen Wald",
+        "credit": "Peter Schulz / Unsplash",
+        "license": "https://unsplash.com/license"
+      },
+      {
+        "src": "/assets/morning-1.webp",
+        "season": "all",
+        "times": [
+          "morning"
+        ],
+        "enabled": true,
+        "alt": "Warme Sonnenstrahlen im Wald am Morgen",
+        "credit": "Pascal van de Vendel / Unsplash",
+        "license": "https://unsplash.com/license"
+      },
+      {
+        "src": "/assets/evening-0.webp",
+        "season": "all",
+        "times": [
+          "evening",
+          "night"
+        ],
+        "enabled": true,
+        "alt": "Ruhiger See zwischen Bergen bei Sonnenuntergang",
+        "credit": "Caleb Sebastian / Unsplash",
+        "license": "https://unsplash.com/license"
+      },
+      {
+        "src": "/assets/evening-1.webp",
+        "season": "all",
+        "times": [
+          "evening",
+          "night"
+        ],
+        "enabled": true,
+        "alt": "Sanftes Abendlicht über einer Berglandschaft",
+        "credit": "Thomas Chizzali / Unsplash",
+        "license": "https://unsplash.com/license"
+      },
+      {
+        "src": "/assets/lucy-amber.webp",
+        "season": "all",
+        "times": [
+          "evening",
+          "night"
+        ],
+        "stages": [
+          "result"
+        ],
+        "enabled": true,
+        "alt": "Ein schwarzer Diffuser mit bernsteinfarben beleuchtetem Wassernebel",
+        "credit": "Einmalig mit Imagegen erstellt; illustratives Motiv",
+        "license": "Eigenes generiertes Motiv, kein Herstellerfoto"
+      },
+      {
+        "src": "/assets/fireplace-0.webp",
+        "season": "autumn",
+        "times": [
+          "evening",
+          "night"
+        ],
+        "video": "/assets/fireplace.mp4",
+        "enabled": true,
+        "alt": "Ruhiges Kaminfeuer am Abend",
+        "credit": "MART PRODUCTION / Pexels",
+        "license": "https://www.pexels.com/license/"
+      },
+      {
+        "src": "/assets/fireplace-1.webp",
+        "season": "autumn",
+        "times": [
+          "evening",
+          "night"
+        ],
+        "video": "/assets/fireplace.mp4",
+        "enabled": true,
+        "alt": "Ruhiges Kaminfeuer am Abend",
+        "credit": "MART PRODUCTION / Pexels",
+        "license": "https://www.pexels.com/license/"
+      },
+      {
+        "src": "/assets/fireplace-0.webp",
+        "season": "winter",
+        "times": [
+          "evening",
+          "night"
+        ],
+        "video": "/assets/fireplace.mp4",
+        "enabled": true,
+        "alt": "Ruhiges Kaminfeuer am Abend",
+        "credit": "MART PRODUCTION / Pexels",
+        "license": "https://www.pexels.com/license/"
+      },
+      {
+        "src": "/assets/fireplace-1.webp",
+        "season": "winter",
+        "times": [
+          "evening",
+          "night"
+        ],
+        "video": "/assets/fireplace.mp4",
+        "enabled": true,
+        "alt": "Ruhiges Kaminfeuer am Abend",
+        "credit": "MART PRODUCTION / Pexels",
+        "license": "https://www.pexels.com/license/"
+      },
+      {
+        "src": "/assets/winter-0.webp",
+        "season": "winter",
+        "times": [
+          "morning",
+          "day"
+        ],
+        "enabled": true,
+        "alt": "Kühle Winterlandschaft im Tageslicht",
+        "credit": "Unsplash",
+        "license": "https://unsplash.com/license"
+      },
+      {
+        "src": "/assets/winter-1.webp",
+        "season": "winter",
+        "times": [
+          "morning",
+          "day"
+        ],
+        "enabled": true,
+        "alt": "Kühle Winterlandschaft im Tageslicht",
+        "credit": "Unsplash",
+        "license": "https://unsplash.com/license"
+      }
+    ],
+    "mist": true,
+    "motion": true
+  },
+  "texts": {
+    "intro": "",
+    "pending": "Das Gerät ist noch nicht eingerichtet. Angezeigt wird nur das Mischungsverhältnis.",
+    "empty": "Gerade ist kein Öl als verfügbar markiert. Bitte den Bestand in der Verwaltung prüfen."
+  },
+  "release": 5
+}

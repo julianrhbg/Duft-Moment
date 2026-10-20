@@ -1,0 +1,40 @@
+/* A single 6-second typographic opening. No media or font downloads. */
+.opening {
+  position: fixed; inset: 0; z-index: 200;
+  display: grid; place-items: center;
+  padding: max(24px, env(safe-area-inset-top)) max(6vw, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(6vw, env(safe-area-inset-left));
+  background: #111210; color: #f1eee7; cursor: pointer;
+  touch-action: manipulation; contain: layout paint;
+  animation: opening-exit 6000ms linear both;
+}
+.opening-type { position: relative; width: 100%; height: min(50svh, 320px); perspective: 900px; }
+.opening-line {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-family: var(--sans); font-size: clamp(48px, 14vw, 192px);
+  font-weight: 600; line-height: 1.1; letter-spacing: -.065em;
+  white-space: nowrap; backface-visibility: hidden;
+  animation-duration: 6000ms; animation-timing-function: cubic-bezier(.22,.68,.22,1); animation-fill-mode: both;
+}
+.opening-first { animation-name: opening-first; }
+.opening-second { animation-name: opening-second; }
+.opening-brand { font-size: clamp(29px, 11.6vw, 164px); letter-spacing: -.055em; animation-name: opening-brand; }
+@keyframes opening-first {
+  0% { opacity: 1; transform: translate3d(0,8px,0) scale(.985); }
+  6%,27% { opacity: 1; transform: translate3d(0,0,0) scale(1); }
+  33%,100% { opacity: 0; transform: translate3d(0,-9px,0) scale(1.012); }
+}
+@keyframes opening-second {
+  0%,27% { opacity: 0; transform: translate3d(0,9px,0) scale(.985); }
+  33%,60% { opacity: 1; transform: translate3d(0,0,0) scale(1); }
+  67%,100% { opacity: 0; transform: translate3d(0,-9px,0) scale(1.012); }
+}
+@keyframes opening-brand {
+  0%,60% { opacity: 0; transform: translate3d(0,9px,0) scale(.985); }
+  67%,100% { opacity: 1; transform: translate3d(0,0,0) scale(1); }
+}
+@keyframes opening-exit {
+  0%,94% { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+@media (max-height: 430px) { .opening-line { font-size: min(14vw, 28svh); } .opening-brand { font-size: min(11.6vw, 23svh); } }
+@media (prefers-reduced-motion: reduce) { .opening { display: none !important; animation: none; } .opening-line { animation: none; } }

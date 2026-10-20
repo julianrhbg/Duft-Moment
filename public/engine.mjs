@@ -31,7 +31,7 @@ export function choose(config,answers,{date=new Date(),turn=0,seen=[]}={}){
   if(!pool.length)return {empty:true,reason:'Für diese Duftrichtung ist gerade keine passende Mischung verfügbar. Ändere deine Auswahl.'};
  }
  // Dosability is a requirement for verified recipes, not a rank bonus.
- pool=pool.filter(r=>!(config.device.review==='verified'&&r.parts.every(p=>config.oils.find(o=>o.id===p.oil)?.review==='verified'))||dose(r,config,answers.intensity));
+ pool=pool.filter(r=>r.parts.length<=config.device.totals[answers.intensity]&&(!(config.device.review==='verified'&&r.parts.every(p=>config.oils.find(o=>o.id===p.oil)?.review==='verified'))||dose(r,config,answers.intensity)));
  if(!pool.length)return {empty:true,reason:'Diese Intensität ist mit den geprüften Rezeptgrenzen nicht dosierbar. Bitte ändere die Auswahl.'};
  const unique=new Map();for(const r of pool){const key=signature(r);if(!unique.has(key)||unique.get(key).priority<r.priority)unique.set(key,r);}pool=[...unique.values()];
  const score=r=>Math.min(2,Math.max(-2,r.priority))+(r.times.includes(timeOfDay(date))?1:0);
@@ -40,8 +40,11 @@ export function choose(config,answers,{date=new Date(),turn=0,seen=[]}={}){
  const unseen=pool.filter(r=>!seen.includes(signature(r)));const previous=seen.at(-1);
  const choices=unseen.length?unseen:pool.filter(r=>signature(r)!==previous);
  const eligible=choices.length?choices:pool;
- const index=(hash(`${dateKey(date)}:${answers.activity}:${answers.group}`)+turn)%eligible.length;
- const recipe=eligible[index];return {recipe,signature:signature(recipe),parts:dose(recipe,config,answers.intensity),fallback,alternatives:pool.length>1};
+ // Weight only after exact fit, dosing, priority window, deduplication and unseen rotation.
+ // A ready-made blend never needs two additions just to win the three-product preference.
+ const weighted=eligible.flatMap(r=>Array(r.parts.length===3&&r.parts.every(p=>!config.oils.find(o=>o.id===p.oil)?.blend)?3:1).fill(r));
+ const index=(hash(`${dateKey(date)}:${answers.activity}:${answers.group}`)+turn)%weighted.length;
+ const recipe=weighted[index];return {recipe,signature:signature(recipe),parts:dose(recipe,config,answers.intensity),fallback,alternatives:pool.length>1};
 }
 export function sceneFor(config,date=new Date()){
  const season=config.settings.season==='auto'?seasonOf(date):config.settings.season;

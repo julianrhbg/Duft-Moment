@@ -46,6 +46,13 @@ add('citrus-bliss','Der helle Rand',[['citrus-bliss',1]],['fresh'],['wake','paus
 add('mint-lemon','Klare Linien',[['lemon',3],['peppermint',1]],['fresh'],['focus','room','wake'],'Helle Zitrone mit einer bewusst kleinen Minznote.');
 add('orange-lavender','Zwischen Tag und Traum',[['wild-orange',1],['lavender',1]],['soft'],['sleep','pause','sofa'],'Weiche Orange und ein blumiger Lavendelton.');
 add('lime-orange','Sonne auf der Schwelle',[['lime',1],['wild-orange',1]],['fresh'],['wake','room','pause'],'Spritzige Limette und die Wärme der Orange.');
+// Five editorial compositions. Ingredient roles are documented in research/trios.md.
+add('trio-citrus-resin','Helles Holz',[['lemon',1],['bergamot',1],['frankincense',1]],['fresh'],['wake','focus','room'],'Klare Zitrone, feinherbe Bergamotte und ein leiser Harzton.',['morning','day']);
+add('trio-green-citrus','Grüner Morgen',[['lime',1],['grapefruit',1],['bergamot-mint',1]],['fresh'],['wake','focus','pause'],'Grüne Limette und herbe Grapefruit, weich verbunden mit Bergamot Mint.',['morning','day']);
+add('trio-soft-citrus','Weiches Abendlicht',[['lavender',1],['wild-orange',1],['bergamot',1]],['soft'],['pause','sleep','sofa'],'Blumiger Lavendel, runde Orange und eine feine Bergamottekante.',['evening','night']);
+add('trio-warm-resin','Warmer Holzton',[['copaiba',1],['frankincense',1],['wild-orange',1]],['warm'],['focus','pause','sleep','sofa'],'Weiche Copaiba und harziger Weihrauch, abgerundet durch Orange.');
+add('trio-floral-wood','Blüten im Holz',[['lavender',1],['copaiba',1],['frankincense',1]],['soft','warm'],['pause','sleep','sofa'],'Lavendelblüten auf weichem Holz und einem feinharzigen Grund.',['evening','night']);
+export const trioRecipes=recipes.filter(r=>r.id.startsWith('trio-'));
 export const sources=[
  {id:'lucy-manual',title:'Stadler Form Lucy · EU-Anleitung',url:'https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf',kind:'Hersteller · Gerät'},
  {id:'lucy',title:'Stadler Form Lucy · Produktseite',url:'https://www.stadlerform.com/de-de/aroma-diffuser/lucy-weiss-l-037',kind:'Hersteller · Gerät'},

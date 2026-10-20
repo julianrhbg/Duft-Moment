@@ -1,26 +1,22 @@
-# Übernahme in das bestehende Hosting
+# Bestehendes Sites-Hosting erhalten
 
-Die öffentlich genannte Adresse bleibt:
+Produktionsadresse: https://duftmoment-julian.julian-rehberger.chatgpt.site
 
-`https://duftmoment-julian.julian-rehberger.chatgpt.site`
+Der tatsächliche Adapter ist enthalten: `hosting/server.mjs`, `scripts/assemble-hosted.py`, `hosting/legacy-defaults.json` und `.openai/hosting.json`. Der Projektbezug ist kein Geheimnis. Zugangsdaten und R2-Zustand gehören nicht ins Repository.
 
-Es wurde kein neuer Host eingerichtet, keine Weiterleitung behauptet und kein neuer QR-Code erzeugt.
+`public/`, `public/engine.mjs`, `public/validate.mjs` und `src/catalog.mjs` sind die gemeinsame Quelle. Der Assembler erstellt `worker/index.js`; `npm run build` legt das Worker-ESM unter `dist/server/index.js` mit `dist/.openai/hosting.json` bereit. Keine Node-/SQLite-Laufzeit im veröffentlichten Artefakt. Der separate Node-Server ist keine Produktionsalternative für diese Adresse.
 
-## Tatsächlicher Befund
+## Speicher und Zugriff
 
-Der zugängliche Branch `main` enthält den vorhandenen Node-/SQLite-Adapter. Im Checkout und den zugänglichen Remote-Branches gibt es weder `worker/index.js` noch `.openai/hosting.json` oder einen anderen Sites-Adapter. Die im Auftrag erwähnte Anpassung der veröffentlichten Version ist daher nicht prüfbar. Die öffentliche Seite antwortet aus dieser Umgebung mit HTTP 403. Diese Antwort wird nicht als Nachweis fehlender oder falscher Zugangsdaten ausgelegt.
+Die vorhandene R2-Bindung `BUCKET` und private Datei `duftmoment-state.json` bleiben unverändert. Passwortableitung, Sitzungscookie, Ablauf, Anmeldelimits und Herkunftsprüfung übernimmt der vorhandene Adapter. Keine Ersteinrichtung erneut öffnen und keine Secrets ersetzen. Export/Import betrifft Inhalte, nicht Zugangsdaten.
 
-Es wurden keine vorhandenen Hostingdateien entfernt oder überschrieben und keine serverseitigen Änderungen vorgenommen. Die Oberfläche wird weiterhin als lokale HTML-, CSS- und JavaScript-Dateien ausgeliefert.
+Die produktiven Einstellungen sind maßgeblich. Die bereits veröffentlichte Dreier-Ergänzung wird über `trioLibraryVersion: 1` erkannt. Wiederholte Builds setzen keine individuellen Rezepte oder Ölmarkierungen zurück. `hosting/legacy-defaults.json` ist eine historische öffentliche Ausgangsbasis, kein R2-Backup und keine Aufforderung zum Reset.
 
-## Geänderte Frontenddateien
+## Neue Änderungen übernehmen
 
-- `public/index.html`: Info-Zugang und `prefers-color-scheme`-Metadaten, entfernter Footer.
-- `public/app.mjs`: Info-Integration, flüchtige History/Fokus-Rückkehr.
-- `public/style.css`: ruhigeres Layout, Farbschemata und Safe Areas.
-- `public/meta.mjs`: öffentliche Ausgangsquellen als Ausfallsicherung, falls die gemeinsame Konfiguration nicht erreichbar ist.
-- Info-Demo: `public/info-demo.mjs`, `public/info-demo.css`, `public/info-room.mjs`.
-- Ruhige Alternative: `public/assets/info-still-light.webp` und `public/assets/info-still-dark.webp` (zusammen ca. 29 KB).
+1. GitHub und aktuellen Hostingquellstand vergleichen; parallele Änderungen gezielt zusammenführen.
+2. Relevante Tests aus der README ausführen. Worker bauen und Artefakt validieren.
+3. Über den autorisierten Sites-Quellworkflow das **bestehende** Projekt aus `.openai/hosting.json` aktualisieren, den exakten Quellcommit speichern und dessen Artefakt veröffentlichen.
+4. Deploymentstatus und echte URL prüfen. Bei Oberflächenänderungen öffentlichen Konfigurationsstand vor/nachher vergleichen. Keine produktiven Passwörter oder Sitzungen auslesen.
 
-Die drei Demo-Dateien und beide WebP-Ansichten müssen im bestehenden statischen Auslieferungsschritt ebenfalls unter der Webwurzel erreichbar sein. Es sind keine neuen API-Endpunkte, Secrets, Backendpakete, Datenmigrationen oder Datenbankbindungen nötig.
-
-Beim Einspielen in ein separat angepasstes Sites-Projekt dessen tatsächlichen Adapter, Authentifizierung, Storage-Bindings und Konfigurationsformat erhalten. Die vollständige GitHub-ZIP ist ein Quellcodepaket; ihr Node-Server ist kein Ersatz für einen unbekannten bereits verwendeten Hostingadapter. Eine Veröffentlichung kann erst über den Zugriff auf dieses bestehende Projekt und dessen autorisierten Veröffentlichungsweg erfolgen. Die bestehende Adresse und damit der QR-Code sind erst nach erfolgreicher Aktualisierung dort als erhalten bestätigt.
+Ohne Sites-Zugriff endet die Arbeit mit einem geprüften GitHub-Commit und ausdrücklich ausstehender Veröffentlichung. Ein GitHub-Commit oder `npm start` veröffentlicht nicht unter der bisherigen Adresse. Keine Ersatzadresse oder neue Infrastruktur einführen.

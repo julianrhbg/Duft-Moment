@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {defaults,trioRecipes} from '../src/catalog.mjs';
+const worker=(await import('data:text/javascript;base64,'+Buffer.from(await readFile(new URL('../worker/index.js',import.meta.url))).toString('base64'))).default;
+const config=structuredClone(defaults);config.recipes=config.recipes.filter(r=>!r.id.startsWith('trio-'));config.settings.title='Mein eigener Titel';config.oils[0].excluded=true;config.oils[1].available=false;config.recipes[0].priority=-2;config.device.totals.medium=2;
+const initial={config,version:23,hostingRelease:6,auth:{salt:'unchanged',hash:'unchanged'},sessions:[{hash:'unchanged',expires:123}],rates:{custom:{start:1,n:2}},legacyBackup:{custom:'keep'}};
+class Bucket{constructor(state){this.data=JSON.stringify(state);this.rev=1;this.conflict=false;}async get(){return{etag:String(this.rev),json:async()=>JSON.parse(this.data)};}async put(key,value,{onlyIf}){if(this.conflict){this.conflict=false;const state=JSON.parse(this.data);state.config.settings.intro='Gleichzeitig geändert';this.data=JSON.stringify(state);this.rev++;return null;}if(onlyIf.etagMatches!==String(this.rev))return null;this.data=value;return{etag:String(++this.rev)};}}
+const get=b=>worker.fetch(new Request('https://test.example/api/config'),{BUCKET:b});
+const bucket=new Bucket(initial),response=await get(bucket);assert.equal(response.status,200);const saved=JSON.parse(bucket.data);
+assert.equal(saved.version,24);assert.equal(saved.trioLibraryVersion,1);assert.deepEqual(saved.config.recipes.slice(0,config.recipes.length),config.recipes);assert.deepEqual(saved.config.recipes.slice(config.recipes.length),trioRecipes);
+for(const key of ['oils','settings','device'])assert.deepEqual(saved.config[key],config[key]);for(const key of ['auth','sessions','rates','legacyBackup'])assert.deepEqual(saved[key],initial[key]);
+const revision=bucket.rev;await get(bucket);assert.equal(bucket.rev,revision);
+saved.config.recipes.find(r=>r.id===trioRecipes[0].id).enabled=false;saved.config.recipes=saved.config.recipes.filter(r=>r.id!==trioRecipes[1].id);bucket.data=JSON.stringify(saved);await get(bucket);assert.deepEqual(JSON.parse(bucket.data),saved);
+const collision=structuredClone(initial);const custom={...structuredClone(trioRecipes[0]),name:'Eigener Name',enabled:false};collision.config.recipes.push(custom);const collisionBucket=new Bucket(collision);await get(collisionBucket);assert.deepEqual(JSON.parse(collisionBucket.data).config.recipes.find(r=>r.id===custom.id),custom);
+const missing=structuredClone(initial);missing.config.oils=missing.config.oils.filter(o=>o.id!=='frankincense');missing.config.recipes=missing.config.recipes.filter(r=>!r.parts.some(p=>p.oil==='frankincense'));const missingBucket=new Bucket(missing);assert.equal((await get(missingBucket)).status,200);assert(JSON.parse(missingBucket.data).config.recipes.every(r=>!r.parts.some(p=>p.oil==='frankincense')));
+const conflictBucket=new Bucket(initial);conflictBucket.conflict=true;await get(conflictBucket);assert.equal(JSON.parse(conflictBucket.data).config.settings.intro,'Gleichzeitig geändert');assert.equal(JSON.parse(conflictBucket.data).config.recipes.length,config.recipes.length+5);
+console.log('PASS: additive trio migration preserves all prior content/private state, collisions, missing ingredients, disabled/deleted recipes, idempotency and concurrent changes.');

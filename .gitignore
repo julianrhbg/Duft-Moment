@@ -3,3 +3,10 @@ node_modules/
 *.sqlite*
 test-results/
 .env
+
+# Sites build output and private local runtime state
+dist/
+.openai/*.local.json
+*.tar.gz
+__pycache__/
+worker/

@@ -67,7 +67,7 @@ async function refresh(signal){
  if(!data.unchanged){config=data.config;version=data.version;sources=data.sources;document.querySelector('#brand').textContent=config.settings.title;document.title=`${config.settings.title} — Duft finden`;updateMotion();}
  return config;
 }
-function focusMain(){requestAnimationFrame(()=>{main.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});});}
+function focusMain(){requestAnimationFrame(()=>{if(document.querySelector('#opening:not([hidden])'))return;main.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});});}
 function mount(node){main.replaceChildren(node);document.body.dataset.view=view;focusMain();}
 function atmosphere(){
  const scene=sceneFor(config,now());lastScene=scene.id;
@@ -167,11 +167,11 @@ function showSources(){
   el('h2',{id:'dialog-title'},'Anwendung & Quellen'),
   el('p',{},'Eigene redaktionelle Duftideen. Keine belegte Wirkung auf Schlaf, Konzentration oder Gesundheit.'),
   el('details',{class:'info-detail'},el('summary',{},'Prüfstand & Dosierung'),
-   el('p',{},'Die Ausgangsquellen konnten in dieser Umgebung wegen einer Netzwerksperre nicht gelesen werden. Die 23 Produkte stammen aus dem übermittelten Bestand; Varianten, Mischungsbestandteile und regionale Unterschiede sind noch nicht unabhängig bestätigt.'),
-   el('p',{},'Bis zur dokumentierten Produkt- und Geräteprüfung zeigen wir nur Verhältnisse. Ein Teil bedeutet nicht ein Tropfen. Auch die Intensitätswahl erzeugt dann keine Tropfenmenge. Die Werte 2, 3 und 4 sowie maximal 4 Tropfen sind unbestätigte interne Ausgangsregeln, keine Herstellerhöchstmenge.')),
+   el('p',{},'Die Produkt- und Geräteangaben wurden aus der bisherigen Installation übernommen. Freigaben sind dokumentierte Verwaltungsentscheidungen, keine allgemeine Sicherheitsgarantie. Beachte konkrete Produktvarianten und regionale Unterschiede.'),
+   el('p',{},'Nur bei dokumentierter Produkt- und Gerätegrundlage werden Tropfen angezeigt, sonst Verhältnisse. Ein Teil bedeutet nicht ein Tropfen. Die Stufen 2, 3 und 4 und die Grenze von 4 Tropfen sind interne Rezeptregeln, keine Herstellerhöchstmenge. Die Lucy-Anleitung nennt 2–3 Tropfen zum Einstieg; bei einem neuen Duft zurückhaltend beginnen.')),
   el('details',{class:'info-detail'},el('summary',{},'Vor der Anwendung'),
    el('p',{},'Beachte die Anleitung deines Geräts und das Etikett der konkreten Ölflasche. Nicht einnehmen und nicht als Hautanleitung verwenden. Bei empfindlichen Personen, Kindern, Schwangerschaft oder Tieren im Raum vorher fachlichen Rat einholen; bei Beschwerden die Anwendung beenden. Duft ersetzt kein Lüften.')),
-  el('h3',{},'Ausgangsquellen · noch nicht geprüft'));
+  el('h3',{},'Ausgangsquellen'));
  for(const s of sources)box.append(el('a',{class:'source',href:s.url,target:'_blank',rel:'noopener noreferrer'},s.title,el('small',{},s.kind)));
  const reviewed=[...(config?.oils??[]).filter(o=>o.review==='verified').map(o=>({name:o.name,url:o.source,date:o.reviewedAt})),...(config?.device?.review==='verified'?[{name:config.device.name,url:config.device.source,date:config.device.reviewedAt}]:[])];
  if(reviewed.length){box.append(el('h3',{},'Dokumentierte Prüfungen'));for(const p of reviewed)box.append(el('a',{class:'source',href:p.url,target:'_blank',rel:'noopener noreferrer'},p.name,el('small',{},`Prüfdatum laut Verwaltung: ${p.date}`)));}
