@@ -17,7 +17,7 @@ Die bestehende öffentliche Installation läuft unter https://duftmoment-julian.
 
 Die R2-Konfiguration ist maßgeblich. Keine Passwörter, Sitzungen, Einrichtungsschlüssel oder privaten Speicherexporte in Git. Keine Zugänge zurücksetzen, keine vorhandenen Markierungen oder eigenen Rezepte überschreiben. Migrationen nur gezielt, versioniert und idempotent. Der aktuelle Dreier-Zusatz ist mit `trioLibraryVersion: 1` markiert.
 
-Sechs Sekunden Intro, drei lesbare Textmomente. Quiz und Konfiguration laden unabhängig. Überspringen, reduzierte Bewegung, Home, BFCache und verzögerte Info-Demo erhalten. Keine Besucherantworten dauerhaft speichern. Aktuelle Gesamt- und Einzelölgrenzen nicht erhöhen.
+Sechs Sekunden Intro, drei lesbare Textmomente. Quiz und Konfiguration laden unabhängig. Überspringen, reduzierte Bewegung, Home und BFCache erhalten. Der Info-Button öffnet ausschließlich Anwendungshinweise und Quellen. Die Demo-Dateien bleiben erhalten, aber ohne sichtbaren Einstieg und ohne Import aus dem normalen Quiz. Die Demo nicht ungefragt erneut freischalten. Keine Besucherantworten dauerhaft speichern. Aktuelle Gesamt- und Einzelölgrenzen nicht erhöhen.
 
 ## Prüfung und Übergabe
 

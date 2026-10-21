@@ -1,3 +1,9 @@
+# Status seit 21.10.2026
+
+Die Demo ist auf ausdrücklichen Nutzerwunsch aus der Bedienoberfläche entfernt. Der kleine Info-Button neben dem Menü öffnet direkt Anwendungshinweise und Quellen. `info-demo.mjs`, `info-demo.css`, `info-room.mjs` und die Demo-Assets bleiben unverändert als aufbewahrter Code erhalten, werden aber im normalen Quiz nicht geladen. Auch alte `#info`-Aufrufe führen zu Hinweisen und Quellen. Die folgende Dokumentation beschreibt die aufbewahrte Demo und ist keine Freigabe, sie wieder einzublenden.
+
+---
+
 # Info und automatisches Farbschema
 
 ## Hauptablauf

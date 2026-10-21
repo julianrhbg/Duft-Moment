@@ -10,7 +10,7 @@ Deutschsprachiges Duftquiz mit drei kurzen Fragen, einer Empfehlung und geschüt
 - Drei Duftgruppen, lokale Tageszeit, saisonale lokale Motive und Neustart ohne gespeicherte Besucherantworten.
 - 23 Produkte und 22 redaktionelle Ausgangsrezepte einschließlich fünf Dreier-Kompositionen. Die tatsächliche Empfehlung berücksichtigt gemeinsame Einstellungen, Verfügbarkeit und Ausschlüsse.
 - Dreier-Rezepte erhalten innerhalb vergleichbar passender, dosierbarer und noch ungesehener Kandidaten mehr Auswahlgewicht. Gute kleinere Rezepte und fertige Mischprodukte bleiben möglich. Zwei Gesamttropfen ergeben höchstens zwei Zutaten.
-- Info-Demo mit scrollgesteuerter Glas-Komposition, Quellen, automatischem Hell-/Dunkelmodus und statischen Fallbacks. Demo-Code lädt erst beim Öffnen.
+- Der kleine Info-Button neben dem Menü öffnet direkt Anwendungshinweise und Quellen. Die bisherige 3D-Demo ist aus der Bedienoberfläche entfernt; ihr Code bleibt erhalten und wird nicht geladen. Automatischer Hell-/Dunkelmodus bleibt erhalten.
 
 ## Produktion und lokale Vorschau
 

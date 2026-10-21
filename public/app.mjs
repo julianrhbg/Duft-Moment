@@ -11,36 +11,12 @@ let config,sources=sourceFallback,version=0,answers={},step=0,run=0,turn=0,busy=
 let manualTime='',lastScene='',motionPaused=false,view='quiz';
 const seen=new Map();
 const infoButton=document.querySelector('#info-button');
-let experience=null,infoModule=null,infoOpening=false,infoSerial=0,infoLoadId=0,infoClosing=false;
 function motionReduced(){return motionPaused||config?.settings.motion===false||matchMedia('(prefers-reduced-motion: reduce)').matches||navigator.connection?.saveData===true;}
-async function openExperience(push=true){
- if(experience?.isOpen||infoOpening)return;infoOpening=true;infoClosing=false;const loadId=++infoLoadId;
- const active=document.activeElement;
- infoButton.setAttribute('aria-busy','true');
- try{
-  infoModule??=import('./info-demo.mjs');const {createExperience}=await infoModule;
-  if(!infoOpening||loadId!==infoLoadId)return;
-  experience=createExperience({onClose:requestCloseExperience,onSources:showSources,reduced:motionReduced()});
-  experience.returnFocus=active?.isConnected?active:infoButton;
-  const current=experience;await current.open();if(!current.isOpen||loadId!==infoLoadId)return;
-  if(push)history.pushState({...history.state,overlay:'info',infoSerial:++infoSerial},'','#info');
- }catch{experience?.dispose();experience=null;toast('Info konnte nicht geladen werden. Anwendungshinweise sind weiterhin im Menü erreichbar.');}
- finally{infoOpening=false;infoButton.removeAttribute('aria-busy');}
-}
-function hideExperience(){
- infoOpening=false;infoClosing=false;infoLoadId++;if(!experience)return;
- const target=experience.returnFocus;experience.dispose();experience=null;
- if(target?.isConnected)target.focus({preventScroll:true});else infoButton.focus({preventScroll:true});
- if(answers.activity==='wake'&&!isMorning(now()))clockChanged();
-}
-function requestCloseExperience(){
- if(infoClosing)return;infoClosing=true;
- if(history.state?.overlay==='info')history.back();else hideExperience();
-}
-infoButton.addEventListener('click',()=>openExperience());
+// The optional demo stays in the project, but has no visitor-facing entry point.
+infoButton.addEventListener('click',showSources);
 
 function now(){const d=new Date();if(manualTime){const[h,m]=manualTime.split(':').map(Number);d.setHours(h,m,0,0);}return d;}
-function updateMotion(){const reduced=motionReduced();document.body.classList.toggle('motion-off',reduced);experience?.setReduced(reduced);}
+function updateMotion(){const reduced=motionReduced();document.body.classList.toggle('motion-off',reduced);}
 function closeMenu(){if(menu.open)menu.close();menuButton.setAttribute('aria-expanded','false');}
 menu.addEventListener('close',()=>menuButton.setAttribute('aria-expanded','false'));
 function showMenu(){
@@ -79,7 +55,7 @@ function atmosphere(){
 function layout(copy,cls){return el('div',{class:`composition ${cls} enter`},copy,atmosphere());}
 function questionTitle(){return config.settings.tagline==='Was braucht dein Dazwischen?'?'Was hast du vor?':config.settings.tagline;}
 function home(push=true){
- hideExperience();infoOpening=false;run++;controller?.abort();busy=false;step=0;answers={};view='quiz';closeMenu();if(dialog.open)dialog.close();
+ run++;controller?.abort();busy=false;step=0;answers={};view='quiz';closeMenu();if(dialog.open)dialog.close();
  main.removeAttribute('aria-busy');if(push)history.replaceState({run,step:0},'','/');if(config)renderQuiz();
 }
 function forward(){step++;history.pushState({run,step},'','/');renderQuiz();}
@@ -184,14 +160,14 @@ async function admin(){
  await openAdmin(main,{onHome:home,isActive:()=>view==='admin'&&run===adminRun,onSaved:async()=>{version=0;await refresh();}});
 }
 function clockChanged(){
- if(!config||experience?.isOpen)return;
+ if(!config)return;
  if(answers.activity==='wake'&&!isMorning(now())){controller?.abort();run++;busy=false;main.removeAttribute('aria-busy');answers={};step=0;history.replaceState({run,step},'','/');renderQuiz();toast('Es ist nicht mehr Morgen. Bitte wähle deine Tätigkeit neu.');}
  else if(view==='quiz')renderQuiz();else if(view==='result'){const scene=main.querySelector('.atmosphere');if(scene)scene.replaceWith(atmosphere());}
 }
-window.addEventListener('popstate',e=>{if(infoOpening&&!experience?.isOpen)hideExperience();if(experience?.isOpen){if(dialog.open)dialog.close();hideExperience();return;}if(e.state?.overlay==='info'){openExperience(false);return;}closeMenu();controller?.abort();busy=false;main.removeAttribute('aria-busy');if(dialog.open)dialog.close();if(location.hash==='#verwaltung')return admin();if(e.state?.run===run&&Number.isInteger(e.state.step)&&e.state.step>=0&&e.state.step<=2&&(e.state.step===0||answers.activity)){step=e.state.step;renderQuiz();}else home(false);});
-window.addEventListener('pageshow',e=>{if(e.persisted){hideExperience();home();}});
+window.addEventListener('popstate',e=>{closeMenu();if(e.state?.overlay==='info'||location.hash==='#info'){showSources();return;}controller?.abort();busy=false;main.removeAttribute('aria-busy');if(dialog.open)dialog.close();if(location.hash==='#verwaltung')return admin();if(e.state?.run===run&&Number.isInteger(e.state.step)&&e.state.step>=0&&e.state.step<=2&&(e.state.step===0||answers.activity)){step=e.state.step;renderQuiz();}else home(false);});
+window.addEventListener('pageshow',e=>{if(e.persisted)home();});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)clockChanged();});
 matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',updateMotion);
 setInterval(()=>{if(!config)return;if(answers.activity==='wake'&&!isMorning(now()))clockChanged();else if(view!=='admin'&&sceneFor(config,now()).id!==lastScene)clockChanged();},30000);
-try{const startOnInfo=location.hash==='#info';await refresh();if(location.hash==='#verwaltung')await admin();else{home(true);if(startOnInfo)openExperience();}}
+try{const startOnInfo=location.hash==='#info';await refresh();if(location.hash==='#verwaltung')await admin();else{home(true);if(startOnInfo)showSources();}}
 catch{mount(el('section',{class:'login'},el('h1',{},'Bestand nicht erreichbar.'),el('p',{class:'error-box'},'Bitte versuche es erneut. Ohne aktuellen Bestand geben wir keine Empfehlung aus.'),btn('Erneut versuchen',()=>location.reload(),'primary')));}

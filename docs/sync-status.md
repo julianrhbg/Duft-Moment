@@ -1,3 +1,13 @@
+# Neuester Abgleich · 21.10.2026
+
+GitHub-Ausgangspunkt dieser Änderung: `632f1acf38fae066796dc004afe9159e2b5d6ce5`.
+
+Aktueller Sites-Quellcommit: `277042e6d799847e198efed198e4680886fc55d5`, veröffentlichte Version 11. Der kleine Info-Button öffnet direkt Anwendung und Quellen. Die Demo ist aus der Besucheroberfläche entfernt, ihr Code und ihre Assets bleiben unverändert. Keine Änderung an R2, Zugang, Konfiguration, Rezepten oder Dosierung.
+
+Geprüft am 21.10.: Info-/Quiz-Test mit DOM-Testdouble, fünf Introtests, Hosting-/Zugriffsschutztest, Syntax und Worker-Artefakt. Echter Browser: Öffnen/Schließen, Erhalt des zweiten Quizschritts, Fokusrückkehr und mobile Darstellung (390 px). Der im flachen GitHub-Aufbau erzeugte Worker ist bytegleich mit dem neuen Sites-Artefakt. Keine erneute fachliche Recherche oder geänderte Freigabe.
+
+---
+
 # Abgleich · 20.10.2026
 
 GitHub-Ausgangspunkt: `86f60b646f4f889313c9b610318a406b7e251911`.
