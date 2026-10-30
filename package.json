@@ -23,9 +23,11 @@
     "test:info-ui": "node --experimental-vm-modules scripts/test-info-ui.mjs",
     "test:renderer": "node scripts/test-info-renderer.mjs",
     "test:info": "node scripts/info-browser.mjs",
-    "build:info-stills": "node scripts/info-stills.mjs"
+    "build:info-stills": "node scripts/info-stills.mjs",
+    "test:stock": "node scripts/test-stock-migration.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"
   }
 }
+

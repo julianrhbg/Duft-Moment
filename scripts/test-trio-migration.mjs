@@ -3,7 +3,7 @@ import {readFile} from 'node:fs/promises';
 import {defaults,trioRecipes} from '../src/catalog.mjs';
 const worker=(await import('data:text/javascript;base64,'+Buffer.from(await readFile(new URL('../worker/index.js',import.meta.url))).toString('base64'))).default;
 const config=structuredClone(defaults);config.recipes=config.recipes.filter(r=>!r.id.startsWith('trio-'));config.settings.title='Mein eigener Titel';config.oils[0].excluded=true;config.oils[1].available=false;config.recipes[0].priority=-2;config.device.totals.medium=2;
-const initial={config,version:23,hostingRelease:6,auth:{salt:'unchanged',hash:'unchanged'},sessions:[{hash:'unchanged',expires:123}],rates:{custom:{start:1,n:2}},legacyBackup:{custom:'keep'}};
+const initial={config,version:23,hostingRelease:6,stockUpdateVersion:1,auth:{salt:'unchanged',hash:'unchanged'},sessions:[{hash:'unchanged',expires:123}],rates:{custom:{start:1,n:2}},legacyBackup:{custom:'keep'}};
 class Bucket{constructor(state){this.data=JSON.stringify(state);this.rev=1;this.conflict=false;}async get(){return{etag:String(this.rev),json:async()=>JSON.parse(this.data)};}async put(key,value,{onlyIf}){if(this.conflict){this.conflict=false;const state=JSON.parse(this.data);state.config.settings.intro='Gleichzeitig geändert';this.data=JSON.stringify(state);this.rev++;return null;}if(onlyIf.etagMatches!==String(this.rev))return null;this.data=value;return{etag:String(++this.rev)};}}
 const get=b=>worker.fetch(new Request('https://test.example/api/config'),{BUCKET:b});
 const bucket=new Bucket(initial),response=await get(bucket);assert.equal(response.status,200);const saved=JSON.parse(bucket.data);

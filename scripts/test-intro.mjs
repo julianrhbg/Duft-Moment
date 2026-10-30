@@ -28,3 +28,9 @@ test('CSS-Ende räumt auf; dekorative Texte und No-JS-Fallback sind korrekt',asy
  const html=await readFile(new URL('../public/index.html',import.meta.url),'utf8'),css=await readFile(new URL('../public/intro.css',import.meta.url),'utf8');
  assert(html.includes('aria-hidden="true" hidden'));for(const text of ['Drei Düfte.','Ein Moment.','DAZWISCHEN'])assert(html.includes(text));assert(css.includes('6000ms'));assert(css.includes('prefers-reduced-motion: reduce'));assert(!/fetch\(|localStorage|sessionStorage|\.focus\(|history\./.test(code));
 });
+
+test('Vorspann bleibt archiviert, wird im Besucher-HTML aber nicht geladen',async()=>{
+ const html=await readFile(new URL('../public/index.html',import.meta.url),'utf8');
+ assert(!/<script[^>]+src="\/intro.js"/.test(html));assert(!/<link[^>]+href="\/intro.css"/.test(html));
+ assert(html.includes('id="opening"'));assert(html.includes('aria-hidden="true" hidden'));
+});

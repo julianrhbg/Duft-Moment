@@ -1,3 +1,4 @@
+import {focusContexts} from './engine.mjs';
 import {validateConfig} from './validate.mjs';
 import {el,btn,toast,api} from './ui.mjs';
 import {groups,activities,intensities} from './meta.mjs';
@@ -11,7 +12,7 @@ export async function openAdmin(main,{onHome,onSaved,isActive=()=>true}){
  function textarea(label,obj,key,maxLength=2000){return el('label',{},label,el('textarea',{maxlength:maxLength,oninput:change(obj,key)},obj[key]??''));}
  function select(label,obj,key,options){const control=el('select',{onchange:change(obj,key)},Object.entries(options).map(([value,label])=>el('option',{value},label)));control.value=obj[key];return el('label',{},label,control);}
  function checkbox(label,obj,key){return el('label',{},el('input',{type:'checkbox',checked:obj[key],onchange:e=>{obj[key]=e.target.checked;mark();}}),label);}
- function checkList(label,obj,key,options){return el('div',{},el('p',{class:'help'},label),el('div',{class:'inline-checks'},Object.entries(options).map(([id,label])=>el('label',{},el('input',{type:'checkbox',checked:obj[key].includes(id),onchange:e=>{obj[key]=e.target.checked?[...obj[key],id]:obj[key].filter(v=>v!==id);mark();}}),label))));}
+ function checkList(label,obj,key,options){return el('div',{},el('p',{class:'help'},label),el('div',{class:'inline-checks'},Object.entries(options).map(([id,label])=>el('label',{},el('input',{type:'checkbox',checked:(obj[key]||[]).includes(id),onchange:e=>{obj[key]=e.target.checked?[...(obj[key]||[]),id]:(obj[key]||[]).filter(v=>v!==id);mark();}}),label))));}
  async function login(){let state;try{state=await api('/api/session');}catch(e){mount(el('div',{class:'login admin'},el('h1',{},'Verwaltung'),el('p',{class:'error-box'},e.message),btn('Erneut versuchen',login,'primary')));return;}
   if(!isActive())return;if(state.authenticated)return load();
   const credentials={token:'',password:''};const confirm={password:''};
@@ -48,7 +49,7 @@ export async function openAdmin(main,{onHome,onSaved,isActive=()=>true}){
   wrapper.append(el('div',{class:'field-row'},el('label',{},'Rezept',control),btn('+',()=>{const id=`rezept-${crypto.randomUUID().slice(0,8)}`;config.recipes.push({id,name:'Neue Duftidee',parts:config.oils.length?[{oil:config.oils[0].id,ratio:1}]:[],groups:['fresh'],activities:['pause'],description:'',times:[],priority:0,enabled:false});selectedRecipe=id;mark();render();},'icon-button',{'aria-label':'Neues Rezept hinzufügen'})));
   const r=config.recipes.find(r=>r.id===selectedRecipe);if(!r)return wrapper;
   const editor=el('div',{class:'admin-card recipe-editor'},input('Rezeptname',r,'name'),textarea('Kurze Duftbeschreibung',r,'description',300),checkbox('Rezept aktiviert',r,'enabled'),input('Redaktionelle Priorität · −2 bis 2',r,'priority',{type:'number',min:-2,max:2}),
-  checkList('Geeignete Tätigkeiten',r,'activities',Object.fromEntries(Object.entries(activities).filter(([k])=>k!=='surprise').map(([k,v])=>[k,v.name]))),checkList('Duftgruppen',r,'groups',Object.fromEntries(Object.entries(groups).map(([k,v])=>[k,v.name]))),checkList('Optional bevorzugte Tageszeiten',r,'times',{morning:'Morgen',day:'Tag',evening:'Abend',night:'Nacht'}),el('h3',{},'Bestandteile · Verhältnis'));
+  checkList('Geeignete Tätigkeiten',r,'activities',Object.fromEntries(Object.entries(activities).filter(([k])=>k!=='surprise').map(([k,v])=>[k,v.name]))),checkList('Duftgruppen',r,'groups',Object.fromEntries(Object.entries(groups).map(([k,v])=>[k,v.name]))),checkList('Optional bevorzugte Tageszeiten',r,'times',{morning:'Morgen',day:'Tag',evening:'Abend',night:'Nacht'}),checkList('Optional: konkrete Lerntätigkeit · leer gilt allgemein',r,'contexts',focusContexts),el('h3',{},'Bestandteile · Verhältnis'));
   for(const [i,p]of r.parts.entries()){editor.append(el('div',{class:'field-row'},select('Produkt',p,'oil',Object.fromEntries(config.oils.map(o=>[o.id,o.name]))),input('Teile',p,'ratio',{type:'number',min:1,max:20}),btn('−',()=>{r.parts.splice(i,1);mark();render();},'icon-button',{'aria-label':`Bestandteil ${i+1} entfernen`})))}
   if(r.parts.length<4&&config.oils.length)editor.append(btn('+ Bestandteil',()=>{const oil=config.oils.find(o=>!r.parts.some(p=>p.oil===o.id));if(!oil)return; r.parts.push({oil:oil.id,ratio:1});mark();render();},'secondary'));
   wrapper.append(editor);return wrapper;

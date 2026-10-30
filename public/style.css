@@ -378,3 +378,9 @@ h1 { font-size: clamp(43px, 4.7vw, 64px); letter-spacing: -.045em; line-height: 
 @media (max-width: 720px) { :root { --header-height: 76px; --header-gutter: 7%; } }
 @media (max-height: 700px) and (max-width: 720px) { :root { --header-height: 66px; } }
 .info-button[aria-busy='true'] { cursor: progress; }
+
+/* Compact stock notice; inherits both system colour schemes. */
+.stock-news{display:block;width:fit-content;margin:0 0 1rem;padding:.35rem .65rem;border:1px solid currentColor;border-radius:2rem;background:transparent;color:inherit;font:inherit;font-size:.75rem;line-height:1.5;cursor:pointer;min-height:44px;opacity:.78}
+.stock-news:hover,.stock-news:focus-visible{opacity:1}
+.new-oil{display:grid;gap:.2rem;padding:.7rem 0;border-bottom:1px solid color-mix(in srgb,currentColor 15%,transparent)}
+.new-oil span,.new-oil small{font-size:.88rem}

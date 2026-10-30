@@ -1,3 +1,4 @@
+export const focusContexts={read:'Lesen & verstehen',practice:'Üben & wiederholen',create:'Schreiben & gestalten'};
 export const groupIds=['fresh','soft','warm'];
 export const activityIds=['wake','focus','pause','sleep','sofa','room','surprise'];
 export const intensityIds=['subtle','medium','strong'];
@@ -20,6 +21,7 @@ export function dose(recipe,config,intensity){const oils=new Map(config.oils.map
 }
 export function choose(config,answers,{date=new Date(),turn=0,seen=[]}={}){
  if(!activityIds.includes(answers.activity)||!intensityIds.includes(answers.intensity)||!(answers.group==='any'||groupIds.includes(answers.group)))throw Error('Bitte vervollständige deine Auswahl.');
+ if(answers.context&&(!Object.hasOwn(focusContexts,answers.context)||answers.activity!=='focus'))throw Error('Bitte wähle deine Tätigkeit neu.');
  if(answers.activity==='wake'&&!isMorning(date))return {resetMorning:true};
  let pool=baseCandidates(config);
  if(!pool.length)return {empty:true,reason:'Im Moment ist keine freigegebene Duftidee mit deinem verfügbaren Bestand möglich.'};
@@ -34,7 +36,8 @@ export function choose(config,answers,{date=new Date(),turn=0,seen=[]}={}){
  pool=pool.filter(r=>r.parts.length<=config.device.totals[answers.intensity]&&(!(config.device.review==='verified'&&r.parts.every(p=>config.oils.find(o=>o.id===p.oil)?.review==='verified'))||dose(r,config,answers.intensity)));
  if(!pool.length)return {empty:true,reason:'Diese Intensität ist mit den geprüften Rezeptgrenzen nicht dosierbar. Bitte ändere die Auswahl.'};
  const unique=new Map();for(const r of pool){const key=signature(r);if(!unique.has(key)||unique.get(key).priority<r.priority)unique.set(key,r);}pool=[...unique.values()];
- const score=r=>Math.min(2,Math.max(-2,r.priority))+(r.times.includes(timeOfDay(date))?1:0);
+ const contextFit=r=>answers.context&&r.contexts?.includes(answers.context)?3:0;
+ const score=r=>contextFit(r)+Math.min(2,Math.max(-2,r.priority))+(r.times.includes(timeOfDay(date))?1:0);
  const top=Math.max(...pool.map(score));pool=pool.filter(r=>score(r)>=top-2);
  pool.sort((a,b)=>a.id.localeCompare(b.id));
  const unseen=pool.filter(r=>!seen.includes(signature(r)));const previous=seen.at(-1);
@@ -43,7 +46,7 @@ export function choose(config,answers,{date=new Date(),turn=0,seen=[]}={}){
  // Weight only after exact fit, dosing, priority window, deduplication and unseen rotation.
  // A ready-made blend never needs two additions just to win the three-product preference.
  const weighted=eligible.flatMap(r=>Array(r.parts.length===3&&r.parts.every(p=>!config.oils.find(o=>o.id===p.oil)?.blend)?3:1).fill(r));
- const index=(hash(`${dateKey(date)}:${answers.activity}:${answers.group}`)+turn)%weighted.length;
+ const index=(hash(`${dateKey(date)}:${answers.activity}:${answers.group}:${answers.context||''}`)+turn)%weighted.length;
  const recipe=weighted[index];return {recipe,signature:signature(recipe),parts:dose(recipe,config,answers.intensity),fallback,alternatives:pool.length>1};
 }
 export function sceneFor(config,date=new Date()){

@@ -1,3 +1,11 @@
+## Abgleich · 30.10.2026
+
+Sites-Quellcommit: `e04b6858672325426bc597bf27241c8c5e36ffa9`, gespeicherte Version 12.
+
+27 Produkte, neun neue Rezepte, einmalige Bestandsauffüllung, konkrete Lernfrage, archivierter deaktivierter Vorspann. Hosting bleibt Worker/R2. GitHub baut aus der flachen Verzeichnisstruktur ein byte-identisches Worker-Artefakt (cmp bestanden). 39 automatisierte Tests plus Worker-/Zugriffsschutz-, Bestands-/Trio-Migrations-, Info-UI-, Syntax- und Artefaktprüfung bestanden. Echter Browser: Quiz, neue Öle, Info, Alternativen, Auswahl ändern und Home; mobile Ansichten 390×844 hell und 320×700 dunkel über lokale QA-CSS-Umschaltung. Kein physisches iPhone getestet.
+
+Regionale Diffusergrundlage für On Guard, Valerian und Holiday Peace bleibt ungeklärt; im Bestand als Duftideen, ohne Tropfenangaben. Oregano-Flaschengröße ändert die bestehende Einzelgrenze nicht. Keine Zugangsdaten oder produktiven Speicherexporte in GitHub.
+
 # Neuester Abgleich · 21.10.2026
 
 GitHub-Ausgangspunkt dieser Änderung: `632f1acf38fae066796dc004afe9159e2b5d6ce5`.
@@ -36,3 +44,4 @@ Ausgeführt im abgeglichenen Repositoryaufbau:
 `worker/` und `dist/` sind reproduzierbare, Git-ignorierte Buildausgaben. Die Quellen bilden denselben Worker ohne duplizierten `upstream/`-Baum.
 
 Die visuelle Smartphone- und Klickprüfung der unveränderten Oberfläche erfolgte bereits vor der Veröffentlichung von Version 10. In diesem reinen Repositoryabgleich wurde sie nicht erneut ausgeführt.
+

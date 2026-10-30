@@ -1,3 +1,11 @@
+## Aktualisierung · 30.10.2026
+
+Vier neue Produkte (On Guard, Eucalyptus, Valerian, Holiday Peace), neun kuratierte Duftideen und ausdrücklich gewünschte Wiederauffüllung, einschließlich Serenity. Bestand jetzt 27 Produkte. Oregano- und sonstige Dosierungsgrenzen bleiben unverändert. Bei regional ungeklärten Varianten werden nur Verhältnisse angezeigt. Quellen und Begründungen: `research/stock-2026-10.md`.
+
+Vorspann deaktiviert, Script/CSS/Markup archiviert. Kleiner Hinweis „Neue Öle“. Nur beim Lernen zusätzliche sachliche Frage: Lesen & verstehen / Üben & wiederholen / Schreiben & gestalten / Noch offen. Optionale Rezeptzuordnungen `contexts` sind verwaltbar. Neue flüchtige Besuchsvariation ohne gespeicherte Antworten.
+
+Produktion weiterhin Worker/R2 unter derselben Adresse; einmalige ETag-gesicherte Bestandsaktualisierung `stockUpdateVersion: 1`. Spätere Verwaltungsentscheidungen bleiben bestehen. Zusätzlicher Test: `npm run test:stock`. Prüfbericht: `docs/stock-update-qa.md`.
+
 # DAZWISCHEN · Duft Moment
 
 Deutschsprachiges Duftquiz mit drei kurzen Fragen, einer Empfehlung und geschützter gemeinsamer Verwaltung. Keine Besucheranmeldung, laufende KI, Tracker oder externen Medienabrufe.
@@ -54,3 +62,4 @@ Artefakt: `dist/server/index.js` und `dist/.openai/hosting.json`. Veröffentlich
 ## Quellen und Medien
 
 [Quellenbasis](research/notes.md), [frühere Recherche](research/legacy-notes.md), [Dreier-Rezepte](research/trios.md), [Mediennachweise](public/assets/credits.json). Die Produktquellen und Freigaben der bestehenden Installation liegen zusätzlich in der gemeinsamen Konfiguration. Rezepte beschreiben Duftatmosphären, keine nachgewiesenen Gesundheitswirkungen. Keine offizielle Partnerschaft mit doTERRA oder Stadler Form.
+

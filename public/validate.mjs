@@ -1,4 +1,4 @@
-import {activityIds,groupIds,intensityIds} from './engine.mjs';
+import {activityIds,groupIds,intensityIds,focusContexts} from './engine.mjs';
 const text=(s,max=500)=>typeof s==='string'&&s.length<=max&&!/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(s);
 const nonempty=(s,max=100)=>text(s,max)&&s.trim().length>0;
 const url=s=>s===''||(text(s,1000)&&(()=>{try{const u=new URL(s);return u.protocol==='https:'&&!u.username&&!u.password;}catch{return false;}})());
@@ -23,8 +23,9 @@ export function validateConfig(input){
   if(o.review==='verified')assert(o.variant==='oil'&&o.source&&/^\d{4}-\d{2}-\d{2}$/.test(o.reviewedAt),'Geprüfte Produkte brauchen Ölvariante, HTTPS-Quelle und Prüfdatum.');
  }
  assert(Array.isArray(input.recipes)&&input.recipes.length<=300,'Maximal 300 Rezepte.');
- const recipeIds=new Set();for(const r of input.recipes){exact(r,['id','name','parts','groups','activities','description','times','priority','enabled']);
+ const recipeIds=new Set();for(const r of input.recipes){exact(r,['id','name','parts','groups','activities','description','times','priority','enabled','contexts']);
   assert(id(r.id)&&!recipeIds.has(r.id),'Rezept-ID fehlt oder ist doppelt.');recipeIds.add(r.id);
+  if(r.contexts!==undefined)assert(Array.isArray(r.contexts)&&new Set(r.contexts).size===r.contexts.length&&r.contexts.every(c=>Object.hasOwn(focusContexts,c)),'Ungültige konkrete Tätigkeiten.');
   assert(nonempty(r.name)&&text(r.description,300),'Rezepttext ist ungültig.');
   assert(Array.isArray(r.parts)&&r.parts.length>0&&r.parts.length<=4&&new Set(r.parts.map(p=>p.oil)).size===r.parts.length,'Ein Rezept braucht 1–4 unterschiedliche Produkte.');
   for(const p of r.parts){exact(p,['oil','ratio']);assert(ids.has(p.oil)&&integer(p.ratio,1,20),'Unbekanntes Produkt oder ungültiges Verhältnis.');}

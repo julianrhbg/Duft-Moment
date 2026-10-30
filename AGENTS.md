@@ -15,9 +15,9 @@ Die bestehende öffentliche Installation läuft unter https://duftmoment-julian.
 
 `npm run build`, dann `npm run dev:hosted` für die Vorschau des tatsächlichen Workers. Ihr Speicher ist flüchtig und vollständig getrennt von R2. `npm start`/`npm run dev` betreffen die separate historische Node-Variante.
 
-Die R2-Konfiguration ist maßgeblich. Keine Passwörter, Sitzungen, Einrichtungsschlüssel oder privaten Speicherexporte in Git. Keine Zugänge zurücksetzen, keine vorhandenen Markierungen oder eigenen Rezepte überschreiben. Migrationen nur gezielt, versioniert und idempotent. Der aktuelle Dreier-Zusatz ist mit `trioLibraryVersion: 1` markiert.
+Die R2-Konfiguration ist maßgeblich. Keine Passwörter, Sitzungen, Einrichtungsschlüssel oder privaten Speicherexporte in Git. Keine Zugänge zurücksetzen, keine vorhandenen Markierungen oder eigenen Rezepte überschreiben. Migrationen nur gezielt, versioniert und idempotent. Der Dreier-Zusatz ist mit `trioLibraryVersion: 1` markiert. Der zusätzliche Bestand vom 30.10.2026 ist mit `stockUpdateVersion: 1` einmalig eingespielt; genannte Nachkäufe werden dabei wieder verfügbar. Spätere Verwaltungsänderungen nicht rückgängig machen. Optionale Rezeptkontexte `contexts` und deren Bearbeitung erhalten.
 
-Sechs Sekunden Intro, drei lesbare Textmomente. Quiz und Konfiguration laden unabhängig. Überspringen, reduzierte Bewegung, Home und BFCache erhalten. Der Info-Button öffnet ausschließlich Anwendungshinweise und Quellen. Die Demo-Dateien bleiben erhalten, aber ohne sichtbaren Einstieg und ohne Import aus dem normalen Quiz. Die Demo nicht ungefragt erneut freischalten. Keine Besucherantworten dauerhaft speichern. Aktuelle Gesamt- und Einzelölgrenzen nicht erhöhen.
+Der Vorspann ist auf Nutzerwunsch deaktiviert. intro.js, intro.css und verborgenes Markup bleiben archiviert; keine Einbindung ohne neuen Auftrag. Quiz startet unmittelbar. Home und BFCache erhalten. Der Info-Button öffnet ausschließlich Anwendungshinweise und Quellen. Die Demo-Dateien bleiben erhalten, aber ohne sichtbaren Einstieg und ohne Import aus dem normalen Quiz. Die Demo nicht ungefragt erneut freischalten. Keine Besucherantworten dauerhaft speichern. Aktuelle Gesamt- und Einzelölgrenzen nicht erhöhen.
 
 ## Prüfung und Übergabe
 
@@ -26,3 +26,4 @@ Passend zur Änderung: `npm run check`, `npm test`, `npm run test:intro`, `npm r
 Artefakt: `dist/server/index.js` und `dist/.openai/hosting.json`. Nur über den autorisierten Sites-Weg im bestehenden Projekt veröffentlichen. Ein GitHub-Commit allein veröffentlicht nicht. Ohne Hostingzugriff den geprüften Commit zur Übernahme bereitstellen und die ausstehende Veröffentlichung nennen. Keine Ersatzadresse ausgeben.
 
 GitHub und Hosting ausdrücklich abgleichen. Letzter importierter Hostingquellstand: `docs/sync-status.md`. Vor erneutem Abgleich immer den aktuellen Stand lesen.
+

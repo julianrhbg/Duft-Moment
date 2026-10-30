@@ -16,6 +16,15 @@ export const intensities = {subtle:'Dezent', medium:'Deutlich', strong:'Kräftig
 
 // Ausgangsquellen bleiben auch ohne erreichbare gemeinsame Konfiguration zugänglich.
 export const sourceFallback=[
+ {id:'new-stock-de',title:'doTERRA · On Guard (DE, Ölvariante)',url:'https://shop.doterra.com/DE/de_DE/shop/onguard-oil/',kind:'Hersteller · regionale Produktvariante'},
+ {id:'eucalyptus-de',title:'doTERRA · Eucalyptus (DE-Shop, fünf Arten)',url:'https://shop.doterra.com/DE/en_DE/shop/eucalyptus-oil/',kind:'Hersteller · Produkt und Diffuserhinweis'},
+ {id:'eucalyptus-pip',title:'doTERRA · Eucalyptus EU-Produktblatt',url:'https://media.doterra.com/eu/de/pips/eucalyptus-oil.pdf',kind:'Hersteller · Zusammensetzung'},
+ {id:'valerian-de',title:'doTERRA · Valerian EU-Produktblatt',url:'https://media.doterra.com/eu/de/pips/valerian-oil.pdf',kind:'Hersteller · EU-Anwendung, keine Diffuserangabe'},
+ {id:'valerian-au',title:'doTERRA · Valerian AU-Produktblatt',url:'https://media.doterra.com/au-otg/en/pips/valerian-oil.pdf',kind:'Hersteller · regionale Abweichung'},
+ {id:'holiday-de',title:'doTERRA · Holiday Peace (DE)',url:'https://shop.doterra.com/de/de_de/shop/holiday-peace-oil/',kind:'Hersteller · regionale Produktvariante'},
+ {id:'holiday-ca',title:'doTERRA · Holiday Peace (Kanada)',url:'https://www.doterra.com/CA/en/blog/spotlight-holiday-peace-holiday-joy-oil',kind:'Hersteller · regionale Diffuseranwendung'},
+ {id:'onguard-old',title:'doTERRA · On Guard DE-Produktblatt von 2018',url:'https://media.doterra.com/de/de/pips/onguard-oil.pdf',kind:'Historischer Herstellerstand · nicht gleich aktuelle Artikelnummer'},
+
  {id:'lucy-manual',title:'Stadler Form Lucy · EU-Anleitung',url:'https://www.stadlerform.com/media/c1/ce/72/1712837620/stadler-form-lucy-manual-eu.pdf',kind:'Hersteller · Gerät'},
  {id:'lucy',title:'Stadler Form Lucy · Produktseite',url:'https://www.stadlerform.com/de-de/aroma-diffuser/lucy-weiss-l-037',kind:'Hersteller · Gerät'},
  {id:'doterra-eu',title:'doTERRA · Produktübersicht Europa',url:'https://media.doterra.com/eu/de/brochures/product-guide.pdf',kind:'Hersteller · Produkte'},

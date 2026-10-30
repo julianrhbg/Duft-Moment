@@ -1,4 +1,4 @@
-import {choose,isMorning,availableGroups,sceneFor} from './engine.mjs';
+import {choose,isMorning,availableGroups,sceneFor,focusContexts} from './engine.mjs';
 import {groups,activities,intensities,sourceFallback} from './meta.mjs';
 import {el,btn,icon,toast,api} from './ui.mjs';
 import {openAdmin} from './admin.mjs';
@@ -7,7 +7,7 @@ const main=document.querySelector('#main');
 const menu=document.querySelector('#menu');
 const menuButton=document.querySelector('#menu-button');
 const dialog=document.querySelector('#info-dialog');
-let config,sources=sourceFallback,version=0,answers={},step=0,run=0,turn=0,busy=false,controller;
+let config,sources=sourceFallback,version=0,answers={},step=0,run=0,turn=crypto.getRandomValues(new Uint32Array(1))[0]%65536,busy=false,controller;
 let manualTime='',lastScene='',motionPaused=false,view='quiz';
 const seen=new Map();
 const infoButton=document.querySelector('#info-button');
@@ -65,25 +65,33 @@ async function setActivity(activity){
  const error=main.querySelector('.flow-error');if(error)error.textContent='';
  const progressLabel=main.querySelector('.progress');if(progressLabel)progressLabel.textContent='Prüfen …';
  try{await refresh(controller.signal);if(id===run)forward();}
- catch(e){if(e.name!=='AbortError'&&id===run){if(error)error.textContent='Der aktuelle Bestand ist nicht erreichbar. Bitte erneut versuchen.';if(progressLabel)progressLabel.replaceChildren('1',el('span',{},'/ 3'));}}
+ catch(e){if(e.name!=='AbortError'&&id===run){if(error)error.textContent='Der aktuelle Bestand ist nicht erreichbar. Bitte erneut versuchen.';if(progressLabel)progressLabel.replaceChildren('1',el('span',{},`/ ${stages().length}`));}}
  finally{if(id===run){busy=false;main.removeAttribute('aria-busy');main.querySelectorAll('.choice').forEach(b=>b.disabled=false);}}
 }
+function stages(){return answers.activity==='focus'?['activity','context','group','intensity']:['activity','group','intensity'];}
 function setGroup(group){answers.group=group;forward();}
+function setContext(context){answers.context=context;forward();}
 function back(){if(step<=0)return home();step--;history.pushState({run,step},'','/');renderQuiz();}
-function progress(){return el('div',{class:'flow-nav'},step>0?btn(el('span',{html:icon('back')}),back,'back-button',{'aria-label':'Zurück'}):el('span',{class:'flow-context'},'Duft finden'),el('span',{class:'progress','aria-label':`Frage ${step+1} von 3`},`${step+1}`,el('span',{},'/ 3')));}
+function progress(){return el('div',{class:'flow-nav'},step>0?btn(el('span',{html:icon('back')}),back,'back-button',{'aria-label':'Zurück'}):el('span',{class:'flow-context'},'Duft finden'),el('span',{class:'progress','aria-label':`Frage ${step+1} von ${stages().length}`},`${step+1}`,el('span',{},`/ ${stages().length}`)));}
 function selectChoice(name,detail,fn,selected=false){return btn([el('span',{class:'choice-copy'},el('span',{class:'choice-name'},name),detail?el('small',{},detail):null),el('span',{class:'selection-mark','aria-hidden':'true'})],fn,`choice${selected?' selected':''}`,{'aria-pressed':selected});}
 function renderQuiz(){
  if(!config)return;
  if(answers.activity==='wake'&&!isMorning(now())){answers={};step=0;toast('Aufwachen ist von 06:00 bis vor 11:00 Uhr verfügbar. Bitte wähle neu.');}
  view='quiz';const copy=el('section',{class:'copy'},progress());
  if(step===0){
+  copy.append(btn('Neue Öle',showNewOils,'stock-news',{'aria-haspopup':'dialog'}));
   copy.append(config.settings.tagline==='Was braucht dein Dazwischen?'?el('h1',{},'Was hast',el('br'),'du vor?'):el('h1',{},questionTitle()));
   const choices=el('div',{class:'choices activity-choices','aria-label':'Tätigkeit'});
   for(const[key,a]of Object.entries(activities)){
    if(key==='wake'&&!isMorning(now()))continue;
    choices.append(selectChoice(a.name,key==='wake'?'Nur morgens':null,()=>setActivity(key),answers.activity===key));
   }copy.append(choices);
- }else if(step===1){
+ }else if(stages()[step]==='context'){
+  copy.append(el('h1',{},'Was steht',el('br'),'genau an?'));
+  const choices=el('div',{class:'choices context-choices','aria-label':'Konkrete Tätigkeit'});
+  for(const [id,label]of Object.entries(focusContexts))choices.append(selectChoice(label,null,()=>setContext(id),answers.context===id));
+  copy.append(choices,btn('Noch offen',()=>setContext(''),'text-button surrender'));
+ }else if(stages()[step]==='group'){
   copy.append(el('h1',{},'Welche',el('br'),'Duftrichtung?'));
   const ids=availableGroups(config,answers.activity);const choices=el('div',{class:'choices fragrance-choices','aria-label':'Duftrichtung'});
   for(const id of ids){const g=groups[id];choices.append(selectChoice(g.name,g.description,()=>setGroup(id),answers.group===id));}
@@ -105,23 +113,32 @@ async function result(intensity=answers.intensity){
  const error=main.querySelector('.flow-error');if(error)error.textContent='';
  try{
   await refresh(controller.signal);if(id!==run)return;
-  const key=`${answers.activity}:${answers.group}`,historySeen=seen.get(key)||[];
+  const key=`${answers.activity}:${answers.group}:${answers.context||''}`,historySeen=seen.get(key)||[];
   const selected=choose(config,answers,{date:now(),turn:turn++,seen:historySeen});
   if(selected.resetMorning){answers={};step=0;renderQuiz();return;}
   if(selected.empty){view='result';mount(layout(el('section',{class:'copy'},el('h1',{},'Gerade kein passender Duft.'),el('p',{class:'empty-detail'},selected.reason),btn('Auswahl ändern',()=>edit(0),'primary')),'empty'));return;}
-  seen.set(key,[...historySeen.slice(-50),selected.signature]);step=3;view='result';history.pushState({run,step},'','/');renderResult(selected);
+  seen.set(key,[...historySeen.slice(-50),selected.signature]);step=stages().length;view='result';history.pushState({run,step},'','/');renderResult(selected);
  }catch(e){
   if(e.name!=='AbortError'&&id===run){const message='Der aktuelle Bestand ist nicht erreichbar. Bitte erneut versuchen.';if(error)error.textContent=message;else toast(message);if(action)action.textContent='Andere Mischung';}
  }finally{if(id===run){busy=false;main.removeAttribute('aria-busy');main.querySelectorAll('.choice,.result-actions button').forEach(b=>{if(b.dataset.only==='true')return;b.disabled=false;});}}
 }
 function edit(target=0){controller?.abort();busy=false;main.removeAttribute('aria-busy');if(dialog.open)dialog.close();step=target;history.pushState({run,step},'','/');renderQuiz();}
 function showSelection(){
- const box=document.querySelector('#dialog-content');box.replaceChildren(el('h2',{id:'dialog-title'},'Auswahl ändern'),
-  el('div',{class:'edit-choices'},
-   selectChoice(activities[answers.activity].name,'Tätigkeit',()=>edit(0)),
-   selectChoice(groups[answers.group]?.name||'Frei ausgewählt','Duftrichtung',()=>edit(1)),
-   selectChoice(intensities[answers.intensity],'Intensität',()=>edit(2))));
- const buttons=box.querySelectorAll('button');['Tätigkeit ändern','Duftrichtung ändern','Intensität ändern'].forEach((s,i)=>buttons[i].setAttribute('aria-label',s));dialog.showModal();
+ const choices=el('div',{class:'edit-choices'},selectChoice(activities[answers.activity].name,'Tätigkeit',()=>edit(0)));
+ if(answers.activity==='focus')choices.append(selectChoice(focusContexts[answers.context]||'Noch offen','Konkret',()=>edit(1)));
+ choices.append(selectChoice(groups[answers.group]?.name||'Frei ausgewählt','Duftrichtung',()=>edit(stages().indexOf('group'))),selectChoice(intensities[answers.intensity],'Intensität',()=>edit(stages().indexOf('intensity'))));
+ const box=document.querySelector('#dialog-content');box.replaceChildren(el('h2',{id:'dialog-title'},'Auswahl ändern'),choices);dialog.showModal();
+}
+function showNewOils(){
+ const box=document.querySelector('#dialog-content');box.replaceChildren(el('h2',{id:'dialog-title'},'Neue Öle'));
+ const ids=['on-guard','eucalyptus','valerian','holiday-peace'];
+ for(const id of ids){const oil=config?.oils.find(o=>o.id===id);if(!oil)continue;
+  const status=!oil.available?'Gerade leer':oil.excluded?'Vorübergehend ausgeschlossen':oil.review==='verified'?'Im Bestand':oil.review==='declared'?'Duftidee · Variante noch abgleichen':'Noch nicht freigegeben';
+  box.append(el('p',{class:'new-oil'},el('strong',{},oil.name),el('span',{},oil.profile),el('small',{},status)));
+ }
+ const serenity=config?.oils.find(o=>o.id==='serenity');if(serenity?.available&&!serenity.excluded)box.append(el('p',{},'Serenity ist wieder da.'));
+ box.append(el('p',{class:'help'},'Bei ungeklärter regionaler Diffuseranwendung bleiben es Verhältnisse, keine Tropfenangaben. Die Quellen findest du unter Info.'));
+ if(!dialog.open)dialog.showModal();
 }
 function renderResult(selected){
  const r=selected.recipe,dosed=!!selected.parts;
@@ -164,7 +181,7 @@ function clockChanged(){
  if(answers.activity==='wake'&&!isMorning(now())){controller?.abort();run++;busy=false;main.removeAttribute('aria-busy');answers={};step=0;history.replaceState({run,step},'','/');renderQuiz();toast('Es ist nicht mehr Morgen. Bitte wähle deine Tätigkeit neu.');}
  else if(view==='quiz')renderQuiz();else if(view==='result'){const scene=main.querySelector('.atmosphere');if(scene)scene.replaceWith(atmosphere());}
 }
-window.addEventListener('popstate',e=>{closeMenu();if(e.state?.overlay==='info'||location.hash==='#info'){showSources();return;}controller?.abort();busy=false;main.removeAttribute('aria-busy');if(dialog.open)dialog.close();if(location.hash==='#verwaltung')return admin();if(e.state?.run===run&&Number.isInteger(e.state.step)&&e.state.step>=0&&e.state.step<=2&&(e.state.step===0||answers.activity)){step=e.state.step;renderQuiz();}else home(false);});
+window.addEventListener('popstate',e=>{closeMenu();if(e.state?.overlay==='info'||location.hash==='#info'){showSources();return;}controller?.abort();busy=false;main.removeAttribute('aria-busy');if(dialog.open)dialog.close();if(location.hash==='#verwaltung')return admin();if(e.state?.run===run&&Number.isInteger(e.state.step)&&e.state.step>=0&&e.state.step<stages().length&&(e.state.step===0||answers.activity)){step=e.state.step;renderQuiz();}else home(false);});
 window.addEventListener('pageshow',e=>{if(e.persisted)home();});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)clockChanged();});
 matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',updateMotion);

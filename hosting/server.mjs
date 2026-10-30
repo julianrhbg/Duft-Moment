@@ -25,8 +25,25 @@ function hostMigrate(old){
  c.settings.intro=(old.texts.intro||'').slice(0,150);
  return validateConfig(c);
 }
+// Owner-requested stock update, applied once with R2 compare-and-swap.
+// Later admin changes/deletions are never resurrected; unrelated/private state stays intact.
+function hostUpdateStock(config){
+ for(const oil of newOils)if(!config.oils.some(o=>o.id===oil.id)){
+  if(config.oils.length>=150)throw Error('Für den neuen Bestand fehlt Platz.');
+  config.oils.push(structuredClone(oil));
+ }
+ for(const id of restockedOilIds){const oil=config.oils.find(o=>o.id===id);if(oil){oil.available=true;oil.excluded=false;}}
+ for(const recipe of stockUpdateRecipes)if(!config.recipes.some(r=>r.id===recipe.id)&&recipe.parts.every(p=>config.oils.some(o=>o.id===p.oil))){
+  if(config.recipes.length>=300)throw Error('Für die neuen Rezepte fehlt Platz.');
+  config.recipes.push(structuredClone(recipe));
+ }
+ for(const recipe of config.recipes){const standard=defaults.recipes.find(r=>r.id===recipe.id);
+  if(recipe.contexts===undefined&&standard?.contexts&&JSON.stringify(recipe.parts)===JSON.stringify(standard.parts))recipe.contexts=structuredClone(standard.contexts);
+ }
+ return validateConfig(config);
+}
 function hostNewState(){return {config:hostMigrate(LEGACY_DEFAULTS),version:1,auth:null,sessions:[],rates:{},hostingRelease:6,trioLibraryVersion:1};}
-async function hostRead(env){if(!env.BUCKET)throw Error('Dauerhafter Speicher fehlt.');for(let i=0;i<6;i++){const object=await env.BUCKET.get('duftmoment-state.json');const state=object?await object.json():hostNewState();if(state.hostingRelease===6&&state.trioLibraryVersion===1)return {state,etag:object?.etag};
+async function hostRead(env){if(!env.BUCKET)throw Error('Dauerhafter Speicher fehlt.');for(let i=0;i<6;i++){const object=await env.BUCKET.get('duftmoment-state.json');const state=object?await object.json():hostNewState();if(state.hostingRelease===6&&state.trioLibraryVersion===1&&state.stockUpdateVersion===1)return {state,etag:object?.etag};
  if(state.hostingRelease!==6){
   if(state.config.schema===1){state.legacyBackup={config:structuredClone(state.config),version:state.version,migratedAt:'2026-10-18'};state.config=hostMigrate(state.config);state.version++;}
   else validateConfig(state.config);
@@ -34,6 +51,7 @@ async function hostRead(env){if(!env.BUCKET)throw Error('Dauerhafter Speicher fe
  }
  // Add once; preserve existing IDs, recipes, exclusions, device and all private state.
  if(state.trioLibraryVersion!==1){let added=0;for(const recipe of trioRecipes){if(state.config.recipes.length>=300)break;if(!state.config.recipes.some(r=>r.id===recipe.id)&&recipe.parts.every(p=>state.config.oils.some(o=>o.id===p.oil))){state.config.recipes.push(structuredClone(recipe));added++;}}if(added)state.version++;state.trioLibraryVersion=1;validateConfig(state.config);}
+ if(state.stockUpdateVersion!==1){state.config=hostUpdateStock(state.config);state.stockUpdateVersion=1;state.version++;}
  const result=await env.BUCKET.put('duftmoment-state.json',JSON.stringify(state),{onlyIf:object?{etagMatches:object.etag}:{etagDoesNotMatch:'*'},httpMetadata:{contentType:'application/json'}});if(result)return {state,etag:result.etag};}
  throw Error('Gleichzeitige Änderung. Bitte erneut versuchen.');}
 async function hostTransaction(env,fn){for(let i=0;i<6;i++){const {state,etag}=await hostRead(env);const output=await fn(state);const written=await env.BUCKET.put('duftmoment-state.json',JSON.stringify(state),{onlyIf:etag?{etagMatches:etag}:{etagDoesNotMatch:'*'},httpMetadata:{contentType:'application/json'}});if(written)return output;}hostFail('Gleichzeitige Änderung. Bitte erneut versuchen.',409);}
