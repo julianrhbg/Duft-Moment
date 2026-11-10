@@ -1,4 +1,4 @@
-import {choose,isMorning,availableGroups,sceneFor,focusContexts} from './engine.mjs';
+import {chooseAdaptive,nextQuestion,isMorning,sceneFor} from './engine.mjs';
 import {groups,activities,intensities,sourceFallback} from './meta.mjs';
 import {el,btn,icon,toast,api} from './ui.mjs';
 import {openAdmin} from './admin.mjs';
@@ -60,7 +60,7 @@ function home(push=true){
 }
 function forward(){step++;history.pushState({run,step},'','/');renderQuiz();}
 async function setActivity(activity){
- if(busy)return;const id=run;answers={activity};controller?.abort();controller=new AbortController();busy=true;
+ if(busy)return;const id=run;answers={activity,group:'any'};controller?.abort();controller=new AbortController();busy=true;
  main.setAttribute('aria-busy','true');main.querySelectorAll('.choice').forEach(b=>b.disabled=true);
  const error=main.querySelector('.flow-error');if(error)error.textContent='';
  const progressLabel=main.querySelector('.progress');if(progressLabel)progressLabel.textContent='Prüfen …';
@@ -68,11 +68,10 @@ async function setActivity(activity){
  catch(e){if(e.name!=='AbortError'&&id===run){if(error)error.textContent='Der aktuelle Bestand ist nicht erreichbar. Bitte erneut versuchen.';if(progressLabel)progressLabel.replaceChildren('1',el('span',{},`/ ${stages().length}`));}}
  finally{if(id===run){busy=false;main.removeAttribute('aria-busy');main.querySelectorAll('.choice').forEach(b=>b.disabled=false);}}
 }
-function stages(){return answers.activity==='focus'?['activity','context','group','intensity']:['activity','group','intensity'];}
-function setGroup(group){answers.group=group;forward();}
-function setContext(context){answers.context=context;forward();}
-function back(){if(step<=0)return home();step--;history.pushState({run,step},'','/');renderQuiz();}
-function progress(){return el('div',{class:'flow-nav'},step>0?btn(el('span',{html:icon('back')}),back,'back-button',{'aria-label':'Zurück'}):el('span',{class:'flow-context'},'Duft finden'),el('span',{class:'progress','aria-label':`Frage ${step+1} von ${stages().length}`},`${step+1}`,el('span',{},`/ ${stages().length}`)));}
+function stages(){return ['activity','intensity','followup'];}
+function setAfter(value){answers.after=value;result();}
+function back(){if(step<=0)return home();delete answers.after;step--;history.pushState({run,step},'','/');renderQuiz();}
+function progress(){return el('div',{class:'flow-nav'},step>0?btn(el('span',{html:icon('back')}),back,'back-button',{'aria-label':'Zurück'}):el('span',{class:'flow-context'},'Duft finden'),el('span',{class:'progress'},`Frage ${step+1}`));}
 function selectChoice(name,detail,fn,selected=false){return btn([el('span',{class:'choice-copy'},el('span',{class:'choice-name'},name),detail?el('small',{},detail):null),el('span',{class:'selection-mark','aria-hidden':'true'})],fn,`choice${selected?' selected':''}`,{'aria-pressed':selected});}
 function renderQuiz(){
  if(!config)return;
@@ -86,17 +85,9 @@ function renderQuiz(){
    if(key==='wake'&&!isMorning(now()))continue;
    choices.append(selectChoice(a.name,key==='wake'?'Nur morgens':null,()=>setActivity(key),answers.activity===key));
   }copy.append(choices);
- }else if(stages()[step]==='context'){
-  copy.append(el('h1',{},'Was steht',el('br'),'genau an?'));
-  const choices=el('div',{class:'choices context-choices','aria-label':'Konkrete Tätigkeit'});
-  for(const [id,label]of Object.entries(focusContexts))choices.append(selectChoice(label,null,()=>setContext(id),answers.context===id));
-  copy.append(choices,btn('Noch offen',()=>setContext(''),'text-button surrender'));
- }else if(stages()[step]==='group'){
-  copy.append(el('h1',{},'Welche',el('br'),'Duftrichtung?'));
-  const ids=availableGroups(config,answers.activity);const choices=el('div',{class:'choices fragrance-choices','aria-label':'Duftrichtung'});
-  for(const id of ids){const g=groups[id];choices.append(selectChoice(g.name,g.description,()=>setGroup(id),answers.group===id));}
-  if(!ids.length)choices.append(el('p',{class:'notice'},'Keine exakte Duftidee verfügbar. Wir können eine gekennzeichnete Alternative prüfen.'));
-  copy.append(choices,btn('Such du etwas aus',()=>setGroup('any'),'text-button surrender'));
+ }else if(step===2&&nextQuestion(config,{...answers,after:undefined})){
+  const q=nextQuestion(config,{...answers,after:undefined});copy.append(el('h1',{},q.title));
+  const choices=el('div',{class:'choices'});for(const [value,label]of q.options)choices.append(selectChoice(label,null,()=>setAfter(value)));copy.append(choices);
  }else{
   copy.append(el('h1',{},'Wie',el('br'),'intensiv?'));
   const choices=el('div',{class:'choices intensity-choices','aria-label':'Intensität'});
@@ -113,8 +104,9 @@ async function result(intensity=answers.intensity){
  const error=main.querySelector('.flow-error');if(error)error.textContent='';
  try{
   await refresh(controller.signal);if(id!==run)return;
-  const key=`${answers.activity}:${answers.group}:${answers.context||''}`,historySeen=seen.get(key)||[];
-  const selected=choose(config,answers,{date:now(),turn:turn++,seen:historySeen});
+  if(view==='quiz'&&nextQuestion(config,answers)){step=2;history.pushState({run,step},'','/');renderQuiz();return;}
+  const key='visit',historySeen=seen.get(key)||[];
+  const selected=chooseAdaptive(config,answers,{date:now(),turn:turn++,seen:historySeen});
   if(selected.resetMorning){answers={};step=0;renderQuiz();return;}
   if(selected.empty){view='result';mount(layout(el('section',{class:'copy'},el('h1',{},'Gerade kein passender Duft.'),el('p',{class:'empty-detail'},selected.reason),btn('Auswahl ändern',()=>edit(0),'primary')),'empty'));return;}
   seen.set(key,[...historySeen.slice(-50),selected.signature]);step=stages().length;view='result';history.pushState({run,step},'','/');renderResult(selected);
@@ -125,8 +117,7 @@ async function result(intensity=answers.intensity){
 function edit(target=0){controller?.abort();busy=false;main.removeAttribute('aria-busy');if(dialog.open)dialog.close();step=target;history.pushState({run,step},'','/');renderQuiz();}
 function showSelection(){
  const choices=el('div',{class:'edit-choices'},selectChoice(activities[answers.activity].name,'Tätigkeit',()=>edit(0)));
- if(answers.activity==='focus')choices.append(selectChoice(focusContexts[answers.context]||'Noch offen','Konkret',()=>edit(1)));
- choices.append(selectChoice(groups[answers.group]?.name||'Frei ausgewählt','Duftrichtung',()=>edit(stages().indexOf('group'))),selectChoice(intensities[answers.intensity],'Intensität',()=>edit(stages().indexOf('intensity'))));
+ choices.append(selectChoice(intensities[answers.intensity],'Intensität',()=>{delete answers.after;edit(1);}));
  const box=document.querySelector('#dialog-content');box.replaceChildren(el('h2',{id:'dialog-title'},'Auswahl ändern'),choices);dialog.showModal();
 }
 function showNewOils(){

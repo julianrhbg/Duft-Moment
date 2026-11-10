@@ -45,7 +45,7 @@ export function choose(config,answers,{date=new Date(),turn=0,seen=[]}={}){
  const eligible=choices.length?choices:pool;
  // Weight only after exact fit, dosing, priority window, deduplication and unseen rotation.
  // A ready-made blend never needs two additions just to win the three-product preference.
- const weighted=eligible.flatMap(r=>Array(r.parts.length===3&&r.parts.every(p=>!config.oils.find(o=>o.id===p.oil)?.blend)?3:1).fill(r));
+ const weighted=eligible.flatMap(r=>Array(answers.group==='any'?1:r.parts.length===3&&r.parts.every(p=>!config.oils.find(o=>o.id===p.oil)?.blend)?3:1).fill(r));
  const index=(hash(`${dateKey(date)}:${answers.activity}:${answers.group}:${answers.context||''}`)+turn)%weighted.length;
  const recipe=weighted[index];return {recipe,signature:signature(recipe),parts:dose(recipe,config,answers.intensity),fallback,alternatives:pool.length>1};
 }
@@ -54,4 +54,26 @@ export function sceneFor(config,date=new Date()){
  const time=timeOfDay(date);const phase=['evening','night'].includes(time)?'evening':time==='morning'?'morning':'day';
  const options=[0,1].map(i=>`${season}-${phase}-${i}`).filter(id=>!config.settings.disabledScenes.includes(id));
  return {season,time,id:options.length?options[hash(dateKey(date))%options.length]:null};
+}
+
+// Context refines editorial atmosphere only; no claim about physiological effects.
+export function adaptivePool(config,answers){
+ let pool=baseCandidates(config).filter(r=>answers.activity==='surprise'||r.activities.includes(answers.activity));
+ if(answers.intensity)pool=pool.filter(r=>r.parts.length<=config.device.totals[answers.intensity]&&(!(config.device.review==='verified'&&r.parts.every(p=>config.oils.find(o=>o.id===p.oil)?.review==='verified'))||dose(r,config,answers.intensity)));
+ if(answers.after&&answers.after!=='open')pool=pool.filter(r=>r.activities.includes(answers.after));
+ return pool;
+}
+export function nextQuestion(config,answers){
+ if(!['pause','sofa','surprise'].includes(answers.activity)||answers.after!==undefined)return null;
+ const pool=adaptivePool(config,answers);if(pool.length<=2)return null;
+ const options=[['focus','Danach geht es weiter'],['sleep','Danach ins Bett']].filter(([id])=>{const n=pool.filter(r=>r.activities.includes(id)).length;return n>0&&n<pool.length;});
+ if(options.length<2)return null;
+ return {title:'Was kommt danach?',options:[...options,['open','Noch nichts vor']]};
+}
+export function chooseAdaptive(config,answers,options={}){
+ const recipes=adaptivePool(config,answers);
+ if(!recipes.length)return {empty:true,reason:'Für diese Situation ist mit dem aktuellen Bestand keine passende Mischung verfügbar. Ändere deine Auswahl.'};
+ // Use the complete curated recipe, never add arbitrary ingredients.
+ const out=choose({...config,recipes},{activity:answers.activity,group:'any',intensity:answers.intensity},options);
+ return out;
 }
