@@ -43,7 +43,7 @@ function hostUpdateStock(config){
  return validateConfig(config);
 }
 function hostNewState(){return {config:hostMigrate(LEGACY_DEFAULTS),version:1,auth:null,sessions:[],rates:{},hostingRelease:6,trioLibraryVersion:1};}
-async function hostRead(env){if(!env.BUCKET)throw Error('Dauerhafter Speicher fehlt.');for(let i=0;i<6;i++){const object=await env.BUCKET.get('duftmoment-state.json');const state=object?await object.json():hostNewState();if(state.hostingRelease===6&&state.trioLibraryVersion===1&&state.stockUpdateVersion===1)return {state,etag:object?.etag};
+async function hostRead(env){if(!env.BUCKET)throw Error('Dauerhafter Speicher fehlt.');for(let i=0;i<6;i++){const object=await env.BUCKET.get('duftmoment-state.json');const state=object?await object.json():hostNewState();if(state.hostingRelease===6&&state.trioLibraryVersion===1&&state.stockUpdateVersion===1&&state.frankincenseEmptyVersion===1)return {state,etag:object?.etag};
  if(state.hostingRelease!==6){
   if(state.config.schema===1){state.legacyBackup={config:structuredClone(state.config),version:state.version,migratedAt:'2026-10-18'};state.config=hostMigrate(state.config);state.version++;}
   else validateConfig(state.config);
@@ -52,6 +52,8 @@ async function hostRead(env){if(!env.BUCKET)throw Error('Dauerhafter Speicher fe
  // Add once; preserve existing IDs, recipes, exclusions, device and all private state.
  if(state.trioLibraryVersion!==1){let added=0;for(const recipe of trioRecipes){if(state.config.recipes.length>=300)break;if(!state.config.recipes.some(r=>r.id===recipe.id)&&recipe.parts.every(p=>state.config.oils.some(o=>o.id===p.oil))){state.config.recipes.push(structuredClone(recipe));added++;}}if(added)state.version++;state.trioLibraryVersion=1;validateConfig(state.config);}
  if(state.stockUpdateVersion!==1){state.config=hostUpdateStock(state.config);state.stockUpdateVersion=1;state.version++;}
+ // Apply the owner's empty-stock request once; future admin restocks remain possible.
+ if(state.frankincenseEmptyVersion!==1){const oil=state.config.oils.find(o=>o.id==='frankincense');if(oil)oil.available=false;state.frankincenseEmptyVersion=1;state.version++;}
  const result=await env.BUCKET.put('duftmoment-state.json',JSON.stringify(state),{onlyIf:object?{etagMatches:object.etag}:{etagDoesNotMatch:'*'},httpMetadata:{contentType:'application/json'}});if(result)return {state,etag:result.etag};}
  throw Error('Gleichzeitige Änderung. Bitte erneut versuchen.');}
 async function hostTransaction(env,fn){for(let i=0;i<6;i++){const {state,etag}=await hostRead(env);const output=await fn(state);const written=await env.BUCKET.put('duftmoment-state.json',JSON.stringify(state),{onlyIf:etag?{etagMatches:etag}:{etagDoesNotMatch:'*'},httpMetadata:{contentType:'application/json'}});if(written)return output;}hostFail('Gleichzeitige Änderung. Bitte erneut versuchen.',409);}

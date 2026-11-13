@@ -78,7 +78,6 @@ function renderQuiz(){
  if(answers.activity==='wake'&&!isMorning(now())){answers={};step=0;toast('Aufwachen ist von 06:00 bis vor 11:00 Uhr verfügbar. Bitte wähle neu.');}
  view='quiz';const copy=el('section',{class:'copy'},progress());
  if(step===0){
-  copy.append(btn('Neue Öle',showNewOils,'stock-news',{'aria-haspopup':'dialog'}));
   copy.append(config.settings.tagline==='Was braucht dein Dazwischen?'?el('h1',{},'Was hast',el('br'),'du vor?'):el('h1',{},questionTitle()));
   const choices=el('div',{class:'choices activity-choices','aria-label':'Tätigkeit'});
   for(const[key,a]of Object.entries(activities)){
