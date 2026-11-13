@@ -63,9 +63,9 @@ async function setActivity(activity){
  if(busy)return;const id=run;answers={activity,group:'any'};controller?.abort();controller=new AbortController();busy=true;
  main.setAttribute('aria-busy','true');main.querySelectorAll('.choice').forEach(b=>b.disabled=true);
  const error=main.querySelector('.flow-error');if(error)error.textContent='';
- const progressLabel=main.querySelector('.progress');if(progressLabel)progressLabel.textContent='Prüfen …';
- try{await refresh(controller.signal);if(id===run)forward();}
- catch(e){if(e.name!=='AbortError'&&id===run){if(error)error.textContent='Der aktuelle Bestand ist nicht erreichbar. Bitte erneut versuchen.';if(progressLabel)progressLabel.replaceChildren('1',el('span',{},`/ ${stages().length}`));}}
+ const progressLabel=main.querySelector('.progress');if(progressLabel)progressLabel.setAttribute('aria-busy','true');
+ try{await (version?refresh(controller.signal):startup);if(id===run)forward();}
+ catch(e){if(e.name!=='AbortError'&&id===run){if(error)error.textContent='Der aktuelle Bestand ist nicht erreichbar. Bitte erneut versuchen.';if(progressLabel)progressLabel.replaceChildren('1',el('span',{},`Frage 1`));}}
  finally{if(id===run){busy=false;main.removeAttribute('aria-busy');main.querySelectorAll('.choice').forEach(b=>b.disabled=false);}}
 }
 function stages(){return ['activity','intensity','followup'];}
@@ -176,5 +176,7 @@ window.addEventListener('pageshow',e=>{if(e.persisted)home();});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)clockChanged();});
 matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',updateMotion);
 setInterval(()=>{if(!config)return;if(answers.activity==='wake'&&!isMorning(now()))clockChanged();else if(view!=='admin'&&sceneFor(config,now()).id!==lastScene)clockChanged();},30000);
-try{const startOnInfo=location.hash==='#info';await refresh();if(location.hash==='#verwaltung')await admin();else{home(true);if(startOnInfo)showSources();}}
+const startup=refresh();
+for(const button of main.querySelectorAll('[data-start-activity]'))button.addEventListener('click',()=>setActivity(button.getAttribute('data-start-activity')));
+try{const initialRun=run,startOnInfo=location.hash==='#info';await startup;if(location.hash==='#verwaltung')await admin();else if(run===initialRun&&!busy&&!answers.activity){home(true);if(startOnInfo)showSources();}}
 catch{mount(el('section',{class:'login'},el('h1',{},'Bestand nicht erreichbar.'),el('p',{class:'error-box'},'Bitte versuche es erneut. Ohne aktuellen Bestand geben wir keine Empfehlung aus.'),btn('Erneut versuchen',()=>location.reload(),'primary')));}
