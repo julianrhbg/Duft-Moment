@@ -7,9 +7,9 @@ const main=document.querySelector('#main');
 const menu=document.querySelector('#menu');
 const menuButton=document.querySelector('#menu-button');
 const dialog=document.querySelector('#info-dialog');
-let config,sources=sourceFallback,version=0,answers={},step=0,run=0,turn=crypto.getRandomValues(new Uint32Array(1))[0]%65536,busy=false,controller;
+let config,sources=sourceFallback,version=0,answers={},step=0,run=0,busy=false,controller;
 let manualTime='',lastScene='',motionPaused=false,view='quiz';
-const seen=new Map();let activeQuestion=null,questionTrail=[],alternativeIndex=0;
+let activeQuestion=null,questionTrail=[],alternativeIndex=0;
 const infoButton=document.querySelector('#info-button');
 function motionReduced(){return motionPaused||config?.settings.motion===false||matchMedia('(prefers-reduced-motion: reduce)').matches||navigator.connection?.saveData===true;}
 // The optional demo stays in the project, but has no visitor-facing entry point.
@@ -55,22 +55,23 @@ function atmosphere(){
 function layout(copy,cls){return el('div',{class:`composition ${cls} enter`},copy,atmosphere());}
 function questionTitle(){return config.settings.tagline==='Was braucht dein Dazwischen?'?'Was hast du vor?':config.settings.tagline;}
 function home(push=true){
- run++;controller?.abort();busy=false;step=0;answers={};view='quiz';closeMenu();if(dialog.open)dialog.close();
+ run++;controller?.abort();busy=false;step=0;answers={};questionTrail=[];activeQuestion=null;alternativeIndex=0;view='quiz';closeMenu();if(dialog.open)dialog.close();
  main.removeAttribute('aria-busy');if(push)history.replaceState({run,step:0},'','/');if(config)renderQuiz();
 }
-function forward(){step++;history.pushState({run,step},'','/');renderQuiz();}
+function flowState(){return {run,step,answers:{...answers},questionTrail:questionTrail.map(a=>({...a})),alternativeIndex};}
+function forward(){step++;history.pushState(flowState(),'','/');renderQuiz();}
 async function setActivity(activity){
  if(busy)return;const id=run;answers={activity,group:'any'};questionTrail=[];alternativeIndex=0;controller?.abort();controller=new AbortController();busy=true;
  main.setAttribute('aria-busy','true');main.querySelectorAll('.choice').forEach(b=>b.disabled=true);
  const error=main.querySelector('.flow-error');if(error)error.textContent='';
  const progressLabel=main.querySelector('.progress');if(progressLabel)progressLabel.setAttribute('aria-busy','true');
  try{await (version?refresh(controller.signal):startup);if(id===run)forward();}
- catch(e){if(e.name!=='AbortError'&&id===run){if(error)error.textContent='Der aktuelle Bestand ist nicht erreichbar. Bitte erneut versuchen.';if(progressLabel)progressLabel.replaceChildren('1',el('span',{},`Frage 1`));}}
+ catch(e){if(e.name!=='AbortError'&&id===run){if(error)error.textContent='Der aktuelle Bestand ist nicht erreichbar. Bitte erneut versuchen.';if(progressLabel){progressLabel.textContent='Frage 1';progressLabel.removeAttribute('aria-busy');}}}
  finally{if(id===run){busy=false;main.removeAttribute('aria-busy');main.querySelectorAll('.choice').forEach(b=>b.disabled=false);}}
 }
 function stages(){return ['activity','intensity','character','note'];}
-function setAfter(value){questionTrail.push({...answers});answers[activeQuestion.key]=value;if(activeQuestion.key==='group')answers.characterAnswered=true;activeQuestion=null;result();}
-function back(){if(step<=0)return home();if(step>=2){answers=questionTrail.pop()||{activity:answers.activity,intensity:answers.intensity,group:'any'};activeQuestion=nextQuestion(config,answers);step=activeQuestion?2+questionTrail.length:1;}else step--;history.pushState({run,step},'','/');renderQuiz();}
+function setAfter(value){if(busy||!activeQuestion)return;questionTrail.push({...answers});answers[activeQuestion.key]=value;if(activeQuestion.key==='group')answers.characterAnswered=true;activeQuestion=null;result();}
+function back(){if(step<=0)return home();if(step>=2&&questionTrail.length){answers=questionTrail.pop();step=2+questionTrail.length;}else{step=Math.max(0,step-1);if(step===1){answers={activity:answers.activity,intensity:answers.intensity,group:'any'};questionTrail=[];}}activeQuestion=null;history.pushState(flowState(),'','/');renderQuiz();}
 function progress(){return el('div',{class:'flow-nav'},step>0?btn(el('span',{html:icon('back')}),back,'back-button',{'aria-label':'Zurück'}):el('span',{class:'flow-context'},'Duft finden'),el('span',{class:'progress'},`Frage ${step+1}`));}
 function selectChoice(name,detail,fn,selected=false){return btn([el('span',{class:'choice-copy'},el('span',{class:'choice-name'},name),detail?el('small',{},detail):null),el('span',{class:'selection-mark','aria-hidden':'true'})],fn,`choice${selected?' selected':''}`,{'aria-pressed':selected});}
 function renderQuiz(){
@@ -103,18 +104,18 @@ async function result(intensity=answers.intensity){
  const error=main.querySelector('.flow-error');if(error)error.textContent='';
  try{
   await refresh(controller.signal);if(id!==run)return;
-  if(view==='quiz'&&nextQuestion(config,answers)){step=2+questionTrail.length;history.pushState({run,step},'','/');renderQuiz();return;}
-  const key='visit',historySeen=seen.get(key)||[];
+  if(view==='quiz'&&nextQuestion(config,answers)){step=2+questionTrail.length;history.pushState(flowState(),'','/');renderQuiz();return;}
+  
   if(view==='result')alternativeIndex++;else alternativeIndex=0;
   const selected=chooseAdaptive(config,answers,{date:now(),alternativeIndex});
   if(selected.resetMorning){answers={};step=0;renderQuiz();return;}
   if(selected.empty){view='result';mount(layout(el('section',{class:'copy'},el('h1',{},'Gerade kein passender Duft.'),el('p',{class:'empty-detail'},selected.reason),btn('Auswahl ändern',()=>edit(0),'primary')),'empty'));return;}
-  seen.set(key,[...historySeen.slice(-50),selected.signature]);step=stages().length;view='result';history.pushState({run,step},'','/');renderResult(selected);
+  step=stages().length;view='result';history.pushState(flowState(),'','/');renderResult(selected);
  }catch(e){
   if(e.name!=='AbortError'&&id===run){const message='Der aktuelle Bestand ist nicht erreichbar. Bitte erneut versuchen.';if(error)error.textContent=message;else toast(message);if(action)action.textContent='Andere Mischung';}
  }finally{if(id===run){busy=false;main.removeAttribute('aria-busy');main.querySelectorAll('.choice,.result-actions button').forEach(b=>{if(b.dataset.only==='true')return;b.disabled=false;});}}
 }
-function edit(target=0){controller?.abort();busy=false;main.removeAttribute('aria-busy');if(dialog.open)dialog.close();step=target;history.pushState({run,step},'','/');renderQuiz();}
+function edit(target=0){controller?.abort();busy=false;main.removeAttribute('aria-busy');if(dialog.open)dialog.close();step=target;history.pushState(flowState(),'','/');renderQuiz();}
 function showSelection(){
  const choices=el('div',{class:'edit-choices'},selectChoice(activities[answers.activity].name,'Tätigkeit',()=>edit(0)));
  choices.append(selectChoice(intensities[answers.intensity],'Intensität',()=>{answers={activity:answers.activity,group:'any'};questionTrail=[];edit(1);}));
@@ -173,7 +174,7 @@ function clockChanged(){
  if(answers.activity==='wake'&&!isMorning(now())){controller?.abort();run++;busy=false;main.removeAttribute('aria-busy');answers={};step=0;history.replaceState({run,step},'','/');renderQuiz();toast('Es ist nicht mehr Morgen. Bitte wähle deine Tätigkeit neu.');}
  else if(view==='quiz')renderQuiz();else if(view==='result'){const scene=main.querySelector('.atmosphere');if(scene)scene.replaceWith(atmosphere());}
 }
-window.addEventListener('popstate',e=>{closeMenu();if(e.state?.overlay==='info'||location.hash==='#info'){showSources();return;}controller?.abort();busy=false;main.removeAttribute('aria-busy');if(dialog.open)dialog.close();if(location.hash==='#verwaltung')return admin();if(e.state?.run===run&&Number.isInteger(e.state.step)&&e.state.step>=0&&e.state.step<stages().length&&(e.state.step===0||answers.activity)){step=e.state.step;renderQuiz();}else home(false);});
+window.addEventListener('popstate',e=>{closeMenu();if(e.state?.overlay==='info'||location.hash==='#info'){showSources();return;}controller?.abort();busy=false;main.removeAttribute('aria-busy');if(dialog.open)dialog.close();if(location.hash==='#verwaltung')return admin();if(e.state?.run===run&&Number.isInteger(e.state.step)&&e.state.step>=0&&e.state.step<=stages().length&&(e.state.step===0||e.state.answers?.activity)){step=e.state.step;answers={...(e.state.answers||{})};questionTrail=(e.state.questionTrail||[]).map(a=>({...a}));activeQuestion=null;alternativeIndex=e.state.alternativeIndex||0;if(step===stages().length){view='result';const selected=chooseAdaptive(config,answers,{date:now(),alternativeIndex});if(selected.recipe)renderResult(selected);else home(false);}else renderQuiz();}else home(false);});
 window.addEventListener('pageshow',e=>{if(e.persisted)home();});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)clockChanged();});
 matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',updateMotion);

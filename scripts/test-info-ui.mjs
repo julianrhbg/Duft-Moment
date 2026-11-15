@@ -29,7 +29,7 @@ const matchMedia=query=>{if(!themes.has(query)){const t={matches:false,events:ne
 const navigator={connection:{saveData:false},deviceMemory:8,hardwareConcurrency:8};
 const context=vm.createContext({console,Node:N,document,window:win,history,location,navigator,matchMedia,AbortController,Date,crypto,devicePixelRatio:1,ResizeObserver:class{observe(){}disconnect(){}},requestAnimationFrame:fn=>{const id=nextFrame++;raf.set(id,fn);return id;},cancelAnimationFrame:id=>raf.delete(id),setInterval(){},setTimeout:()=>0,clearTimeout(){},queueMicrotask,fetch:async()=>{requests++;if(earlyStart&&requests===1)await startupGate;return {ok:true,status:200,json:async()=>structuredClone(fixtures)};}});
 const root=path.resolve('public'),modules=new Map();
-async function moduleFor(name){if(modules.has(name))return modules.get(name);let code=await readFile(path.join(root,name),'utf8');if(name==='app.mjs')code+='\nexport {setActivity}; export const testing={state:()=>({step,answers:{...answers},view,run,turn}),showSources,home};';const m=new vm.SourceTextModule(code,{context,identifier:name,importModuleDynamically:async(specifier,parent)=>{const child=await moduleFor(path.posix.join(path.posix.dirname(parent.identifier),specifier));if(child.status==='unlinked')await child.link(link);if(child.status==='linked')await child.evaluate();return child;}});modules.set(name,m);return m;}
+async function moduleFor(name){if(modules.has(name))return modules.get(name);let code=await readFile(path.join(root,name),'utf8');if(name==='app.mjs')code+='\nexport {setActivity}; export const testing={state:()=>({step,answers:{...answers},view,run}),showSources,home};';const m=new vm.SourceTextModule(code,{context,identifier:name,importModuleDynamically:async(specifier,parent)=>{const child=await moduleFor(path.posix.join(path.posix.dirname(parent.identifier),specifier));if(child.status==='unlinked')await child.link(link);if(child.status==='linked')await child.evaluate();return child;}});modules.set(name,m);return m;}
 const link=(specifier,parent)=>moduleFor(path.posix.join(path.posix.dirname(parent.identifier),specifier));
 const app=await moduleFor('app.mjs');await app.link(link);const evaluation=app.evaluate();if(earlyStart){await new Promise(r=>setTimeout(r,0));const choice=app.namespace.setActivity('focus');assert.equal(requests,1);releaseStartup();await evaluation;await choice;assert.equal(app.namespace.testing.state().step,1);assert.equal(app.namespace.testing.state().answers.activity,'focus');assert.equal(requests,1);app.namespace.testing.home();}else await evaluation;
 const tick=async()=>{for(let n=0;n<12;n++){await new Promise(r=>setTimeout(r,2));const frames=[...raf.values()];raf.clear();frames.forEach(fn=>fn());}};
@@ -49,7 +49,17 @@ fire(document.querySelector('#close-dialog'),'click');assert(!info.open);
 fire(win,'popstate',{state:{overlay:'info'}});await tick();assert(info.open);assert(!modules.has('info-demo.mjs'));fire(document.querySelector('#close-dialog'),'click');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');reduced.matches=true;fire(reduced,'change');
 fire(document.querySelector('#info-button'),'click');await tick();assert(info.open);fire(document.querySelector('#close-dialog'),'click');
-fire(findButton('Deutlich'),'click');await tick();assert.equal(app.namespace.testing.state().step,3);assert(document.querySelector('#main').querySelector('.recipe-parts'));
+fire(findButton('Deutlich'),'click');await tick();assert.equal(app.namespace.testing.state().step,2);
+fire(document.querySelector('.back-button'),'click');await tick();assert.equal(app.namespace.testing.state().step,1);
+fire(findButton('Deutlich'),'click');await tick();
+const questionBefore=document.querySelector('#main').textContent;
+fire(findButton('Passend zu meinem Moment'),'click');await tick();
+history.back();await tick();assert.equal(document.querySelector('#main').textContent,questionBefore);assert(!app.namespace.testing.state().answers.characterAnswered);
+history.forward();await tick();assert(app.namespace.testing.state().answers.characterAnswered);
+for(let i=0;i<3&&app.namespace.testing.state().view==='quiz';i++){const button=findButton('Passend zu meinem Moment');assert(button);fire(button,'click');await tick();}
+assert.equal(app.namespace.testing.state().step,4);assert(document.querySelector('#main').querySelector('.recipe-parts'));
+history.back();await tick();assert.equal(app.namespace.testing.state().view,'quiz');
+history.forward();await tick();assert.equal(app.namespace.testing.state().view,'result');
 const resultBefore=document.querySelector('#main').textContent;
 fire(document.querySelector('#info-button'),'click');await tick();assert(info.open);fire(document.querySelector('#close-dialog'),'click');await tick();assert.equal(document.querySelector('#main').textContent,resultBefore);
 fire(document.querySelector('#menu-button'),'click');fire(findButton('Anwendung & Quellen',document.querySelector('#menu')),'click');await tick();assert(info.open);assert(!document.querySelector('#menu').open);fire(document.querySelector('#close-dialog'),'click');
