@@ -63,17 +63,23 @@ export function adaptivePool(config,answers){
  if(answers.after&&answers.after!=='open')pool=pool.filter(r=>r.activities.includes(answers.after));
  return pool;
 }
+const noteOils={citrus:['lemon','lime','wild-orange','grapefruit','bergamot','citrus-bliss'],mint:['peppermint','air','eucalyptus','bergamot-mint','lemon-eucalyptus'],floral:['lavender','serenity','adaptiv'],wood:['copaiba','frankincense','balance','holiday-peace'],herbal:['tulsi','oregano','lemongrass','valerian']};
+const noteNames={citrus:'Zitrusschale',mint:'Minze & Eukalyptus',floral:'Blüten & Lavendel',wood:'Holz & Harz',herbal:'Kräuter'};
+function hasNote(r,n){return r.parts.some(p=>noteOils[n]?.includes(p.oil));}
+function preferencePool(config,answers){return adaptivePool(config,answers).filter(r=>(!answers.group||answers.group==='any'||r.groups.includes(answers.group))&&(!answers.note||answers.note==='any'||hasNote(r,answers.note)));}
 export function nextQuestion(config,answers){
- if(!['pause','sofa','surprise'].includes(answers.activity)||answers.after!==undefined)return null;
- const pool=adaptivePool(config,answers);if(pool.length<=2)return null;
- const options=[['focus','Danach geht es weiter'],['sleep','Danach ins Bett']].filter(([id])=>{const n=pool.filter(r=>r.activities.includes(id)).length;return n>0&&n<pool.length;});
- if(options.length<2)return null;
- return {title:'Was kommt danach?',options:[...options,['open','Noch nichts vor']]};
+ const pool=preferencePool(config,answers);if(pool.length<=1)return null;
+ if(!answers.characterAnswered){const choices=[['fresh','Frisch & klar'],['soft','Weich & blumig'],['warm','Warm & holzig']].filter(([id])=>pool.some(r=>r.groups.includes(id)));if(choices.length>1)return {key:'group',title:'Was soll den Raum prägen?',options:[...choices,['any','Passend zu meinem Moment']]};}
+ if(answers.note===undefined){const choices=Object.entries(noteNames).filter(([id])=>{const n=pool.filter(r=>hasNote(r,id)).length;return n>0&&n<pool.length;});if(choices.length>1)return {key:'note',title:'Welche Note spricht dich an?',options:[...choices,['any','Passend zu meinem Moment']]};}
+ return null;
 }
-export function chooseAdaptive(config,answers,options={}){
- const recipes=adaptivePool(config,answers);
- if(!recipes.length)return {empty:true,reason:'Für diese Situation ist mit dem aktuellen Bestand keine passende Mischung verfügbar. Ändere deine Auswahl.'};
- // Use the complete curated recipe, never add arbitrary ingredients.
- const out=choose({...config,recipes},{activity:answers.activity,group:'any',intensity:answers.intensity},options);
- return out;
+export function chooseAdaptive(config,answers,{date=new Date(),alternativeIndex=0}={}){
+ if(answers.activity==='wake'&&!isMorning(date))return {resetMorning:true};
+ const unique=new Map();
+ const score=r=>Math.min(2,Math.max(-2,r.priority))*10+(r.times.includes(timeOfDay(date))?1:0);
+ for(const r of preferencePool(config,answers)){const key=signature(r),old=unique.get(key);if(!old||score(r)>score(old)||score(r)===score(old)&&r.id<old.id)unique.set(key,r);}
+ const recipes=[...unique.values()].sort((a,b)=>score(b)-score(a)||a.id.localeCompare(b.id));
+ if(!recipes.length)return {empty:true,reason:'Für diese Auswahl ist mit deinem Bestand keine passende Mischung verfügbar. Ändere deine Auswahl.'};
+ const recipe=recipes[Math.max(0,alternativeIndex)%recipes.length];
+ return {recipe,signature:signature(recipe),parts:dose(recipe,config,answers.intensity),fallback:false,alternatives:recipes.length>1};
 }
