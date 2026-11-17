@@ -69,8 +69,7 @@ function hasNote(r,n){return r.parts.some(p=>noteOils[n]?.includes(p.oil));}
 function preferencePool(config,answers){return adaptivePool(config,answers).filter(r=>(!answers.group||answers.group==='any'||r.groups.includes(answers.group))&&(!answers.note||answers.note==='any'||hasNote(r,answers.note)));}
 export function nextQuestion(config,answers){
  const pool=preferencePool(config,answers);if(new Set(pool.map(signature)).size<=1)return null;
- if(!answers.characterAnswered){const choices=[['fresh','Frisch & klar'],['soft','Weich & blumig'],['warm','Warm & holzig']].filter(([id])=>{const n=pool.filter(r=>r.groups.includes(id)).length;return n>0&&n<pool.length;});if(choices.length>1)return {key:'group',title:'Was soll den Raum prägen?',options:[...choices,['any','Passend zu meinem Moment']]};}
- if(answers.note===undefined){const choices=Object.entries(noteNames).filter(([id])=>{const n=pool.filter(r=>hasNote(r,id)).length;return n>0&&n<pool.length;});if(choices.length>1)return {key:'note',title:'Welche Note spricht dich an?',options:[...choices,['any','Passend zu meinem Moment']]};}
+ if(answers.note===undefined){const choices=Object.entries(noteNames).filter(([id])=>{const n=pool.filter(r=>hasNote(r,id)).length;return n>0&&n<pool.length;});if(choices.length>1)return {key:'note',title:'Wie soll es duften?',options:[...choices,['any','Passend zu meinem Moment']]};}
  return null;
 }
 export function chooseAdaptive(config,answers,{date=new Date(),alternativeIndex=0}={}){

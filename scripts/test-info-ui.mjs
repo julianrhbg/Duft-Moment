@@ -54,8 +54,8 @@ fire(document.querySelector('.back-button'),'click');await tick();assert.equal(a
 fire(findButton('Deutlich'),'click');await tick();
 const questionBefore=document.querySelector('#main').textContent;
 fire(findButton('Passend zu meinem Moment'),'click');await tick();
-history.back();await tick();assert.equal(document.querySelector('#main').textContent,questionBefore);assert(!app.namespace.testing.state().answers.characterAnswered);
-history.forward();await tick();assert(app.namespace.testing.state().answers.characterAnswered);
+history.back();await tick();assert.equal(document.querySelector('#main').textContent,questionBefore);assert.equal(app.namespace.testing.state().answers.note,undefined);
+history.forward();await tick();assert.equal(app.namespace.testing.state().answers.note,'any');assert.equal(app.namespace.testing.state().view,'result');
 for(let i=0;i<3&&app.namespace.testing.state().view==='quiz';i++){const button=findButton('Passend zu meinem Moment');assert(button);fire(button,'click');await tick();}
 assert.equal(app.namespace.testing.state().step,4);assert(document.querySelector('#main').querySelector('.recipe-parts'));
 history.back();await tick();assert.equal(app.namespace.testing.state().view,'quiz');
